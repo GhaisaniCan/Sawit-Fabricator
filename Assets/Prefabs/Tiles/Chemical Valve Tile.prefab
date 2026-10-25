@@ -98,8 +98,13 @@ MonoBehaviour:
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   mode: 0
   retractTurns: 2
-  range: 0
+  targetMode: 2
+  radius: 1
+  valveColor: 0
   idleSprite: {fileID: 21300000, guid: 0bb7a28bf9adc7a42a60e3e071eed311, type: 3}
   releasedSprite: {fileID: 21300000, guid: 0e2468b7f44e80c489b8db5a685860c1, type: 3}
   idleColor: {r: 1, g: 1, b: 1, a: 1}
   releasedColor: {r: 1, g: 1, b: 1, a: 1}
+  mistSprite: {fileID: 21300000, guid: b798ba7d4447bef478b493e43eaf8ee2, type: 3}
+  mistAlpha: 0.4
+  smokePrefab: {fileID: 744945791733926240, guid: 906cf11a7c0d8ef469f48359b94fd6b7, type: 3}

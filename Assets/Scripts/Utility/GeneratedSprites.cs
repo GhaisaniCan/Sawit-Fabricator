@@ -7,6 +7,7 @@ public static class GeneratedSprites
     private static Sprite square;
     private static Sprite frame;
     private static Sprite triangle;
+    private static Sprite softDot;
 
     // Solid 1x1 world-unit square
     public static Sprite Square
@@ -70,6 +71,30 @@ public static class GeneratedSprites
 
             triangle = CreateSprite(pixels, size);
             return triangle;
+        }
+    }
+
+    // 1x1 world-unit circle with a soft edge (markers, placeholder mist)
+    public static Sprite SoftDot
+    {
+        get
+        {
+            if (softDot != null) return softDot;
+
+            const int size = 64;
+            var pixels = new Color32[size * size];
+            for (int y = 0; y < size; y++)
+            {
+                for (int x = 0; x < size; x++)
+                {
+                    var distance = Vector2.Distance(new Vector2(x + 0.5f, y + 0.5f), new Vector2(size / 2f, size / 2f)) / (size / 2f);
+                    var alpha = Mathf.Clamp01((1f - distance) * 4f); // solid centre, soft rim
+                    pixels[y * size + x] = new Color32(255, 255, 255, (byte)(alpha * 255));
+                }
+            }
+
+            softDot = CreateSprite(pixels, size);
+            return softDot;
         }
     }
 

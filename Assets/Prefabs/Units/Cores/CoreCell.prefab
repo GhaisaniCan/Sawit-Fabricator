@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4332117599497096532}
   - component: {fileID: 3577226096134098685}
   - component: {fileID: 5936149379018897133}
+  - component: {fileID: 2316852165672702614}
   m_Layer: 0
   m_Name: CoreCell
   m_TagString: Untagged
@@ -108,3 +109,20 @@ MonoBehaviour:
   UnitName: 
   OccupiedTile: {fileID: 0}
   Faction: 1
+--- !u!114 &2316852165672702614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4351562968621963271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e244c824fcd7e004ebd2e99d41e2eadc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CellIdleAnimator
+  scaleFrequency: 0.9
+  scaleAmplitude: 0.07
+  squashAndStretch: 0
+  rotationFrequency: 0.25
+  rotationAngleMax: 3

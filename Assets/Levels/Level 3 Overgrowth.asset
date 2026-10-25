@@ -27,14 +27,17 @@ MonoBehaviour:
     unit: {fileID: 11400000, guid: 0a2b9d78607d0de46b4221ab7305ab70, type: 2}
     overrideBlockedTiles: 0
     blockedTileOffsets: []
+    chemicalColor: 0
   - position: {x: 0, y: 6}
     unit: {fileID: 11400000, guid: ed5a765d665a4aa58896345615f7a4b0, type: 2}
     overrideBlockedTiles: 0
     blockedTileOffsets: []
+    chemicalColor: 0
   - position: {x: 8, y: 6}
     unit: {fileID: 11400000, guid: ed5a765d665a4aa58896345615f7a4b0, type: 2}
     overrideBlockedTiles: 0
     blockedTileOffsets: []
+    chemicalColor: 0
   - position: {x: 2, y: 4}
     unit: {fileID: 11400000, guid: 2cbea0668f5a482cb93542748865e844, type: 2}
     overrideBlockedTiles: 1
@@ -45,6 +48,7 @@ MonoBehaviour:
     - {x: 0, y: 2}
     - {x: -1, y: 2}
     - {x: 1, y: 1}
+    chemicalColor: 0
   - position: {x: 6, y: 4}
     unit: {fileID: 11400000, guid: c2f5a6eb7ef374a4a92636f93f0eadb9, type: 2}
     overrideBlockedTiles: 1
@@ -58,3 +62,10 @@ MonoBehaviour:
     - {x: -1, y: 0}
     - {x: 1, y: 1}
     - {x: 1, y: 2}
+    chemicalColor: 0
+  - position: {x: 2, y: 2}
+    unit: {fileID: 11400000, guid: c2f5a6eb7ef374a4a92636f93f0eadb9, type: 2}
+    overrideBlockedTiles: 1
+    blockedTileOffsets:
+    - {x: 1, y: 1}
+    chemicalColor: 0

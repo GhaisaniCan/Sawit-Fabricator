@@ -31,17 +31,21 @@ Assets/
   Scripts/
     Managers/   GameManager, GridManager, UnitManager   (singletons via static Instance set in Awake)
     Tiles/      Tile (abstract), GrassTile, WallTile
-      Plant/    PlantInteractableTile (abstract), CellWallGateTile, DeflectorValveTile, ChemicalValveTile
-    Units/      BaseUnit, ScriptableUnit, MoveArrow
+      Plant/    PlantInteractableTile (abstract), CellWallGateTile, DeflectorValveTile, ChemicalValveTile,
+                ChemicalColor (enum + colours)
+    Units/      BaseUnit, ScriptableUnit, MoveArrow, CellIdleAnimator
       Players/  BasePlayer, Player1
       Enemies/  BaseEnemy, Enemy1, Enemy2, BlockingEnemy, VineSegment
       Cores/    CoreCell
     Levels/     LevelData (ScriptableObject)
     Utility/    GeneratedSprites (placeholder square / frame / triangle sprites)
   Editor/       LevelDataEditor (grid painter for LevelData)
-  Levels/       Level 1, Level Test, Level 2 Infection Route, Level 3 Overgrowth (vines + chemical valve demo)
-  Prefabs/      Tiles/ (Base, Grass, Wall, Gate, Gate Closed, Deflector Valve, Chemical Valve, AssetTestTile)
+  Levels/       Level 1, Level Test, Level 2 Infection Route, Level 3 Overgrowth (vines + chemical valve demo),
+                Level 4 Chemistry (all three valve targeting modes)
+  Prefabs/      Tiles/ (Base, Grass, Wall, Gate, Gate Closed, Deflector Valve, Chemical Valve [+ Area, Azure], AssetTestTile)
                 Units/ (PlayerSkull, EnemyPrabowo, EnemySawit, EnemyBlocker, EnemyBlocker Thorny, Cores/CoreCell)
+                FX/ (Chemical Smoke)
+  Materials/    Chemical Smoke.mat
   Resources/Units/  ScriptableUnit assets (loaded with Resources.LoadAll<ScriptableUnit>("Units"))
   Sprites/      Prabowo.png, Sawit.png, Skull-Emoji.png
     Cells/      Game art: cancer/core/defensive cells, cytoplasm, cellulose wall, gates, valve, arrows
@@ -100,6 +104,11 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
   `Faction` field.** Prefab faction values have been wrong before (EnemySawit was set to Player).
 - `ScriptableUnit` (in `Resources/Units`) pairs a `Faction` with a `UnitPrefab`. Level placements and
   random spawning both refer to these assets. Random spawning picks by prefab type.
+- **`CellIdleAnimator`** (on PlayerSkull, CoreCell, EnemyBlocker and its Thorny variant): sine "breathing"
+  scale (`scaleFrequency`, `scaleAmplitude`, optional `squashAndStretch`) and Z sway (`rotationFrequency`,
+  `rotationAngleMax`), random phases per cell. It animates relative to the scale/rotation captured in
+  `OnEnable` and restores them in `OnDisable`, so **disable it before animating the unit's transform
+  yourself** (`DestroyPlayerInVines` does). Slides only move position, so they don't conflict.
 
 ### Movement (`UnitManager` + `MoveArrow`)
 - Arrows appear on neighbouring tiles for each of the 8 directions where the slide path isn't empty.
@@ -145,6 +154,9 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
 - **Capture:** `OnDestroy` frees every tile and retracts + destroys all its pieces.
 - **Hazardous** (`hazardous`, uses `hazardStemSprite`): sliding into these vines destroys the Cancer Cell.
 - `BlockingEnemy.VinesChanged` (static event) fires on every extend/retract/timer tick.
+- **`enemyColor`** (`ChemicalColor`) links it to ColorMatch chemical valves and shows a coloured dot on the
+  cell (Units order 1). Per-level override: `LevelData.UnitPlacement.chemicalColor` → `SetEnemyColor` (before Start).
+  `CoveredTiles` lists the tiles its vines cover.
 - Prefabs: `EnemyBlocker` (normal) and `EnemyBlocker Thorny` (variant: hazardous, crimson-tinted host),
   unit assets `EnemyUnit Blocker` / `EnemyUnit Thorny Blocker`.
 
@@ -158,18 +170,31 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
   and `startAngle` is the starting direction. Clicking it rotates to the next allowed angle. It can only
   be clicked when 2 or more directions are allowed, so a single direction makes a fixed deflector. The
   output direction is absolute: it doesn't depend on which way the unit came in. Shown as a triangle arrow.
-- **`ChemicalValveTile`:** an enzyme gland that makes Defensive Cells retract their vines. `mode`
-  TimedRetract (`retractTurns`, default 2; clicking again restarts the timer) or Toggle (retracted until
-  clicked again). `range` = max tiles (Chebyshev) to a host; 0 = every Defensive Cell on the board. Only
-  clickable while there's a Defensive Cell in range. Shows `releasedSprite` while its retraction is active.
-- Prefabs `Prefabs/Tiles/Gate Tile`, `Gate Tile Closed`, `Deflector Valve Tile` and `Chemical Valve Tile` are
-  variants of Base Tile. Add them as tile types in a LevelData to paint them.
+- **`ChemicalValveTile`:** an enzyme gland that makes Defensive Cells retract their vines.
+  - `mode`: TimedRetract (`retractTurns`, default 2; clicking again restarts the timer) or Toggle
+    (retracted until clicked again).
+  - `targetMode` (`ChemicalTargetMode`): **AreaRadius** (hosts within `radius` tiles, Chebyshev, so 1 = 3×3),
+    **ColorMatch** (hosts whose `EnemyColor` == `valveColor`), **Global** (every Defensive Cell).
+  - `CanInteract`: there's a target, or the valve is active (so a Toggle valve can always be switched off).
+  - Each valve tracks **its own** active state (Toggle flag, or its own `turnsLeft` counted on
+    `SlideFinished`), so two valves hitting the same cell don't light each other up.
+  - While active: `releasedSprite`, a pulsing **mist** overlay (`mistSprite`, `mistAlpha`, tinted by
+    `valveColor`) on the affected tiles (AreaRadius: the whole area; otherwise each target's host + vine
+    tiles), and an optional `smokePrefab` particle cloud on the valve. Mist fades in and out; smoke stops
+    emitting and is destroyed once its puffs have died. Everything is cleaned up when the effect ends.
+  - ColorMatch valves show a colour dot matching the dot on the Defensive Cells they affect.
+- **`ChemicalColor`** (enum + `ToColor()`): None, Crimson, Azure, Amber, Violet. None = no marker, never
+  colour-matched; its mist colour is pale cream.
+- Prefabs `Prefabs/Tiles/Gate Tile`, `Gate Tile Closed`, `Deflector Valve Tile`, `Chemical Valve Tile` (Global,
+  Timed), `Chemical Valve Area` (radius 1, Timed) and `Chemical Valve Azure` (ColorMatch Azure, Toggle) are
+  variants of Base Tile. Add them as tile types in a LevelData to paint them. Smoke FX:
+  `Prefabs/FX/Chemical Smoke` (material `Materials/Chemical Smoke`, Sprites/Default + mist texture).
 
 ### Level authoring (`LevelData` + `LevelDataEditor`)
 - Create one with *Create → Level Data*.
 - Holds `width`, `height`, `tileOptions` (tile prefab + painter colour), `cells` (one int per cell,
   `index = y * width + x`, indexing into `tileOptions`), and `units` (position + ScriptableUnit +
-  optional blocker override).
+  optional Defensive Cell overrides: vine offsets and `chemicalColor`).
 - The Inspector painter has:
   - **Tile Types:** rows with a colour picker and prefab field, plus Add and Remove buttons.
   - **Brushes:** one for each tile type, one for each ScriptableUnit in the project, and Erase Unit.
@@ -191,7 +216,10 @@ sorting order, both for drawing and for which object gets a click.
 | Tile sprite                     | TileRender | 0     |
 | Tile highlight                  | TileRender | 1     |
 | Vine segments (stems, knots, tips) | TileRender | 1  |
-| Gate membrane / valve arrow / chemical gland | TileRender | 2 |
+| Chemical mist overlay (z −0.02, over vines) | TileRender | 1 |
+| Gate membrane / valve arrow / chemical gland / valve colour dot | TileRender | 2 |
+| Chemical smoke particles        | TileRender | 3     |
+| Defensive Cell colour dot       | Units      | 1     |
 | Units (Cancer, Core, Defensive) | Units      | 0     |
 | Move arrows                     | Units      | 10    |
 

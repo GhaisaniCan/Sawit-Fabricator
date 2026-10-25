@@ -114,8 +114,9 @@ public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     }
 
-    // Child sprite drawn on this tile's sorting layer, orderOffset above the base tile sprite
-    protected SpriteRenderer CreateOverlay(string overlayName, Sprite sprite, Color color, int orderOffset) {
+    // Child sprite drawn on this tile's sorting layer, orderOffset above the base tile sprite.
+    // Public so effects from elsewhere (e.g. a chemical valve's mist) can decorate this tile.
+    public SpriteRenderer CreateOverlay(string overlayName, Sprite sprite, Color color, int orderOffset) {
 
         var overlay = new GameObject(overlayName);
         overlay.transform.SetParent(transform, false);

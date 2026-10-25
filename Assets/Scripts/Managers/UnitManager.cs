@@ -103,10 +103,11 @@ public class UnitManager : MonoBehaviour
 
             var spawnedUnit = Instantiate(placement.unit.UnitPrefab);
 
-            // Must happen before the enemy's Start, which is when it builds its walls
-            if (placement.overrideBlockedTiles && spawnedUnit is BlockingEnemy blockingEnemy)
+            // Must happen before the enemy's Start, which is when it builds its vines and colour marker
+            if (spawnedUnit is BlockingEnemy blockingEnemy)
             {
-                blockingEnemy.SetBlockedTileOffsets(placement.blockedTileOffsets);
+                if (placement.overrideBlockedTiles) blockingEnemy.SetBlockedTileOffsets(placement.blockedTileOffsets);
+                if (placement.chemicalColor != ChemicalColor.None) blockingEnemy.SetEnemyColor(placement.chemicalColor);
             }
 
             tile.SetUnit(spawnedUnit);
@@ -339,6 +340,10 @@ public class UnitManager : MonoBehaviour
 
     // The Cancer Cell slid into hazardous vines: shrink it away, then lose unless another Cancer Cell is left
     private IEnumerator DestroyPlayerInVines(BasePlayer player) {
+
+        // Stop the idle breathing first; disabling it restores the cell's base scale for the shrink
+        var idle = player.GetComponent<CellIdleAnimator>();
+        if (idle != null) idle.enabled = false;
 
         var startScale = player.transform.localScale;
         for (float t = 0f; t < 0.25f; t += Time.deltaTime)

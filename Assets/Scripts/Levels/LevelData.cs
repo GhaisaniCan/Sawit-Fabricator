@@ -23,6 +23,8 @@ public class LevelData : ScriptableObject
         // Only used when the unit is a BlockingEnemy
         public bool overrideBlockedTiles;
         public Vector2Int[] blockedTileOffsets = new Vector2Int[0];
+        [Tooltip("Only for Defensive Cells: colour for ColorMatch chemical valves. None keeps the prefab's colour.")]
+        public ChemicalColor chemicalColor;
     }
 
     [Min(1)] public int width = 8;

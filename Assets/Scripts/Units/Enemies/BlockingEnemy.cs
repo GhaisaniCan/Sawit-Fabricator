@@ -17,6 +17,10 @@ public class BlockingEnemy : BaseEnemy
         new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0),
     };
 
+    [Tooltip("Chemical valves in ColorMatch mode only affect Defensive Cells of their colour. None = no marker, never colour-matched.")]
+    [SerializeField] private ChemicalColor enemyColor = ChemicalColor.None;
+    [SerializeField] private Sprite colorMarkerSprite; // optional, a soft dot is generated when empty
+
     [Header("Vines")]
     [Tooltip("When on, a Cancer Cell sliding into these vines is destroyed instead of stopping in front of them.")]
     [SerializeField] private bool hazardous;
@@ -43,11 +47,21 @@ public class BlockingEnemy : BaseEnemy
     public bool VinesActive => vinesActive;
     public int RetractTurnsLeft => retractTurnsLeft;
     public IReadOnlyDictionary<Vector2Int, VineSegment> Segments => segments;
+    public ChemicalColor EnemyColor => enemyColor;
+
+    // Tiles this cell's vines cover (whether or not they're currently out)
+    public IEnumerable<Tile> CoveredTiles => blockedTiles.Values;
 
     // Per-level override, set by UnitManager before Start runs
     public void SetBlockedTileOffsets(Vector2Int[] offsets)
     {
         blockedTileOffsets = offsets;
+    }
+
+    // Per-level override, set by UnitManager before Start runs
+    public void SetEnemyColor(ChemicalColor color)
+    {
+        enemyColor = color;
     }
 
 
@@ -64,8 +78,26 @@ public class BlockingEnemy : BaseEnemy
     // Runs after spawning, once Tile.SetUnit has given this enemy its tile
     private void Start()
     {
+        CreateColorMarker();
         BuildVines();
         ApplyVineState();
+    }
+
+    // Small coloured dot on the cell so players can see which colour-coded valve affects it
+    private void CreateColorMarker()
+    {
+        if (enemyColor == ChemicalColor.None) return;
+
+        var marker = new GameObject("Chemical Marker");
+        marker.transform.SetParent(transform, false);
+        marker.transform.localPosition = new Vector3(0.3f, 0.3f, -0.01f);
+        marker.transform.localScale = Vector3.one * 0.3f;
+
+        var markerRenderer = marker.AddComponent<SpriteRenderer>();
+        markerRenderer.sprite = colorMarkerSprite != null ? colorMarkerSprite : GeneratedSprites.SoftDot;
+        markerRenderer.color = enemyColor.ToColor();
+        markerRenderer.sortingLayerName = "Units";
+        markerRenderer.sortingOrder = 1; // just above the cell itself
     }
 
     // Captured (or unloaded): free every tile and pull the vines back in for good

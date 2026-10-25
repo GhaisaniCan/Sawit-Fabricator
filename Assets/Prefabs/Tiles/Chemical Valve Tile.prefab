@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1189459565068012723
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1729091548473472669, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0ebd7cdc20fa92e42af4ea1300dd3d70, type: 3}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584603196867520350, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_Name
+      value: Chemical Valve Tile
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7584603196867520350, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8341311090634522090}
+  m_SourcePrefab: {fileID: 100100000, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+--- !u!212 &540212834784901678 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1729091548473472669, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+  m_PrefabInstance: {fileID: 1189459565068012723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3574545564761784482 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2385387644994636817, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+  m_PrefabInstance: {fileID: 1189459565068012723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8773050832121064429 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7584603196867520350, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+  m_PrefabInstance: {fileID: 1189459565068012723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8341311090634522090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8773050832121064429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d7e048a4d98c4d41bdd1d5cbf7369ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChemicalValveTile
+  highlight: {fileID: 3574545564761784482}
+  spriteRenderer: {fileID: 540212834784901678}
+  isWalkable: 1
+  occupiedUnit: {fileID: 0}
+  baseColor: {r: 1, g: 1, b: 1, a: 1}
+  mode: 0
+  retractTurns: 2
+  range: 0
+  idleSprite: {fileID: 21300000, guid: 0bb7a28bf9adc7a42a60e3e071eed311, type: 3}
+  releasedSprite: {fileID: 21300000, guid: 0e2468b7f44e80c489b8db5a685860c1, type: 3}
+  idleColor: {r: 1, g: 1, b: 1, a: 1}
+  releasedColor: {r: 1, g: 1, b: 1, a: 1}

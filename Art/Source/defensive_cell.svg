@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Defensive Cell (Sel Defensif): heavy crystalline immune cell, blue/crimson, shield extensions -->
+  <defs>
+    <linearGradient id="crystal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5b8dff"/>
+      <stop offset="0.5" stop-color="#1e40af"/>
+      <stop offset="1" stop-color="#0b1a52"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff4d5e"/>
+      <stop offset="1" stop-color="#8a0a1c"/>
+    </linearGradient>
+    <radialGradient id="heart" cx="50%" cy="45%" r="60%">
+      <stop offset="0" stop-color="#ffd1d6"/>
+      <stop offset="0.4" stop-color="#ff3b52"/>
+      <stop offset="1" stop-color="#7a0016"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <!-- one shield plate pointing up; rotated for the other sides -->
+    <g id="plate">
+      <path fill="url(#shield)" stroke="#3d0008" stroke-width="4" stroke-linejoin="round"
+            d="M128,10 L160,26 L156,62 L128,74 L100,62 L96,26 Z"/>
+      <path fill="none" stroke="#ff9aa5" stroke-width="2.5" opacity="0.7" stroke-linejoin="round"
+            d="M128,20 L150,31 L147,56 L128,64"/>
+    </g>
+  </defs>
+
+  <!-- cold blue glow -->
+  <circle cx="128" cy="128" r="92" fill="#3b82f6" opacity="0.45" filter="url(#glow)"/>
+
+  <!-- shield-like cell wall extensions (N, E, S, W like the default wall offsets) -->
+  <use href="#plate"/>
+  <use href="#plate" transform="rotate(90 128 128)"/>
+  <use href="#plate" transform="rotate(180 128 128)"/>
+  <use href="#plate" transform="rotate(270 128 128)"/>
+
+  <!-- crystalline octagonal body -->
+  <path fill="url(#crystal)" stroke="#06103a" stroke-width="5" stroke-linejoin="round"
+        d="M100,58 L156,58 L198,100 L198,156 L156,198 L100,198 L58,156 L58,100 Z"/>
+  <!-- facets -->
+  <g stroke="#9cc3ff" stroke-width="2" opacity="0.55" fill="none">
+    <path d="M100,58 L128,128 L156,58"/>
+    <path d="M198,100 L128,128 L198,156"/>
+    <path d="M156,198 L128,128 L100,198"/>
+    <path d="M58,156 L128,128 L58,100"/>
+  </g>
+  <path fill="#bcd6ff" opacity="0.35" d="M100,58 L156,58 L128,128 Z"/>
+  <path fill="#bcd6ff" opacity="0.2" d="M58,100 L100,58 L128,128 Z"/>
+  <path fill="#020820" opacity="0.3" d="M156,198 L198,156 L128,128 Z"/>
+
+  <!-- crimson core crystal -->
+  <path fill="#ff2a46" opacity="0.8" filter="url(#glow)" d="M128,92 L162,128 L128,164 L94,128 Z"/>
+  <path fill="url(#heart)" stroke="#4a000d" stroke-width="3.5" stroke-linejoin="round" d="M128,96 L158,128 L128,160 L98,128 Z"/>
+  <path fill="#ffffff" opacity="0.7" d="M128,104 L142,120 L128,124 L114,120 Z"/>
+</svg>

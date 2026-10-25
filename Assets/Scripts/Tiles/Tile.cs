@@ -8,33 +8,56 @@ public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     [SerializeField] private GameObject highlight;
     [SerializeField] protected SpriteRenderer spriteRenderer;
-    [SerializeField] private bool isWalkable;
+    [SerializeField] protected bool isWalkable;
 
     public BaseUnit occupiedUnit;
     public bool walkable => isWalkable && (occupiedUnit == null) && !isBlocked;
 
-    // Several blocking enemies can wall off the same tile; it stays blocked until all of them are gone
+    // Several Defensive Cells can grow vines over the same tile; it stays blocked until all of them retract.
+    // The vine visuals belong to the BlockingEnemy (VineSegment), the tile only tracks who is blocking it.
     private readonly HashSet<BlockingEnemy> blockers = new HashSet<BlockingEnemy>();
-    private GameObject wallOverlay;
     public bool isBlocked => blockers.Count > 0;
+
+    // Terrain walkability, ignoring units and vines (a vine over a wall still acts as a wall)
+    public bool IsWalkableTerrain => isWalkable;
+
+    // True when any vine on this tile is hazardous: a Cancer Cell sliding in is destroyed
+    public bool IsHazardous
+    {
+        get
+        {
+            foreach (var blocker in blockers)
+            {
+                if (blocker != null && blocker.IsHazardous) return true;
+            }
+            return false;
+        }
+    }
 
     private bool isSelected;
 
-    public virtual void init(int x, int y) 
+    // Interactive tiles (gates, valves) override these; plain tiles can't be interacted with
+    public virtual bool CanInteract => false;
+    protected virtual void Interact() { }
+
+    public virtual void init(int x, int y)
     {
 
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log($"{this.name} Down");
-
-        if (GameManager.Instance.gameState != GameState.PlayerTurn) return;
+        if (GameManager.Instance.gameState != GameState.PlayerTurn || UnitManager.Instance.IsBusy) return;
 
         // Checked by type, not Faction, since the Faction field on unit prefabs can be wrong
         if (occupiedUnit is BasePlayer player)
         {
             UnitManager.Instance.SetSelectedPlayer(player);
+        }
+        else if (CanInteract)
+        {
+            Interact();
+            UnitManager.Instance.OnBoardChanged();
         }
         else
         {
@@ -46,15 +69,11 @@ public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log($"{this.name} Enter");
-
         highlight.SetActive(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log($"{this.name} Exit");
-
         // A selected tile keeps its highlight while the pointer is elsewhere
         if (!isSelected) highlight.SetActive(false);
 
@@ -68,7 +87,6 @@ public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log($"{this.name} Up");
     }
 
     public void SetUnit(BaseUnit unit) {
@@ -84,29 +102,31 @@ public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     }
 
-    public void AddBlocker(BlockingEnemy blocker, Sprite wallSprite, Color wallColor) {
+    public void AddBlocker(BlockingEnemy blocker) {
 
-        if (!blockers.Add(blocker) || wallOverlay != null) return;
-
-        wallOverlay = new GameObject("Wall");
-        wallOverlay.transform.SetParent(transform, false);
-
-        var wallRenderer = wallOverlay.AddComponent<SpriteRenderer>();
-        wallRenderer.sprite = wallSprite;
-        wallRenderer.color = wallColor;
-
-        // Above the tile and its highlight, still below units
-        wallRenderer.sortingLayerID = spriteRenderer.sortingLayerID;
-        wallRenderer.sortingOrder = spriteRenderer.sortingOrder + 2;
+        blockers.Add(blocker);
 
     }
 
     public void RemoveBlocker(BlockingEnemy blocker) {
 
-        if (!blockers.Remove(blocker) || isBlocked) return;
+        blockers.Remove(blocker);
 
-        if (wallOverlay != null) Destroy(wallOverlay);
-        wallOverlay = null;
+    }
+
+    // Child sprite drawn on this tile's sorting layer, orderOffset above the base tile sprite
+    protected SpriteRenderer CreateOverlay(string overlayName, Sprite sprite, Color color, int orderOffset) {
+
+        var overlay = new GameObject(overlayName);
+        overlay.transform.SetParent(transform, false);
+
+        var overlayRenderer = overlay.AddComponent<SpriteRenderer>();
+        overlayRenderer.sprite = sprite;
+        overlayRenderer.color = color;
+        overlayRenderer.sortingLayerID = spriteRenderer.sortingLayerID;
+        overlayRenderer.sortingOrder = spriteRenderer.sortingOrder + orderOffset;
+
+        return overlayRenderer;
 
     }
 

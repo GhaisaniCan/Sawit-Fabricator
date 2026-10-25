@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Cancer Cell (Sel Kanker): mutated magenta/purple cell with pseudopods -->
+  <defs>
+    <radialGradient id="body" cx="45%" cy="40%" r="65%">
+      <stop offset="0" stop-color="#ff7bea"/>
+      <stop offset="0.45" stop-color="#d21fc4"/>
+      <stop offset="0.8" stop-color="#7a1bb8"/>
+      <stop offset="1" stop-color="#3d0a6b"/>
+    </radialGradient>
+    <radialGradient id="nucleus" cx="42%" cy="38%" r="60%">
+      <stop offset="0" stop-color="#fff0fd"/>
+      <stop offset="0.35" stop-color="#ff9cf0"/>
+      <stop offset="1" stop-color="#b3129f"/>
+    </radialGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+  </defs>
+
+  <!-- outer bioluminescent halo -->
+  <path filter="url(#glow)" fill="#ff3be0" opacity="0.55"
+        d="M128,30 C150,30 162,50 176,52 C196,40 222,46 220,70 C218,86 204,92 206,108 C210,126 236,134 230,158 C224,182 198,174 186,190 C176,204 184,228 160,232 C140,236 134,214 118,214 C100,214 92,236 70,228 C48,220 60,196 50,182 C38,166 20,160 24,136 C28,112 50,116 54,98 C58,80 40,64 56,48 C74,30 96,46 108,38 C114,34 120,30 128,30 Z"/>
+
+  <!-- body with pseudopods -->
+  <path fill="url(#body)" stroke="#2a0845" stroke-width="5" stroke-linejoin="round"
+        d="M128,30 C150,30 162,50 176,52 C196,40 222,46 220,70 C218,86 204,92 206,108 C210,126 236,134 230,158 C224,182 198,174 186,190 C176,204 184,228 160,232 C140,236 134,214 118,214 C100,214 92,236 70,228 C48,220 60,196 50,182 C38,166 20,160 24,136 C28,112 50,116 54,98 C58,80 40,64 56,48 C74,30 96,46 108,38 C114,34 120,30 128,30 Z"/>
+
+  <!-- inner membrane rim highlight -->
+  <path fill="none" stroke="#ffb3f4" stroke-width="3" opacity="0.45" stroke-linecap="round"
+        d="M62,62 C78,46 98,54 112,46 M44,132 C46,118 62,118 66,104"/>
+
+  <!-- mutated organelles -->
+  <g fill="#5a0d8f" opacity="0.75">
+    <ellipse cx="86" cy="96" rx="11" ry="7" transform="rotate(-30 86 96)"/>
+    <ellipse cx="172" cy="94" rx="9" ry="6" transform="rotate(25 172 94)"/>
+    <ellipse cx="178" cy="160" rx="12" ry="7" transform="rotate(-15 178 160)"/>
+    <ellipse cx="82" cy="170" rx="10" ry="6" transform="rotate(40 82 170)"/>
+    <circle cx="130" cy="192" r="6"/>
+    <circle cx="64" cy="138" r="5"/>
+  </g>
+  <g fill="#ff9cf0" opacity="0.6">
+    <circle cx="150" cy="70" r="4"/>
+    <circle cx="200" cy="130" r="3.5"/>
+    <circle cx="104" cy="196" r="3"/>
+  </g>
+
+  <!-- glowing core (irregular, mutated nucleus) -->
+  <path filter="url(#softGlow)" fill="#ff5ce8" opacity="0.9"
+        d="M128,92 C148,88 166,104 164,124 C168,146 150,166 128,164 C104,168 90,148 92,128 C88,106 106,94 128,92 Z"/>
+  <path fill="url(#nucleus)" stroke="#6b0a5e" stroke-width="3"
+        d="M128,96 C146,93 160,107 158,124 C161,143 146,159 128,157 C108,160 96,144 98,127 C95,108 110,98 128,96 Z"/>
+  <!-- nucleolus -->
+  <circle cx="122" cy="120" r="11" fill="#ffffff" opacity="0.95"/>
+  <circle cx="138" cy="138" r="5" fill="#ffe0fb" opacity="0.9"/>
+</svg>

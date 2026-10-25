@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Move Arrow (8-way slide selection), pointing RIGHT; the game rotates and tints it.
+       Mostly white so UnitManager's idle/hover tint colours read correctly. -->
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="9"/>
+    </filter>
+  </defs>
+  <!-- magenta halo ties it to the Cancer Cell -->
+  <path filter="url(#glow)" fill="#ff3be0" opacity="0.75"
+        d="M56,40 L200,128 L56,216 L92,128 Z"/>
+  <!-- double chevron body -->
+  <path fill="#ffffff" stroke="#2a0845" stroke-width="10" stroke-linejoin="round"
+        d="M60,44 L204,128 L60,212 L98,128 Z"/>
+  <path fill="#ffe3fb" opacity="0.9" d="M84,92 L150,128 L84,164 L102,128 Z"/>
+</svg>

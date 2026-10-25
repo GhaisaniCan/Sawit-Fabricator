@@ -505,6 +505,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   gameState: 0
+  onWin:
+    m_PersistentCalls:
+      m_Calls: []
+  onLose:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1874119905
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +555,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d622e9f591ad234aaf053b608778924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitManager
+  selectedPlayer: {fileID: 0}
+  arrowSprite: {fileID: 21300000, guid: f31ffc017f5ee2d46b8e5e1cb4d4ba0d, type: 3}
+  moveSpeed: 8
+  interactablesPreventLose: 1
 --- !u!1 &1976449856
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,7 +606,8 @@ MonoBehaviour:
   width: 6
   height: 8
   tilePrefab: {fileID: 9200977322369064681, guid: 6b4f71e154516254a906632c211f54f9, type: 3}
-  camera: {fileID: 519420032}
+  cam: {fileID: 519420032}
+  level: {fileID: 11400000, guid: 26e1a2fb696e4316b8f3e2260582ef2b, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

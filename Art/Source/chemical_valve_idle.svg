@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Chemical Valve, IDLE: a sealed enzyme gland on cytoplasm. Clicking it releases the enzyme -->
+  <defs>
+    <linearGradient id="cyto" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#46d17f"/>
+      <stop offset="1" stop-color="#1a8d50"/>
+    </linearGradient>
+    <radialGradient id="sac" cx="42%" cy="36%" r="65%">
+      <stop offset="0" stop-color="#f3c8ff"/>
+      <stop offset="0.5" stop-color="#a64ce0"/>
+      <stop offset="1" stop-color="#4b1477"/>
+    </radialGradient>
+  </defs>
+  <rect width="256" height="256" fill="url(#cyto)"/>
+  <rect x="4" y="4" width="248" height="248" rx="14" fill="none" stroke="#0c5a30" stroke-width="7" opacity="0.6"/>
+
+  <!-- gland body -->
+  <path d="M128,40 C178,40 214,80 210,130 C206,182 170,216 128,216 C86,216 50,182 46,130 C42,80 78,40 128,40 Z"
+        fill="url(#sac)" stroke="#2a0845" stroke-width="6"/>
+  <!-- stitched seal -->
+  <path d="M84,128 C104,116 152,116 172,128" fill="none" stroke="#2a0845" stroke-width="7" stroke-linecap="round"/>
+  <g stroke="#2a0845" stroke-width="5" stroke-linecap="round">
+    <line x1="98" y1="112" x2="104" y2="136"/>
+    <line x1="128" y1="108" x2="128" y2="134"/>
+    <line x1="158" y1="112" x2="152" y2="136"/>
+  </g>
+  <!-- enzyme droplets visible through the membrane -->
+  <g fill="#e6ff7a" opacity="0.75">
+    <circle cx="104" cy="168" r="9"/>
+    <circle cx="146" cy="176" r="6"/>
+    <circle cx="160" cy="84" r="7"/>
+    <circle cx="96" cy="82" r="5"/>
+  </g>
+  <path d="M84,70 C96,56 116,52 128,52" fill="none" stroke="#f8e1ff" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+</svg>

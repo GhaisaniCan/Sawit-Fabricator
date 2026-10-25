@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Chemical Valve, RELEASED: the gland has burst open and enzyme mist is spreading; vines are retracting -->
+  <defs>
+    <linearGradient id="cyto" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#46d17f"/>
+      <stop offset="1" stop-color="#1a8d50"/>
+    </linearGradient>
+    <radialGradient id="mist" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f4ff9e" stop-opacity="0.95"/>
+      <stop offset="0.5" stop-color="#c8ff4f" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#c8ff4f" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+  <rect width="256" height="256" fill="url(#cyto)"/>
+  <rect x="4" y="4" width="248" height="248" rx="14" fill="none" stroke="#0c5a30" stroke-width="7" opacity="0.6"/>
+
+  <!-- enzyme cloud -->
+  <circle cx="128" cy="128" r="118" fill="url(#mist)"/>
+
+  <!-- burst gland petals -->
+  <g fill="#8a3bc4" stroke="#2a0845" stroke-width="5" stroke-linejoin="round">
+    <path d="M128,128 L92,58 C112,46 144,46 164,58 Z"/>
+    <path d="M128,128 L198,92 C210,112 210,144 198,164 Z"/>
+    <path d="M128,128 L164,198 C144,210 112,210 92,198 Z"/>
+    <path d="M128,128 L58,164 C46,144 46,112 58,92 Z"/>
+  </g>
+  <g fill="#d9a3ff" opacity="0.55">
+    <path d="M128,118 L100,64 C114,58 128,58 136,60 Z"/>
+    <path d="M138,128 L192,100 C196,112 196,124 194,132 Z"/>
+  </g>
+
+  <!-- glowing enzyme core and droplets flying out -->
+  <circle cx="128" cy="128" r="26" fill="#f4ff9e" filter="url(#glow)"/>
+  <circle cx="128" cy="128" r="18" fill="#ffffff"/>
+  <g fill="#e6ff7a" stroke="#6b7a00" stroke-width="2">
+    <circle cx="66" cy="66" r="8"/>
+    <circle cx="192" cy="60" r="6"/>
+    <circle cx="200" cy="196" r="8"/>
+    <circle cx="58" cy="194" r="6"/>
+    <circle cx="128" cy="30" r="5"/>
+    <circle cx="226" cy="128" r="5"/>
+  </g>
+</svg>

@@ -22,6 +22,14 @@ public class LevelDataEditor : Editor
     private static readonly Color wallOverlayColor = new Color(0.45f, 0.3f, 0.15f, 0.75f);
     private static readonly Color playerOutline = new Color(0.3f, 0.8f, 1f);
     private static readonly Color enemyOutline = new Color(1f, 0.35f, 0.35f);
+    private static readonly Color coreOutline = new Color(0.4f, 1f, 0.45f);
+
+    private static Color GetOutline(ScriptableUnit unit)
+    {
+        if (unit.UnitPrefab is BasePlayer) return playerOutline;
+        if (unit.UnitPrefab is CoreCell) return coreOutline;
+        return enemyOutline;
+    }
 
     private List<ScriptableUnit> projectUnits = new List<ScriptableUnit>();
 
@@ -149,7 +157,7 @@ public class LevelDataEditor : Editor
         EditorGUILayout.BeginHorizontal();
         foreach (var unit in projectUnits)
         {
-            var outline = unit.UnitPrefab is BasePlayer ? playerOutline : enemyOutline;
+            var outline = GetOutline(unit);
             if (BrushButton(unit.name, brushKind == BrushKind.Unit && brushUnit == unit, outline, GetSprite(unit)))
             {
                 brushKind = BrushKind.Unit;
@@ -239,8 +247,7 @@ public class LevelDataEditor : Editor
         var placement = level.GetUnitAt(position);
         if (placement != null && placement.unit != null)
         {
-            var outline = placement.unit.UnitPrefab is BasePlayer ? playerOutline : enemyOutline;
-            DrawOutline(inner, outline);
+            DrawOutline(inner, GetOutline(placement.unit));
 
             var sprite = GetSprite(placement.unit);
             if (sprite != null) DrawSprite(new Rect(inner.x + 3, inner.y + 3, inner.width - 6, inner.height - 6), sprite);
@@ -318,6 +325,11 @@ public class LevelDataEditor : Editor
         if (!level.units.Any(u => u.unit != null && u.unit.UnitPrefab is BasePlayer))
         {
             EditorGUILayout.HelpBox("No player unit placed.", MessageType.Warning);
+        }
+
+        if (!level.units.Any(u => u.unit != null && u.unit.UnitPrefab is CoreCell))
+        {
+            EditorGUILayout.HelpBox("No Core Cell placed, so this level can never be won.", MessageType.Warning);
         }
 
         foreach (var placement in level.units)

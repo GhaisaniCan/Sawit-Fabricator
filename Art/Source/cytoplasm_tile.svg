@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Cytoplasm Tile (base): translucent emerald/lime plant cell interior, fills the whole tile -->
+  <defs>
+    <linearGradient id="cyto" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#46d17f"/>
+      <stop offset="1" stop-color="#1a8d50"/>
+    </linearGradient>
+    <radialGradient id="vesicle" cx="40%" cy="35%" r="60%">
+      <stop offset="0" stop-color="#e2ffb8" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#9cf06a" stop-opacity="0.15"/>
+    </radialGradient>
+  </defs>
+  <rect width="256" height="256" fill="url(#cyto)"/>
+
+  <!-- floating vesicles / organelles (kept away from the edges so tiles join cleanly) -->
+  <g stroke="#b8ff8a" stroke-width="2" stroke-opacity="0.35">
+    <circle cx="66" cy="72" r="24" fill="url(#vesicle)"/>
+    <circle cx="186" cy="64" r="14" fill="url(#vesicle)"/>
+    <circle cx="184" cy="176" r="28" fill="url(#vesicle)"/>
+    <circle cx="78" cy="186" r="13" fill="url(#vesicle)"/>
+  </g>
+  <g fill="#d6ffa8" opacity="0.5">
+    <circle cx="128" cy="118" r="5"/>
+    <circle cx="110" cy="54" r="3"/>
+    <circle cx="214" cy="118" r="3.5"/>
+    <circle cx="44" cy="134" r="3"/>
+    <circle cx="140" cy="208" r="4"/>
+    <circle cx="150" cy="150" r="2.5"/>
+  </g>
+
+  <!-- soft cell edge so the grid reads clearly -->
+  <rect x="4" y="4" width="248" height="248" rx="14" fill="none" stroke="#0c5a30" stroke-width="7" opacity="0.6"/>
+  <rect x="11" y="11" width="234" height="234" rx="10" fill="none" stroke="#a8ffb5" stroke-width="2" opacity="0.35"/>
+</svg>

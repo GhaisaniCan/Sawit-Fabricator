@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Membrane Gate, CLOSED: same frame, sealed with reinforced cellulose plates -->
+  <defs>
+    <linearGradient id="cellulose" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c9ad55"/>
+      <stop offset="1" stop-color="#6e5a1f"/>
+    </linearGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#a88c3c"/>
+      <stop offset="1" stop-color="#4f3f12"/>
+    </linearGradient>
+  </defs>
+
+  <!-- frame -->
+  <rect x="10" y="10" width="236" height="236" fill="url(#cellulose)" stroke="#3b300f" stroke-width="5"/>
+
+  <!-- sealing plates, four quadrants meeting in the middle -->
+  <g stroke="#2e250a" stroke-width="4" stroke-linejoin="round" fill="url(#plate)">
+    <path d="M42,42 H128 L128,128 L42,128 Z"/>
+    <path d="M128,42 H214 V128 H128 Z"/>
+    <path d="M42,128 H128 V214 H42 Z"/>
+    <path d="M128,128 H214 V214 H128 Z"/>
+  </g>
+  <!-- reinforcing cross braces -->
+  <g stroke="#3b300f" stroke-width="14" stroke-linecap="round">
+    <line x1="52" y1="52" x2="204" y2="204"/>
+    <line x1="204" y1="52" x2="52" y2="204"/>
+  </g>
+  <g stroke="#e3cc7a" stroke-width="4" stroke-linecap="round" opacity="0.6">
+    <line x1="56" y1="52" x2="204" y2="200"/>
+    <line x1="200" y1="52" x2="52" y2="200"/>
+  </g>
+  <!-- central lock knot and rivets -->
+  <circle cx="128" cy="128" r="22" fill="#5c4a18" stroke="#2e250a" stroke-width="5"/>
+  <circle cx="122" cy="122" r="6" fill="#e3cc7a" opacity="0.7"/>
+  <g fill="#2e250a">
+    <circle cx="26" cy="26" r="5"/><circle cx="230" cy="26" r="5"/>
+    <circle cx="26" cy="230" r="5"/><circle cx="230" cy="230" r="5"/>
+    <circle cx="128" cy="26" r="4"/><circle cx="128" cy="230" r="4"/>
+    <circle cx="26" cy="128" r="4"/><circle cx="230" cy="128" r="4"/>
+  </g>
+</svg>

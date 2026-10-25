@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Deflector Valve base: circular plant vascular node on cytoplasm. The arrow is a separate, rotatable sprite -->
+  <defs>
+    <linearGradient id="cyto" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#46d17f"/>
+      <stop offset="1" stop-color="#1a8d50"/>
+    </linearGradient>
+    <radialGradient id="node" cx="45%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#5ff0d0"/>
+      <stop offset="0.6" stop-color="#139c84"/>
+      <stop offset="1" stop-color="#075a4d"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="256" height="256" fill="url(#cyto)"/>
+  <rect x="4" y="4" width="248" height="248" rx="14" fill="none" stroke="#0c5a30" stroke-width="7" opacity="0.6"/>
+
+  <!-- vascular strands feeding the node (xylem/phloem) -->
+  <g stroke="#0e6f5c" stroke-width="14" stroke-linecap="round" opacity="0.85">
+    <line x1="128" y1="8" x2="128" y2="248"/>
+    <line x1="8" y1="128" x2="248" y2="128"/>
+  </g>
+  <g stroke="#7cf5da" stroke-width="3" stroke-linecap="round" opacity="0.55">
+    <line x1="124" y1="10" x2="124" y2="246"/>
+    <line x1="10" y1="124" x2="246" y2="124"/>
+  </g>
+
+  <!-- the node -->
+  <circle cx="128" cy="128" r="88" fill="url(#node)" stroke="#043a32" stroke-width="6"/>
+  <circle cx="128" cy="128" r="76" fill="none" stroke="#a9fff0" stroke-width="3" opacity="0.5"/>
+  <!-- ring of pits / valve teeth -->
+  <g fill="#043a32">
+    <circle cx="128" cy="52" r="6"/><circle cx="182" cy="74" r="6"/><circle cx="204" cy="128" r="6"/><circle cx="182" cy="182" r="6"/>
+    <circle cx="128" cy="204" r="6"/><circle cx="74" cy="182" r="6"/><circle cx="52" cy="128" r="6"/><circle cx="74" cy="74" r="6"/>
+  </g>
+  <circle cx="128" cy="128" r="54" fill="#0a7364" stroke="#043a32" stroke-width="4"/>
+</svg>

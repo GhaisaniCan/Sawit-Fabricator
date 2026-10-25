@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Core Cell (Sel Inti): golden-green plant nucleus cell, high-value target -->
+  <defs>
+    <radialGradient id="aura" cx="50%" cy="50%" r="50%">
+      <stop offset="0.45" stop-color="#ffe066" stop-opacity="0.85"/>
+      <stop offset="0.75" stop-color="#b8ff4f" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#b8ff4f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="cell" cx="42%" cy="38%" r="65%">
+      <stop offset="0" stop-color="#f4ffb0"/>
+      <stop offset="0.5" stop-color="#9be34f"/>
+      <stop offset="1" stop-color="#2e8a3a"/>
+    </radialGradient>
+    <radialGradient id="nucleus" cx="40%" cy="36%" r="65%">
+      <stop offset="0" stop-color="#fff7c7"/>
+      <stop offset="0.45" stop-color="#ffd23f"/>
+      <stop offset="1" stop-color="#e08a00"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+  </defs>
+
+  <!-- energetic aura -->
+  <circle cx="128" cy="128" r="124" fill="url(#aura)"/>
+  <g stroke="#fff3a0" stroke-width="5" stroke-linecap="round" opacity="0.7">
+    <line x1="128" y1="14" x2="128" y2="36"/>
+    <line x1="128" y1="220" x2="128" y2="242"/>
+    <line x1="14" y1="128" x2="36" y2="128"/>
+    <line x1="220" y1="128" x2="242" y2="128"/>
+    <line x1="47" y1="47" x2="62" y2="62"/>
+    <line x1="194" y1="194" x2="209" y2="209"/>
+    <line x1="209" y1="47" x2="194" y2="62"/>
+    <line x1="62" y1="194" x2="47" y2="209"/>
+  </g>
+
+  <!-- plant cell body: slightly faceted, like a plant cell -->
+  <path fill="url(#cell)" stroke="#1d5e2a" stroke-width="5" stroke-linejoin="round"
+        d="M128,44 L182,62 L208,112 L200,168 L160,206 L100,208 L58,174 L48,118 L72,66 Z"/>
+  <path fill="none" stroke="#e9ffb0" stroke-width="3" opacity="0.55" stroke-linejoin="round"
+        d="M128,54 L176,70 L198,113 L191,163 L156,196 L103,198 L67,169 L58,120 L79,74 Z"/>
+
+  <!-- chloroplasts -->
+  <g fill="#2f7d32" stroke="#174d1d" stroke-width="2">
+    <ellipse cx="84" cy="102" rx="12" ry="7" transform="rotate(-35 84 102)"/>
+    <ellipse cx="178" cy="110" rx="11" ry="6.5" transform="rotate(30 178 110)"/>
+    <ellipse cx="170" cy="172" rx="12" ry="7" transform="rotate(-25 170 172)"/>
+    <ellipse cx="86" cy="166" rx="11" ry="6.5" transform="rotate(35 86 166)"/>
+  </g>
+
+  <!-- nucleus with glow -->
+  <circle cx="128" cy="128" r="44" fill="#ffd23f" filter="url(#glow)" opacity="0.9"/>
+  <circle cx="128" cy="128" r="38" fill="url(#nucleus)" stroke="#a65f00" stroke-width="4"/>
+  <!-- prominent nucleolus -->
+  <circle cx="128" cy="128" r="18" fill="#fffbe0" filter="url(#glow)"/>
+  <circle cx="128" cy="128" r="14" fill="#ffffff"/>
+  <circle cx="122" cy="122" r="5" fill="#fff6c2"/>
+</svg>

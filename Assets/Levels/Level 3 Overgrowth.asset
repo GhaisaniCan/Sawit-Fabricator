@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df34e99b5f694a9cac71048b7fc616c9, type: 3}
+  m_Name: Level 3 Overgrowth
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  width: 9
+  height: 7
+  tileOptions:
+  - prefab: {fileID: 9200977322369064681, guid: 6b4f71e154516254a906632c211f54f9, type: 3}
+    editorColor: {r: 0.15, g: 0.6, b: 0.2, a: 1}
+  - prefab: {fileID: 5392014200653610183, guid: 109a77b4a880f9947ae8c393d1fd9d38, type: 3}
+    editorColor: {r: 0.35, g: 0.35, b: 0.35, a: 1}
+  - prefab: {fileID: 8341311090634522090, guid: dec62b23cb76f594c953c6a5c64fe5d7, type: 3}
+    editorColor: {r: 0.65, g: 0.3, b: 0.9, a: 1}
+  cells: 000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000i
+  units:
+  - position: {x: 0, y: 0}
+    unit: {fileID: 11400000, guid: 0a2b9d78607d0de46b4221ab7305ab70, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+  - position: {x: 0, y: 6}
+    unit: {fileID: 11400000, guid: ed5a765d665a4aa58896345615f7a4b0, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+  - position: {x: 8, y: 6}
+    unit: {fileID: 11400000, guid: ed5a765d665a4aa58896345615f7a4b0, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+  - position: {x: 2, y: 4}
+    unit: {fileID: 11400000, guid: 2cbea0668f5a482cb93542748865e844, type: 2}
+    overrideBlockedTiles: 1
+    blockedTileOffsets:
+    - {x: -1, y: 0}
+    - {x: -2, y: 0}
+    - {x: 0, y: 1}
+    - {x: 0, y: 2}
+    - {x: -1, y: 2}
+    - {x: 1, y: 1}
+  - position: {x: 6, y: 4}
+    unit: {fileID: 11400000, guid: c2f5a6eb7ef374a4a92636f93f0eadb9, type: 2}
+    overrideBlockedTiles: 1
+    blockedTileOffsets:
+    - {x: 0, y: 1}
+    - {x: 0, y: 2}
+    - {x: 0, y: -1}
+    - {x: 0, y: -2}
+    - {x: 1, y: 0}
+    - {x: 2, y: 0}
+    - {x: -1, y: 0}
+    - {x: 1, y: 1}
+    - {x: 1, y: 2}

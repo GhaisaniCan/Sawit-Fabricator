@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Vine tip: the end of a tendril. Sits at the tile centre and points RIGHT, away from the stem it grows from -->
+  <defs>
+    <linearGradient id="stem" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6f8cff"/>
+      <stop offset="0.45" stop-color="#2c43b8"/>
+      <stop offset="1" stop-color="#101d63"/>
+    </linearGradient>
+    <radialGradient id="bud" cx="45%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#ffd1d6"/>
+      <stop offset="0.45" stop-color="#ff3b52"/>
+      <stop offset="1" stop-color="#7a0016"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+  <!-- tapering, curling tendril -->
+  <path d="M112,108 C150,104 186,100 204,112 C222,124 214,150 196,148 C182,146 182,130 194,128"
+        fill="none" stroke="#0a1240" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M112,108 C150,104 186,100 204,112 C222,124 214,150 196,148 C182,146 182,130 194,128"
+        fill="none" stroke="url(#stem)" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M112,148 C140,150 160,152 170,146" fill="none" stroke="#0a1240" stroke-width="20" stroke-linecap="round"/>
+  <path d="M112,148 C140,150 160,152 170,146" fill="none" stroke="url(#stem)" stroke-width="11" stroke-linecap="round"/>
+  <!-- glowing bud where the tendril splits -->
+  <circle cx="128" cy="128" r="30" fill="#ff3b52" opacity="0.6" filter="url(#glow)"/>
+  <circle cx="128" cy="128" r="26" fill="url(#bud)" stroke="#4a000d" stroke-width="4"/>
+  <circle cx="120" cy="120" r="7" fill="#ffffff" opacity="0.7"/>
+</svg>

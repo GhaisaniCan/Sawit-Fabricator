@@ -19,6 +19,8 @@ public class GridManager : MonoBehaviour
 
     private Dictionary<Vector2, Tile> tiles;
 
+    public IEnumerable<Tile> AllTiles => tiles != null ? tiles.Values : Enumerable.Empty<Tile>();
+
 
     private void Awake()
     {

@@ -38,7 +38,7 @@ Assets/
       Enemies/  BaseEnemy, Enemy1, Enemy2, BlockingEnemy, VineSegment
       Cores/    CoreCell
     Levels/     LevelData (ScriptableObject)
-    Utility/    GeneratedSprites (placeholder square / frame / triangle sprites)
+    Utility/    GeneratedSprites (placeholder square / frame / triangle sprites), CameraController
   Editor/       LevelDataEditor (grid painter for LevelData)
   Levels/       Level 1, Level Test, Level 2 Infection Route, Level 3 Overgrowth (vines + chemical valve demo),
                 Level 4 Chemistry (all three valve targeting modes)
@@ -97,6 +97,14 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
   **every** blocker retracts. The tile only tracks state; vine visuals belong to the `BlockingEnemy`.
   `IsHazardous` is true if any blocker on it is hazardous; `IsWalkableTerrain` ignores units and vines.
 - `CreateOverlay(name, sprite, color, orderOffset)` adds a child sprite on the tile's sorting layer.
+
+### Camera (`CameraController`, on Main Camera)
+- Middle/right-mouse drag pans 1:1 with the cursor (after `dragThresholdPixels`), WASD/arrows pan, and the
+  scroll wheel zooms toward the cursor with damping (`minOrthographicSize`..`maxOrthographicSize`).
+- Clamped so the view stays within the board (`GridManager.Width`/`Height`) plus `boundsPadding`. If the view
+  is bigger than that, it's centred. Input is ignored while the app is unfocused.
+- Board clicks fire on **pointer down**, so `Tile` and `MoveArrow` only react to the left button and ignore
+  presses while `CameraController.IsPanning`.
 
 ### Units
 - `BaseUnit` has `UnitName`, `OccupiedTile`, `Faction`.

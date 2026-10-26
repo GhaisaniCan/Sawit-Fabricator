@@ -16,6 +16,10 @@ public class GridManager : MonoBehaviour
     [SerializeField] private LevelData level;
     public LevelData Level => level;
 
+    // Board size in tiles; taken from the level once GenerateGrid has run
+    public int Width => width;
+    public int Height => height;
+
 
     private Dictionary<Vector2, Tile> tiles;
 

@@ -318,23 +318,34 @@ sprites.vine_stem = svg(
   <!-- leaf -->
   <path d="M190,110 C194,96 206,92 212,96 C208,106 200,111 190,110 Z" fill="#6e8f4a" stroke="#2f4a2a" stroke-width="2.5"/>`);
 
+// A straight thorn on the top (side -1) or bottom (side 1) edge of a stem, leaning `lean` degrees (positive = toward +x)
+const spike = (x, side, len, lean) => {
+  const y0 = side < 0 ? 112 : 144, a = lean * Math.PI / 180;
+  const tx = x + len * Math.sin(a), ty = y0 + side * len * Math.cos(a);
+  const p = `M${x - 7},${y0} L${tx.toFixed(1)},${ty.toFixed(1)} L${x + 7},${y0} Z`;
+  // red tip: the last third of the thorn
+  const k = 0.66, lx = x - 7 + (tx - x + 7) * k, ly = y0 + (ty - y0) * k, rx = x + 7 + (tx - x - 7) * k;
+  return { body: `<path d="${p}"/>`, tip: `<path d="M${lx.toFixed(1)},${ly.toFixed(1)} L${tx.toFixed(1)},${ty.toFixed(1)} L${rx.toFixed(1)},${ly.toFixed(1)} Z"/>` };
+};
+const thornySpikes = [
+  spike(186, -1, 22, -22), spike(208, -1, 18, 14), spike(231, -1, 23, -8), spike(250, -1, 16, 24),
+  spike(196, 1, 20, 18), spike(219, 1, 23, -16), spike(242, 1, 18, 10),
+];
+
 sprites.vine_stem_thorny = svg(
-  `Thorny bramble stem (hazardous): same half-segment shape as vine_stem, in muted red-brown bark with a few short
-       hooked thorns. Thorns stay past x=180 so they clear the knot and crossing stems at intersections`,
-  barkDefs('bark', '#8a5244', '#5e3328', '#361b17'),
+  `Thorny bramble stem (hazardous): same half-segment shape as vine_stem, in blood-red bark bristling with small
+       straight thorns at varied angles. Thorns stay past x=180 so they clear the knot and crossing stems at intersections`,
+  barkDefs('bark', '#b4483a', '#7e2620', '#3e0f0e'),
   `
-  <!-- hooked thorns, alternating sides -->
-  <g fill="#eadcc4" stroke="#2a1210" stroke-width="2.5" stroke-linejoin="round">
-    <path d="M184,110 C188,100 194,94 202,92 C198,98 198,104 200,110 Z"/>
-    <path d="M226,110 C230,100 236,94 244,92 C240,98 240,104 242,110 Z"/>
-    <path d="M204,146 C208,156 214,162 222,164 C218,158 218,152 220,146 Z"/>
-  </g>
-  <rect x="112" y="108" width="146" height="40" rx="14" fill="url(#bark)" stroke="#2a1210" stroke-width="5"/>
-  <g fill="none" stroke="#24100c" stroke-width="3" stroke-linecap="round" opacity="0.6">
+  <!-- straight thorns, both sides, leaning at different angles -->
+  <g fill="#f0dcc0" stroke="#2a0a08" stroke-width="2.5" stroke-linejoin="round">${thornySpikes.map(s => s.body).join('')}</g>
+  <g fill="#c8281e">${thornySpikes.map(s => s.tip).join('')}</g>
+  <rect x="112" y="108" width="146" height="40" rx="14" fill="url(#bark)" stroke="#2a0a08" stroke-width="5"/>
+  <g fill="none" stroke="#2a0a08" stroke-width="3" stroke-linecap="round" opacity="0.6">
     <path d="M124,124 C150,118 170,130 196,122 S240,124 258,122"/>
     <path d="M132,138 C160,134 190,142 222,136"/>
   </g>
-  <path d="M122,115 H250" stroke="#c99080" stroke-width="3" stroke-linecap="round" opacity="0.45"/>`);
+  <path d="M122,115 H250" stroke="#ff9a88" stroke-width="3" stroke-linecap="round" opacity="0.45"/>`);
 
 sprites.vine_knot = svg(
   'Bramble knot: gnarled bark joint drawn at the tile centre where a root bends or branches',

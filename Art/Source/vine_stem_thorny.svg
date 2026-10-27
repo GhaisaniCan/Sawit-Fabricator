@@ -1,23 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Thorny bramble stem (hazardous): same half-segment shape as vine_stem, in muted red-brown bark with a few short
-       hooked thorns. Thorns stay past x=180 so they clear the knot and crossing stems at intersections -->
+  <!-- Thorny bramble stem (hazardous): same half-segment shape as vine_stem, in blood-red bark bristling with small
+       straight thorns at varied angles. Thorns stay past x=180 so they clear the knot and crossing stems at intersections -->
   <defs>
     <linearGradient id="bark" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#8a5244"/>
-      <stop offset="0.5" stop-color="#5e3328"/>
-      <stop offset="1" stop-color="#361b17"/>
+      <stop offset="0" stop-color="#b4483a"/>
+      <stop offset="0.5" stop-color="#7e2620"/>
+      <stop offset="1" stop-color="#3e0f0e"/>
     </linearGradient>
   </defs>
-  <!-- hooked thorns, alternating sides -->
-  <g fill="#eadcc4" stroke="#2a1210" stroke-width="2.5" stroke-linejoin="round">
-    <path d="M184,110 C188,100 194,94 202,92 C198,98 198,104 200,110 Z"/>
-    <path d="M226,110 C230,100 236,94 244,92 C240,98 240,104 242,110 Z"/>
-    <path d="M204,146 C208,156 214,162 222,164 C218,158 218,152 220,146 Z"/>
-  </g>
-  <rect x="112" y="108" width="146" height="40" rx="14" fill="url(#bark)" stroke="#2a1210" stroke-width="5"/>
-  <g fill="none" stroke="#24100c" stroke-width="3" stroke-linecap="round" opacity="0.6">
+  <!-- straight thorns, both sides, leaning at different angles -->
+  <g fill="#f0dcc0" stroke="#2a0a08" stroke-width="2.5" stroke-linejoin="round"><path d="M179,112 L177.8,91.6 L193,112 Z"/><path d="M201,112 L212.4,94.5 L215,112 Z"/><path d="M224,112 L227.8,89.2 L238,112 Z"/><path d="M243,112 L256.5,97.4 L257,112 Z"/><path d="M189,144 L202.2,163.0 L203,144 Z"/><path d="M212,144 L212.7,166.1 L226,144 Z"/><path d="M235,144 L245.1,161.7 L249,144 Z"/></g>
+  <g fill="#c8281e"><path d="M178.2,98.5 L177.8,91.6 L182.9,98.5 Z"/><path d="M208.5,100.5 L212.4,94.5 L213.3,100.5 Z"/><path d="M226.5,97.0 L227.8,89.2 L231.3,97.0 Z"/><path d="M251.9,102.4 L256.5,97.4 L256.7,102.4 Z"/><path d="M197.7,156.6 L202.2,163.0 L202.5,156.6 Z"/><path d="M212.4,158.6 L212.7,166.1 L217.2,158.6 Z"/><path d="M241.7,155.7 L245.1,161.7 L246.4,155.7 Z"/></g>
+  <rect x="112" y="108" width="146" height="40" rx="14" fill="url(#bark)" stroke="#2a0a08" stroke-width="5"/>
+  <g fill="none" stroke="#2a0a08" stroke-width="3" stroke-linecap="round" opacity="0.6">
     <path d="M124,124 C150,118 170,130 196,122 S240,124 258,122"/>
     <path d="M132,138 C160,134 190,142 222,136"/>
   </g>
-  <path d="M122,115 H250" stroke="#c99080" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
+  <path d="M122,115 H250" stroke="#ff9a88" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
 </svg>

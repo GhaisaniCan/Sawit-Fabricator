@@ -304,7 +304,7 @@ interactables carry all the saturation. If a tile competes with a unit for atten
 | Tech Bug (`cancer_cell`) | Hexagonal hull, nanite plating, circuit traces, glitch offset fringe | `#1C2230` hull, `#22E5F0` cyan, `#FF3DBE` magenta |
 | Seed Embryo (`core_cell`) | Concentric translucent layers, glowing sap heart, leafy membrane edge | `#F5C542` sap, `#9BD16A` leaf, `#FFF4C8` glow |
 | Root Sentinel (`defensive_cell`) | Bark-armoured node, moss patches, root stubs | `#5A3E2B` bark, `#4F6B3A` moss, `#2F4A2A` leaf |
-| Bramble roots (`vine_*`) | Bark-textured stem with a few small thorns; tips taper straight along the centreline from bark into green (no sideways curl, so many tips read calmly). Thorny: muted red-brown bark with three short hooked thorns, no glow. Stem thorns stay past x=180 (of 256) so they clear knots and crossing stems | `#6B4A32`, `#4F6B3A`; thorny `#5E3328` |
+| Bramble roots (`vine_*`) | Bark-textured stem with a few small thorns; tips taper straight along the centreline from bark into green (no sideways curl, so many tips read calmly). Thorny: blood-red bark with seven small straight thorns on both sides at varied lean angles (pale with red tips, `spike()` helper), no glow. Stem thorns stay past x=180 (of 256) so they clear knots and crossing stems | `#6B4A32`, `#4F6B3A`; thorny `#7E2620`, tips `#C8281E` |
 | Seed-coat gate (`gate_open`/`gate_closed`) | Open: petals parted like a stoma. Closed: overlapping cellulose petals | `#C9A66B`, `#9C7B45` |
 | Sap router (`valve_node` + `valve_arrow`) | Round wooden vascular node; arrow is a glowing sap glyph | `#7A5634` node, `#F2C14E` glyph |
 | Injector gland (`chemical_valve_*`) | Steel nozzle with a cyan status ring; released = nozzle open, ring lit | `#8B95A3`, `#5C6672`, `#3FE0E8` |

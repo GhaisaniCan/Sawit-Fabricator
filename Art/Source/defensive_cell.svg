@@ -1,57 +1,53 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Defensive Cell (Sel Defensif): heavy crystalline immune cell, blue/crimson, shield extensions -->
+  <!-- Root Sentinel: bark-armoured lignin node with moss and thorny root stubs (mid-tones so a crimson tint still reads) -->
   <defs>
-    <linearGradient id="crystal" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#5b8dff"/>
-      <stop offset="0.5" stop-color="#1e40af"/>
-      <stop offset="1" stop-color="#0b1a52"/>
-    </linearGradient>
-    <linearGradient id="shield" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#ff4d5e"/>
-      <stop offset="1" stop-color="#8a0a1c"/>
-    </linearGradient>
-    <radialGradient id="heart" cx="50%" cy="45%" r="60%">
-      <stop offset="0" stop-color="#ffd1d6"/>
-      <stop offset="0.4" stop-color="#ff3b52"/>
-      <stop offset="1" stop-color="#7a0016"/>
+    <radialGradient id="bark" cx="42%" cy="38%" r="70%">
+      <stop offset="0" stop-color="#9a7350"/>
+      <stop offset="0.6" stop-color="#6b4a32"/>
+      <stop offset="1" stop-color="#3e2a1c"/>
     </radialGradient>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="6"/>
-    </filter>
-    <!-- one shield plate pointing up; rotated for the other sides -->
-    <g id="plate">
-      <path fill="url(#shield)" stroke="#3d0008" stroke-width="4" stroke-linejoin="round"
-            d="M128,10 L160,26 L156,62 L128,74 L100,62 L96,26 Z"/>
-      <path fill="none" stroke="#ff9aa5" stroke-width="2.5" opacity="0.7" stroke-linejoin="round"
-            d="M128,20 L150,31 L147,56 L128,64"/>
-    </g>
+    <radialGradient id="heart" cx="45%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#c9a272"/>
+      <stop offset="1" stop-color="#7a5636"/>
+    </radialGradient>
+    <linearGradient id="moss" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8fb05a"/>
+      <stop offset="1" stop-color="#4f6b3a"/>
+    </linearGradient>
   </defs>
-
-  <!-- cold blue glow -->
-  <circle cx="128" cy="128" r="92" fill="#3b82f6" opacity="0.45" filter="url(#glow)"/>
-
-  <!-- shield-like cell wall extensions (N, E, S, W like the default wall offsets) -->
-  <use href="#plate"/>
-  <use href="#plate" transform="rotate(90 128 128)"/>
-  <use href="#plate" transform="rotate(180 128 128)"/>
-  <use href="#plate" transform="rotate(270 128 128)"/>
-
-  <!-- crystalline octagonal body -->
-  <path fill="url(#crystal)" stroke="#06103a" stroke-width="5" stroke-linejoin="round"
-        d="M100,58 L156,58 L198,100 L198,156 L156,198 L100,198 L58,156 L58,100 Z"/>
-  <!-- facets -->
-  <g stroke="#9cc3ff" stroke-width="2" opacity="0.55" fill="none">
-    <path d="M100,58 L128,128 L156,58"/>
-    <path d="M198,100 L128,128 L198,156"/>
-    <path d="M156,198 L128,128 L100,198"/>
-    <path d="M58,156 L128,128 L58,100"/>
+  <!-- root stubs with thorns -->
+  <g stroke="#24170f" stroke-width="5" stroke-linejoin="round" fill="#5a3e2b">
+    <path d="M118,40 L128,12 L138,40 Z"/><path d="M216,118 L244,128 L216,138 Z"/>
+    <path d="M118,216 L128,244 L138,216 Z"/><path d="M40,118 L12,128 L40,138 Z"/>
+    <path d="M182,62 L206,50 L194,74 Z"/><path d="M194,182 L206,206 L182,194 Z"/>
+    <path d="M62,194 L50,206 L74,182 Z"/><path d="M74,62 L50,50 L62,74 Z"/>
   </g>
-  <path fill="#bcd6ff" opacity="0.35" d="M100,58 L156,58 L128,128 Z"/>
-  <path fill="#bcd6ff" opacity="0.2" d="M58,100 L100,58 L128,128 Z"/>
-  <path fill="#020820" opacity="0.3" d="M156,198 L198,156 L128,128 Z"/>
+  <g fill="#e8d6b0"><path d="M125,22 L128,12 L131,22 Z"/><path d="M234,125 L244,128 L234,131 Z"/>
+    <path d="M125,234 L128,244 L131,234 Z"/><path d="M22,125 L12,128 L22,131 Z"/></g>
 
-  <!-- crimson core crystal -->
-  <path fill="#ff2a46" opacity="0.8" filter="url(#glow)" d="M128,92 L162,128 L128,164 L94,128 Z"/>
-  <path fill="url(#heart)" stroke="#4a000d" stroke-width="3.5" stroke-linejoin="round" d="M128,96 L158,128 L128,160 L98,128 Z"/>
-  <path fill="#ffffff" opacity="0.7" d="M128,104 L142,120 L128,124 L114,120 Z"/>
+  <!-- bark shell -->
+  <path d="M128,34 L180,46 L214,82 L222,128 L210,176 L176,210 L128,222 L80,210 L46,176 L34,128 L46,80 L80,46 Z"
+        fill="url(#bark)" stroke="#24170f" stroke-width="7" stroke-linejoin="round"/>
+  <!-- bark plate cracks -->
+  <g fill="none" stroke="#2e1e14" stroke-width="4" stroke-linecap="round" opacity="0.8">
+    <path d="M128,40 L120,72"/><path d="M206,92 L176,104"/><path d="M200,168 L172,156"/>
+    <path d="M128,216 L134,184"/><path d="M54,166 L84,154"/><path d="M52,96 L82,104"/>
+  </g>
+  <path d="M60,92 C72,64 96,50 124,46" fill="none" stroke="#b8936a" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <!-- moss patches -->
+  <g fill="url(#moss)" stroke="#33461f" stroke-width="2.5">
+    <path d="M58,104 C54,86 72,72 90,78 C100,68 120,70 118,84 C108,92 96,92 86,104 C76,112 62,114 58,104 Z"/>
+    <path d="M168,188 C180,180 198,184 198,170 C206,176 206,196 190,204 C178,210 164,200 168,188 Z"/>
+  </g>
+  <g fill="#c3db8a" opacity="0.7"><circle cx="74" cy="90" r="4"/><circle cx="98" cy="80" r="3"/><circle cx="188" cy="190" r="3"/></g>
+  <!-- leaf sprigs -->
+  <g fill="#2f4a2a" stroke="#1c2c18" stroke-width="2">
+    <path d="M176,62 C196,54 208,64 204,72 C192,76 182,72 176,62 Z"/>
+    <path d="M64,180 C50,196 56,210 64,208 C72,198 72,188 64,180 Z"/>
+  </g>
+  <!-- heartwood eye -->
+  <circle cx="128" cy="128" r="44" fill="url(#heart)" stroke="#24170f" stroke-width="5"/>
+  <g fill="none" stroke="#5a3e2b" stroke-width="3" opacity="0.7"><circle cx="128" cy="128" r="32"/><circle cx="128" cy="128" r="20"/></g>
+  <circle cx="128" cy="128" r="10" fill="#3e2a1c"/>
+  <circle cx="122" cy="120" r="5" fill="#f0dcb4" opacity="0.6"/>
 </svg>

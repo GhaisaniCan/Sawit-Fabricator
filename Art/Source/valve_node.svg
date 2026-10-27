@@ -1,37 +1,63 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Deflector Valve base: circular plant vascular node on cytoplasm. The arrow is a separate, rotatable sprite -->
+  <!-- Sap Router base: round wooden vascular node on the seed matrix. The glowing sap glyph is a separate, rotatable sprite -->
   <defs>
-    <linearGradient id="cyto" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#46d17f"/>
-      <stop offset="1" stop-color="#1a8d50"/>
+    <linearGradient id="mx" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4ead4"/>
+      <stop offset="1" stop-color="#e9dbbb"/>
     </linearGradient>
+    <radialGradient id="mxCell" cx="45%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#fbf5e6" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#f1e4c6" stop-opacity="0.2"/>
+    </radialGradient>
     <radialGradient id="node" cx="45%" cy="40%" r="60%">
-      <stop offset="0" stop-color="#5ff0d0"/>
-      <stop offset="0.6" stop-color="#139c84"/>
-      <stop offset="1" stop-color="#075a4d"/>
+      <stop offset="0" stop-color="#a47c56"/>
+      <stop offset="0.65" stop-color="#7a5634"/>
+      <stop offset="1" stop-color="#4e3520"/>
+    </radialGradient>
+    <radialGradient id="pool" cx="50%" cy="45%" r="55%">
+      <stop offset="0" stop-color="#7a4f1c"/>
+      <stop offset="1" stop-color="#4a2e10"/>
     </radialGradient>
   </defs>
-
-  <rect width="256" height="256" fill="url(#cyto)"/>
-  <rect x="4" y="4" width="248" height="248" rx="14" fill="none" stroke="#0c5a30" stroke-width="7" opacity="0.6"/>
-
-  <!-- vascular strands feeding the node (xylem/phloem) -->
-  <g stroke="#0e6f5c" stroke-width="14" stroke-linecap="round" opacity="0.85">
-    <line x1="128" y1="8" x2="128" y2="248"/>
-    <line x1="8" y1="128" x2="248" y2="128"/>
+  <rect width="256" height="256" fill="url(#mx)"/>
+  <!-- seed-pod cells (kept off the tile edges so tiles join cleanly) -->
+  <g fill="url(#mxCell)" stroke="#d9c6a0" stroke-width="3" stroke-opacity="0.55" stroke-linejoin="round">
+    <path d="M22,24 L116,20 L122,102 L66,116 L20,94 Z"/>
+    <path d="M136,20 L234,24 L236,108 L172,120 L132,98 Z"/>
+    <path d="M20,112 L68,130 L112,124 L118,234 L24,236 Z"/>
+    <path d="M130,116 L176,134 L236,126 L234,234 L134,236 Z"/>
   </g>
-  <g stroke="#7cf5da" stroke-width="3" stroke-linecap="round" opacity="0.55">
-    <line x1="124" y1="10" x2="124" y2="246"/>
-    <line x1="10" y1="124" x2="246" y2="124"/>
+  <g fill="#e6cf9c" opacity="0.45">
+    <circle cx="70" cy="64" r="9"/><circle cx="192" cy="186" r="11"/><circle cx="182" cy="66" r="5"/>
   </g>
-
-  <!-- the node -->
-  <circle cx="128" cy="128" r="88" fill="url(#node)" stroke="#043a32" stroke-width="6"/>
-  <circle cx="128" cy="128" r="76" fill="none" stroke="#a9fff0" stroke-width="3" opacity="0.5"/>
-  <!-- ring of pits / valve teeth -->
-  <g fill="#043a32">
-    <circle cx="128" cy="52" r="6"/><circle cx="182" cy="74" r="6"/><circle cx="204" cy="128" r="6"/><circle cx="182" cy="182" r="6"/>
-    <circle cx="128" cy="204" r="6"/><circle cx="74" cy="182" r="6"/><circle cx="52" cy="128" r="6"/><circle cx="74" cy="74" r="6"/>
+  <!-- incubation fluid bubbles -->
+  <g fill="#ffffff" opacity="0.45">
+    <circle cx="96" cy="170" r="5"/><circle cx="108" cy="186" r="2.5"/><circle cx="210" cy="92" r="3.5"/>
+    <circle cx="48" cy="200" r="3"/><circle cx="150" cy="56" r="2.5"/>
   </g>
-  <circle cx="128" cy="128" r="54" fill="#0a7364" stroke="#043a32" stroke-width="4"/>
+  <!-- faint holographic fabricator grid -->
+  <g stroke="#8fcfd0" stroke-width="1.2" opacity="0.18">
+    <line x1="64" y1="0" x2="64" y2="256"/><line x1="128" y1="0" x2="128" y2="256"/><line x1="192" y1="0" x2="192" y2="256"/>
+    <line x1="0" y1="64" x2="256" y2="64"/><line x1="0" y1="128" x2="256" y2="128"/><line x1="0" y1="192" x2="256" y2="192"/>
+  </g>
+  <g fill="none" stroke="#7cc9cc" stroke-width="2.5" stroke-linecap="round" opacity="0.4">
+    <path d="M10,24 V10 H24"/><path d="M232,10 H246 V24"/><path d="M246,232 V246 H232"/><path d="M24,246 H10 V232"/>
+  </g>
+  <rect x="3" y="3" width="250" height="250" rx="9" fill="none" stroke="#cdb98f" stroke-width="4" opacity="0.55"/>
+  <!-- vascular strands feeding the node -->
+  <g stroke="#b48e5e" stroke-width="14" stroke-linecap="round" opacity="0.7">
+    <line x1="128" y1="10" x2="128" y2="246"/><line x1="10" y1="128" x2="246" y2="128"/>
+  </g>
+  <g stroke="#f2d9a0" stroke-width="3" stroke-linecap="round" opacity="0.6">
+    <line x1="124" y1="12" x2="124" y2="244"/><line x1="12" y1="124" x2="244" y2="124"/>
+  </g>
+  <circle cx="128" cy="128" r="88" fill="url(#node)" stroke="#33220f" stroke-width="6"/>
+  <g fill="none" stroke="#33220f" stroke-width="2.5" opacity="0.45"><circle cx="128" cy="128" r="78"/><circle cx="128" cy="128" r="68"/></g>
+  <!-- ring of vascular pits -->
+  <g fill="#f2c14e" stroke="#33220f" stroke-width="2">
+    <circle cx="128" cy="54" r="5"/><circle cx="180" cy="76" r="5"/><circle cx="202" cy="128" r="5"/><circle cx="180" cy="180" r="5"/>
+    <circle cx="128" cy="202" r="5"/><circle cx="76" cy="180" r="5"/><circle cx="54" cy="128" r="5"/><circle cx="76" cy="76" r="5"/>
+  </g>
+  <circle cx="128" cy="128" r="54" fill="url(#pool)" stroke="#33220f" stroke-width="4"/>
+  <path d="M92,104 A44,44 0 0 1 128,82" fill="none" stroke="#c99a5a" stroke-width="3" opacity="0.6"/>
 </svg>

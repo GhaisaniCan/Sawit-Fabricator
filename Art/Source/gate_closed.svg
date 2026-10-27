@@ -1,42 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Membrane Gate, CLOSED: same frame, sealed with reinforced cellulose plates -->
+  <!-- Seed-coat Gate, CLOSED: same frame, sealed by overlapping cellulose petals like a closed seed coat -->
   <defs>
-    <linearGradient id="cellulose" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#c9ad55"/>
-      <stop offset="1" stop-color="#6e5a1f"/>
+    <linearGradient id="coat" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dcbf88"/>
+      <stop offset="1" stop-color="#9c7b45"/>
     </linearGradient>
-    <linearGradient id="plate" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#a88c3c"/>
-      <stop offset="1" stop-color="#4f3f12"/>
-    </linearGradient>
+    <radialGradient id="petal" cx="50%" cy="50%" r="55%">
+      <stop offset="0" stop-color="#8a6a3a"/>
+      <stop offset="1" stop-color="#c9a66b"/>
+    </radialGradient>
   </defs>
-
-  <!-- frame -->
-  <rect x="10" y="10" width="236" height="236" fill="url(#cellulose)" stroke="#3b300f" stroke-width="5"/>
-
-  <!-- sealing plates, four quadrants meeting in the middle -->
-  <g stroke="#2e250a" stroke-width="4" stroke-linejoin="round" fill="url(#plate)">
-    <path d="M42,42 H128 L128,128 L42,128 Z"/>
-    <path d="M128,42 H214 V128 H128 Z"/>
-    <path d="M42,128 H128 V214 H42 Z"/>
-    <path d="M128,128 H214 V214 H128 Z"/>
-  </g>
-  <!-- reinforcing cross braces -->
-  <g stroke="#3b300f" stroke-width="14" stroke-linecap="round">
-    <line x1="52" y1="52" x2="204" y2="204"/>
-    <line x1="204" y1="52" x2="52" y2="204"/>
-  </g>
-  <g stroke="#e3cc7a" stroke-width="4" stroke-linecap="round" opacity="0.6">
-    <line x1="56" y1="52" x2="204" y2="200"/>
-    <line x1="200" y1="52" x2="52" y2="200"/>
-  </g>
-  <!-- central lock knot and rivets -->
-  <circle cx="128" cy="128" r="22" fill="#5c4a18" stroke="#2e250a" stroke-width="5"/>
-  <circle cx="122" cy="122" r="6" fill="#e3cc7a" opacity="0.7"/>
-  <g fill="#2e250a">
-    <circle cx="26" cy="26" r="5"/><circle cx="230" cy="26" r="5"/>
-    <circle cx="26" cy="230" r="5"/><circle cx="230" cy="230" r="5"/>
-    <circle cx="128" cy="26" r="4"/><circle cx="128" cy="230" r="4"/>
-    <circle cx="26" cy="128" r="4"/><circle cx="230" cy="128" r="4"/>
-  </g>
+  <rect x="10" y="10" width="236" height="236" fill="url(#coat)" stroke="#5a4325" stroke-width="5"/>
+  <circle cx="128" cy="128" r="94" fill="#7a5c32" stroke="#5a4325" stroke-width="4"/>
+  <g fill="url(#petal)" stroke="#4a3520" stroke-width="4" stroke-linejoin="round"><path transform="rotate(0 128 128)" d="M128,128 L128,38 C160,40 188,56 204,82 Z"/><path transform="rotate(60 128 128)" d="M128,128 L128,38 C160,40 188,56 204,82 Z"/><path transform="rotate(120 128 128)" d="M128,128 L128,38 C160,40 188,56 204,82 Z"/><path transform="rotate(180 128 128)" d="M128,128 L128,38 C160,40 188,56 204,82 Z"/><path transform="rotate(240 128 128)" d="M128,128 L128,38 C160,40 188,56 204,82 Z"/><path transform="rotate(300 128 128)" d="M128,128 L128,38 C160,40 188,56 204,82 Z"/></g>
+  <g fill="none" stroke="#f0dcb0" stroke-width="2.5" opacity="0.5"><path transform="rotate(0 128 128)" d="M134,52 C158,56 176,68 188,86"/><path transform="rotate(60 128 128)" d="M134,52 C158,56 176,68 188,86"/><path transform="rotate(120 128 128)" d="M134,52 C158,56 176,68 188,86"/><path transform="rotate(180 128 128)" d="M134,52 C158,56 176,68 188,86"/><path transform="rotate(240 128 128)" d="M134,52 C158,56 176,68 188,86"/><path transform="rotate(300 128 128)" d="M134,52 C158,56 176,68 188,86"/></g>
+  <circle cx="128" cy="128" r="16" fill="#5a4325" stroke="#3a2a16" stroke-width="4"/>
+  <circle cx="123" cy="123" r="4" fill="#f0dcb0" opacity="0.6"/>
+  <g fill="#5a4325"><circle cx="25" cy="25" r="5"/><circle cx="231" cy="25" r="5"/><circle cx="25" cy="231" r="5"/><circle cx="231" cy="231" r="5"/></g>
 </svg>

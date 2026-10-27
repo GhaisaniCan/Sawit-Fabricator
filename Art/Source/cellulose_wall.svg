@@ -1,38 +1,61 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Cellulose Wall: thick organic cell wall block. Used for Wall tiles and Defensive Cell wall overlays -->
+  <!-- Lignin Wall: dense woody seed-coat block over the matrix. Darker than the matrix so it reads as solid -->
   <defs>
-    <linearGradient id="cellulose" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#c9ad55"/>
-      <stop offset="0.55" stop-color="#8f7630"/>
-      <stop offset="1" stop-color="#5c4a18"/>
+    <linearGradient id="mx" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4ead4"/>
+      <stop offset="1" stop-color="#e9dbbb"/>
     </linearGradient>
-    <clipPath id="block">
-      <rect x="8" y="8" width="240" height="240" rx="26"/>
-    </clipPath>
+    <radialGradient id="mxCell" cx="45%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#fbf5e6" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#f1e4c6" stop-opacity="0.2"/>
+    </radialGradient>
+    <linearGradient id="wood" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c4a77a"/>
+      <stop offset="0.55" stop-color="#a3855a"/>
+      <stop offset="1" stop-color="#7d6342"/>
+    </linearGradient>
+    <clipPath id="block"><rect x="8" y="8" width="240" height="240" rx="24"/></clipPath>
   </defs>
-
-  <rect x="8" y="8" width="240" height="240" rx="26" fill="url(#cellulose)"/>
-
-  <!-- woven cellulose microfibrils -->
-  <g clip-path="url(#block)" stroke-linecap="round" fill="none">
-    <g stroke="#ecd98f" stroke-width="5" opacity="0.45">
-      <path d="M-20,60 C40,40 80,90 140,66 S240,40 280,70"/>
-      <path d="M-20,128 C40,108 80,158 140,134 S240,108 280,138"/>
-      <path d="M-20,196 C40,176 80,226 140,202 S240,176 280,206"/>
+  <rect width="256" height="256" fill="url(#mx)"/>
+  <!-- seed-pod cells (kept off the tile edges so tiles join cleanly) -->
+  <g fill="url(#mxCell)" stroke="#d9c6a0" stroke-width="3" stroke-opacity="0.55" stroke-linejoin="round">
+    <path d="M22,24 L116,20 L122,102 L66,116 L20,94 Z"/>
+    <path d="M136,20 L234,24 L236,108 L172,120 L132,98 Z"/>
+    <path d="M20,112 L68,130 L112,124 L118,234 L24,236 Z"/>
+    <path d="M130,116 L176,134 L236,126 L234,234 L134,236 Z"/>
+  </g>
+  <g fill="#e6cf9c" opacity="0.45">
+    <circle cx="70" cy="64" r="9"/><circle cx="192" cy="186" r="11"/><circle cx="182" cy="66" r="5"/>
+  </g>
+  <!-- incubation fluid bubbles -->
+  <g fill="#ffffff" opacity="0.45">
+    <circle cx="96" cy="170" r="5"/><circle cx="108" cy="186" r="2.5"/><circle cx="210" cy="92" r="3.5"/>
+    <circle cx="48" cy="200" r="3"/><circle cx="150" cy="56" r="2.5"/>
+  </g>
+  <!-- faint holographic fabricator grid -->
+  <g stroke="#8fcfd0" stroke-width="1.2" opacity="0.18">
+    <line x1="64" y1="0" x2="64" y2="256"/><line x1="128" y1="0" x2="128" y2="256"/><line x1="192" y1="0" x2="192" y2="256"/>
+    <line x1="0" y1="64" x2="256" y2="64"/><line x1="0" y1="128" x2="256" y2="128"/><line x1="0" y1="192" x2="256" y2="192"/>
+  </g>
+  <g fill="none" stroke="#7cc9cc" stroke-width="2.5" stroke-linecap="round" opacity="0.4">
+    <path d="M10,24 V10 H24"/><path d="M232,10 H246 V24"/><path d="M246,232 V246 H232"/><path d="M24,246 H10 V232"/>
+  </g>
+  <rect x="3" y="3" width="250" height="250" rx="9" fill="none" stroke="#cdb98f" stroke-width="4" opacity="0.55"/>
+  <rect x="8" y="8" width="240" height="240" rx="24" fill="url(#wood)"/>
+  <g clip-path="url(#block)" fill="none" stroke-linecap="round">
+    <!-- growth rings around two knots -->
+    <g stroke="#6e5536" stroke-width="3" opacity="0.45">
+      <ellipse cx="88" cy="92" rx="22" ry="14"/><ellipse cx="88" cy="92" rx="40" ry="26"/><ellipse cx="88" cy="92" rx="60" ry="40"/>
+      <ellipse cx="180" cy="176" rx="18" ry="12"/><ellipse cx="180" cy="176" rx="36" ry="24"/><ellipse cx="180" cy="176" rx="58" ry="38"/>
     </g>
-    <g stroke="#4a3a10" stroke-width="4" opacity="0.4">
-      <path d="M60,-20 C40,40 90,80 66,140 S40,240 70,280"/>
-      <path d="M190,-20 C170,40 220,80 196,140 S170,240 200,280"/>
+    <!-- lignin grain -->
+    <g stroke="#e2cda0" stroke-width="3" opacity="0.4">
+      <path d="M-10,150 C50,138 90,160 140,146 S230,130 270,140"/>
+      <path d="M-10,220 C40,210 100,230 150,214 S230,204 270,212"/>
+      <path d="M-10,36 C60,30 120,46 170,34 S240,28 270,36"/>
     </g>
   </g>
-
-  <!-- bevel and outline -->
-  <rect x="16" y="16" width="224" height="224" rx="20" fill="none" stroke="#f3e2a2" stroke-width="3" opacity="0.5"/>
-  <rect x="8" y="8" width="240" height="240" rx="26" fill="none" stroke="#3b300f" stroke-width="7"/>
-
-  <!-- knots in the wall -->
-  <g fill="#5c4a18" stroke="#3b300f" stroke-width="2">
-    <ellipse cx="96" cy="100" rx="9" ry="6"/>
-    <ellipse cx="168" cy="164" rx="10" ry="6.5"/>
-  </g>
+  <g fill="#5e4a30"><ellipse cx="88" cy="92" rx="8" ry="5"/><ellipse cx="180" cy="176" rx="7" ry="4.5"/></g>
+  <rect x="16" y="16" width="224" height="224" rx="18" fill="none" stroke="#eadbb8" stroke-width="3" opacity="0.45"/>
+  <rect x="8" y="8" width="240" height="240" rx="24" fill="none" stroke="#5e4a30" stroke-width="7"/>
 </svg>

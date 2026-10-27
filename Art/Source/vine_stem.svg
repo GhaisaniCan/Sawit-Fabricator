@@ -1,26 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Vine stem: HALF segment from the tile centre to the RIGHT edge. The game rotates it toward each
-       connected neighbour (and stretches it on diagonals), so two halves meet at every tile edge. -->
+  <!-- Bramble root stem: HALF segment from the tile centre to the RIGHT edge. The game rotates it toward each
+       connected neighbour (and stretches it on diagonals), so two halves meet at every tile edge -->
   <defs>
-    <linearGradient id="stem" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#6f8cff"/>
-      <stop offset="0.45" stop-color="#2c43b8"/>
-      <stop offset="1" stop-color="#101d63"/>
+    <linearGradient id="bark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9a7350"/>
+      <stop offset="0.5" stop-color="#6b4a32"/>
+      <stop offset="1" stop-color="#3e2a1c"/>
     </linearGradient>
   </defs>
+  <!-- small thorns, kept past x=180 so they clear the knot and crossing stems at intersections -->
+  <g fill="#d9c49a" stroke="#24170f" stroke-width="2.5" stroke-linejoin="round">
+    <path d="M224,110 L230,98 L236,110 Z"/><path d="M196,146 L202,158 L208,146 Z"/>
+  </g>
   <!-- starts slightly left of centre so joints never show a gap -->
-  <rect x="112" y="108" width="146" height="40" rx="14" fill="url(#stem)" stroke="#0a1240" stroke-width="5"/>
-  <!-- crimson vein -->
-  <path d="M120,128 C150,122 180,134 210,126 S250,128 258,128" fill="none" stroke="#ff3b52" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
-  <!-- sheen -->
-  <path d="M122,116 H250" stroke="#b9c8ff" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
-  <!-- suckers -->
-  <g fill="#1b2a7a" stroke="#0a1240" stroke-width="2.5">
-    <ellipse cx="162" cy="146" rx="9" ry="5"/>
-    <ellipse cx="214" cy="110" rx="9" ry="5"/>
+  <rect x="112" y="108" width="146" height="40" rx="14" fill="url(#bark)" stroke="#24170f" stroke-width="5"/>
+  <!-- bark grain -->
+  <g fill="none" stroke="#2e1e14" stroke-width="3" stroke-linecap="round" opacity="0.7">
+    <path d="M124,124 C150,118 170,130 196,122 S240,124 258,122"/>
+    <path d="M132,138 C160,134 190,142 222,136"/>
   </g>
-  <g fill="#ff8a98" opacity="0.8">
-    <circle cx="162" cy="146" r="2.5"/>
-    <circle cx="214" cy="110" r="2.5"/>
-  </g>
+  <path d="M122,115 H250" stroke="#c4a07a" stroke-width="3" stroke-linecap="round" opacity="0.55"/>
+  <!-- leaf -->
+  <path d="M190,110 C194,96 206,92 212,96 C208,106 200,111 190,110 Z" fill="#6e8f4a" stroke="#2f4a2a" stroke-width="2.5"/>
 </svg>

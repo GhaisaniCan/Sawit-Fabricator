@@ -1,34 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Cytoplasm Tile (base): translucent emerald/lime plant cell interior, fills the whole tile -->
+  <!-- Seed Matrix tile (base): pastel amber seed-pod cells over a faint holographic fabricator grid -->
   <defs>
-    <linearGradient id="cyto" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#46d17f"/>
-      <stop offset="1" stop-color="#1a8d50"/>
+    <linearGradient id="mx" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4ead4"/>
+      <stop offset="1" stop-color="#e9dbbb"/>
     </linearGradient>
-    <radialGradient id="vesicle" cx="40%" cy="35%" r="60%">
-      <stop offset="0" stop-color="#e2ffb8" stop-opacity="0.75"/>
-      <stop offset="1" stop-color="#9cf06a" stop-opacity="0.15"/>
+    <radialGradient id="mxCell" cx="45%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#fbf5e6" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#f1e4c6" stop-opacity="0.2"/>
     </radialGradient>
   </defs>
-  <rect width="256" height="256" fill="url(#cyto)"/>
-
-  <!-- floating vesicles / organelles (kept away from the edges so tiles join cleanly) -->
-  <g stroke="#b8ff8a" stroke-width="2" stroke-opacity="0.35">
-    <circle cx="66" cy="72" r="24" fill="url(#vesicle)"/>
-    <circle cx="186" cy="64" r="14" fill="url(#vesicle)"/>
-    <circle cx="184" cy="176" r="28" fill="url(#vesicle)"/>
-    <circle cx="78" cy="186" r="13" fill="url(#vesicle)"/>
+  <rect width="256" height="256" fill="url(#mx)"/>
+  <!-- seed-pod cells (kept off the tile edges so tiles join cleanly) -->
+  <g fill="url(#mxCell)" stroke="#d9c6a0" stroke-width="3" stroke-opacity="0.55" stroke-linejoin="round">
+    <path d="M22,24 L116,20 L122,102 L66,116 L20,94 Z"/>
+    <path d="M136,20 L234,24 L236,108 L172,120 L132,98 Z"/>
+    <path d="M20,112 L68,130 L112,124 L118,234 L24,236 Z"/>
+    <path d="M130,116 L176,134 L236,126 L234,234 L134,236 Z"/>
   </g>
-  <g fill="#d6ffa8" opacity="0.5">
-    <circle cx="128" cy="118" r="5"/>
-    <circle cx="110" cy="54" r="3"/>
-    <circle cx="214" cy="118" r="3.5"/>
-    <circle cx="44" cy="134" r="3"/>
-    <circle cx="140" cy="208" r="4"/>
-    <circle cx="150" cy="150" r="2.5"/>
+  <g fill="#e6cf9c" opacity="0.45">
+    <circle cx="70" cy="64" r="9"/><circle cx="192" cy="186" r="11"/><circle cx="182" cy="66" r="5"/>
   </g>
-
-  <!-- soft cell edge so the grid reads clearly -->
-  <rect x="4" y="4" width="248" height="248" rx="14" fill="none" stroke="#0c5a30" stroke-width="7" opacity="0.6"/>
-  <rect x="11" y="11" width="234" height="234" rx="10" fill="none" stroke="#a8ffb5" stroke-width="2" opacity="0.35"/>
+  <!-- incubation fluid bubbles -->
+  <g fill="#ffffff" opacity="0.45">
+    <circle cx="96" cy="170" r="5"/><circle cx="108" cy="186" r="2.5"/><circle cx="210" cy="92" r="3.5"/>
+    <circle cx="48" cy="200" r="3"/><circle cx="150" cy="56" r="2.5"/>
+  </g>
+  <!-- faint holographic fabricator grid -->
+  <g stroke="#8fcfd0" stroke-width="1.2" opacity="0.18">
+    <line x1="64" y1="0" x2="64" y2="256"/><line x1="128" y1="0" x2="128" y2="256"/><line x1="192" y1="0" x2="192" y2="256"/>
+    <line x1="0" y1="64" x2="256" y2="64"/><line x1="0" y1="128" x2="256" y2="128"/><line x1="0" y1="192" x2="256" y2="192"/>
+  </g>
+  <g fill="none" stroke="#7cc9cc" stroke-width="2.5" stroke-linecap="round" opacity="0.4">
+    <path d="M10,24 V10 H24"/><path d="M232,10 H246 V24"/><path d="M246,232 V246 H232"/><path d="M24,246 H10 V232"/>
+  </g>
+  <rect x="3" y="3" width="250" height="250" rx="9" fill="none" stroke="#cdb98f" stroke-width="4" opacity="0.55"/>
 </svg>

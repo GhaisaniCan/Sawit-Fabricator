@@ -348,6 +348,18 @@ public class UnitManager : MonoBehaviour
 
             if (next == null) break;
 
+            // Roots come first, even over a unit: a unit under roots can't be captured through them
+            if (next.isBlocked)
+            {
+                // A hazardous vine over a wall still just acts as a wall
+                if (next.IsHazardous && next.IsWalkableTerrain)
+                {
+                    path.Add(next);
+                    endsInHazard = true;
+                }
+                break;
+            }
+
             if (next.occupiedUnit is MovingCell movingCell && movingCell.IsHostile)
             {
                 path.Add(next);
@@ -358,14 +370,6 @@ public class UnitManager : MonoBehaviour
             if (next.occupiedUnit != null)
             {
                 if (IsCapturable(next.occupiedUnit)) path.Add(next);
-                break;
-            }
-
-            // A hazardous vine over a wall still just acts as a wall
-            if (next.isBlocked && next.IsHazardous && next.IsWalkableTerrain)
-            {
-                path.Add(next);
-                endsInHazard = true;
                 break;
             }
 
@@ -640,7 +644,8 @@ public class UnitManager : MonoBehaviour
             return;
         }
 
-        if (activeCoreCells.Count == 0) return;
+        // No early return when no Core Cells are left: the last one can only go by capture, which wins above,
+        // so an empty count means the level never had any, and it must still be losable
 
         if (movesLimited && currentMoves <= 0)
         {

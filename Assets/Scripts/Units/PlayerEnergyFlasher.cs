@@ -74,7 +74,9 @@ public class PlayerEnergyFlasher : MonoBehaviour
     private void Evaluate()
     {
         var limited = maxMoves > 0;
-        var playing = GameManager.Instance != null && GameManager.Instance.gameState == GameState.PlayerTurn;
+        // The Moving Cells' EnemyTurn is part of the same round, so keep warning through it
+        var state = GameManager.Instance != null ? GameManager.Instance.gameState : GameState.GenerateGrid;
+        var playing = state == GameState.PlayerTurn || state == GameState.EnemyTurn;
 
         if (!limited || !playing || moves <= 0 || moves > lowMoveThreshold) SetLevel(WarningLevel.None);
         else SetLevel(moves == 1 ? WarningLevel.Critical : WarningLevel.Pulse);

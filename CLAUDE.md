@@ -87,9 +87,10 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
 - **Win:** a move corrupts the last Seed Embryo (`UnitManager.ResolveOutcome(capturedCoreCell: true)`).
 - **Lose (hazard):** the last Tech Bug slides into thorny roots or a hostile Moving Cell, or a hostile Moving Cell
   steps onto it, and it's destroyed (`DestroyPlayer`).
-- **Lose (energy):** the level has a move limit, energy hits 0 and Seed Embryos remain. Checked after the win
-  check, so corrupting the last embryo with the last move still wins.
-- **Lose (stuck):** Seed Embryos remain and no Tech Bug has any safe slide in any direction. With
+- **Lose (energy):** the level has a move limit, energy hits 0 and the level isn't won. Checked after the win
+  check, so corrupting the last embryo with the last move still wins. Energy and stuck losses also apply to a
+  level with no Seed Embryos at all (it can't be won, but it must still be losable).
+- **Lose (stuck):** the level isn't won and no Tech Bug has any safe slide in any direction. With
   `UnitManager.interactablesPreventLose` on (the default), it's also required that no gate, router or
   gland can be clicked, since clicking one might open a path. Turn it off for the strict rule.
 - The outcome is checked after every finished slide and after every interactable click (`OnBoardChanged`).
@@ -184,7 +185,8 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
   - a resin snare (`StopTile`, walkable) → enter it and stop **on** it. Starting a move from one is
     unaffected. Prefab `Prefabs/Tiles/Stop Tile` (Base Tile variant, `stop_tile` art); add it as a tile type
     in a LevelData to paint it
-  - a friendly unit, non-walkable tile (wall, closed gate) or root-blocked tile → stop **before** it
+  - a friendly unit, non-walkable tile (wall, closed gate) or root-blocked tile → stop **before** it. Roots are
+    checked first, so a unit under roots can't be captured through them (capture the Root Sentinel or retract them)
   - thorny (hazardous) roots over walkable terrain, or a hostile Moving Cell → enter the tile and be destroyed (`endsInHazard`); these
     moves still get arrows, tinted red, and don't count as a way out for the lose check
   - a sap router → enter it, then continue in the router's `OutputDirection`. Entering the same

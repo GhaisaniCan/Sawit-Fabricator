@@ -1,20 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Vine knot: joint drawn at the tile centre where a vine bends or branches -->
+  <!-- Bramble knot: gnarled bark joint drawn at the tile centre where a root bends or branches -->
   <defs>
     <radialGradient id="knot" cx="42%" cy="38%" r="65%">
-      <stop offset="0" stop-color="#8aa2ff"/>
-      <stop offset="0.55" stop-color="#2c43b8"/>
-      <stop offset="1" stop-color="#101d63"/>
-    </radialGradient>
-    <radialGradient id="core" cx="45%" cy="40%" r="60%">
-      <stop offset="0" stop-color="#ffd1d6"/>
-      <stop offset="0.5" stop-color="#ff3b52"/>
-      <stop offset="1" stop-color="#7a0016"/>
+      <stop offset="0" stop-color="#a47c56"/>
+      <stop offset="0.6" stop-color="#6b4a32"/>
+      <stop offset="1" stop-color="#3e2a1c"/>
     </radialGradient>
   </defs>
-  <circle cx="128" cy="128" r="36" fill="url(#knot)" stroke="#0a1240" stroke-width="5"/>
-  <g fill="none" stroke="#b9c8ff" stroke-width="3" opacity="0.6">
-    <path d="M100,112 A32,32 0 0 1 128,96"/>
-  </g>
-  <circle cx="128" cy="128" r="14" fill="url(#core)" stroke="#4a000d" stroke-width="3"/>
+  <circle cx="128" cy="128" r="36" fill="url(#knot)" stroke="#24170f" stroke-width="5"/>
+  <g fill="none" stroke="#2e1e14" stroke-width="3" opacity="0.7"><circle cx="128" cy="128" r="24"/><circle cx="128" cy="128" r="13"/></g>
+  <path d="M100,112 A32,32 0 0 1 128,96" fill="none" stroke="#c4a07a" stroke-width="3" opacity="0.6"/>
+  <path d="M138,98 C150,86 164,90 162,98 C154,104 144,104 138,98 Z" fill="#6e8f4a" stroke="#2f4a2a" stroke-width="2"/>
+  <circle cx="128" cy="128" r="5" fill="#24170f"/>
 </svg>

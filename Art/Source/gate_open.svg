@@ -1,43 +1,58 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Membrane Gate, OPEN: cellulose frame around a translucent green pore channel -->
+  <!-- Seed-coat Gate, OPEN: cellulose frame with guard-cell lips parted like a stoma, matrix visible through it -->
   <defs>
-    <linearGradient id="cyto" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#46d17f"/>
-      <stop offset="1" stop-color="#1a8d50"/>
+    <linearGradient id="mx" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4ead4"/>
+      <stop offset="1" stop-color="#e9dbbb"/>
     </linearGradient>
-    <linearGradient id="cellulose" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#c9ad55"/>
-      <stop offset="1" stop-color="#6e5a1f"/>
-    </linearGradient>
-    <radialGradient id="pore" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#eaffd0" stop-opacity="0.9"/>
-      <stop offset="0.6" stop-color="#8dffb0" stop-opacity="0.45"/>
-      <stop offset="1" stop-color="#3fe08a" stop-opacity="0.15"/>
+    <radialGradient id="mxCell" cx="45%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#fbf5e6" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#f1e4c6" stop-opacity="0.2"/>
     </radialGradient>
-    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="5"/>
-    </filter>
+    <linearGradient id="coat" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#dcbf88"/>
+      <stop offset="1" stop-color="#9c7b45"/>
+    </linearGradient>
+    <linearGradient id="lip" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#b5d88a"/>
+      <stop offset="1" stop-color="#6e9a4a"/>
+    </linearGradient>
   </defs>
-
-  <rect width="256" height="256" fill="url(#cyto)"/>
-
-  <!-- cellulose frame (the membrane anchor) -->
-  <path fill="url(#cellulose)" stroke="#3b300f" stroke-width="5" fill-rule="evenodd"
-        d="M10,10 H246 V246 H10 Z M42,42 V214 H214 V42 Z"/>
-  <g fill="#3b300f">
-    <circle cx="26" cy="26" r="5"/><circle cx="230" cy="26" r="5"/>
-    <circle cx="26" cy="230" r="5"/><circle cx="230" cy="230" r="5"/>
+  <rect width="256" height="256" fill="url(#mx)"/>
+  <!-- seed-pod cells (kept off the tile edges so tiles join cleanly) -->
+  <g fill="url(#mxCell)" stroke="#d9c6a0" stroke-width="3" stroke-opacity="0.55" stroke-linejoin="round">
+    <path d="M22,24 L116,20 L122,102 L66,116 L20,94 Z"/>
+    <path d="M136,20 L234,24 L236,108 L172,120 L132,98 Z"/>
+    <path d="M20,112 L68,130 L112,124 L118,234 L24,236 Z"/>
+    <path d="M130,116 L176,134 L236,126 L234,234 L134,236 Z"/>
   </g>
-
-  <!-- open pore channel -->
-  <circle cx="128" cy="128" r="74" fill="#7dffa8" opacity="0.5" filter="url(#glow)"/>
-  <circle cx="128" cy="128" r="68" fill="url(#pore)" stroke="#c8ffd8" stroke-width="4"/>
-  <!-- retracted membrane petals at the rim -->
-  <g fill="#2fa865" stroke="#0c5a30" stroke-width="2.5" opacity="0.9">
-    <path d="M128,60 C138,68 138,78 128,84 C118,78 118,68 128,60 Z"/>
-    <path d="M128,196 C138,188 138,178 128,172 C118,178 118,188 128,196 Z"/>
-    <path d="M60,128 C68,118 78,118 84,128 C78,138 68,138 60,128 Z"/>
-    <path d="M196,128 C188,118 178,118 172,128 C178,138 188,138 196,128 Z"/>
+  <g fill="#e6cf9c" opacity="0.45">
+    <circle cx="70" cy="64" r="9"/><circle cx="192" cy="186" r="11"/><circle cx="182" cy="66" r="5"/>
   </g>
-  <circle cx="128" cy="128" r="10" fill="#ffffff" opacity="0.7"/>
+  <!-- incubation fluid bubbles -->
+  <g fill="#ffffff" opacity="0.45">
+    <circle cx="96" cy="170" r="5"/><circle cx="108" cy="186" r="2.5"/><circle cx="210" cy="92" r="3.5"/>
+    <circle cx="48" cy="200" r="3"/><circle cx="150" cy="56" r="2.5"/>
+  </g>
+  <!-- faint holographic fabricator grid -->
+  <g stroke="#8fcfd0" stroke-width="1.2" opacity="0.18">
+    <line x1="64" y1="0" x2="64" y2="256"/><line x1="128" y1="0" x2="128" y2="256"/><line x1="192" y1="0" x2="192" y2="256"/>
+    <line x1="0" y1="64" x2="256" y2="64"/><line x1="0" y1="128" x2="256" y2="128"/><line x1="0" y1="192" x2="256" y2="192"/>
+  </g>
+  <g fill="none" stroke="#7cc9cc" stroke-width="2.5" stroke-linecap="round" opacity="0.4">
+    <path d="M10,24 V10 H24"/><path d="M232,10 H246 V24"/><path d="M246,232 V246 H232"/><path d="M24,246 H10 V232"/>
+  </g>
+  <rect x="3" y="3" width="250" height="250" rx="9" fill="none" stroke="#cdb98f" stroke-width="4" opacity="0.55"/>
+  <!-- seed-coat frame -->
+  <path fill="url(#coat)" stroke="#5a4325" stroke-width="5" fill-rule="evenodd"
+        d="M10,10 H246 V246 H10 Z M40,40 V216 H216 V40 Z"/>
+  <g fill="#5a4325"><circle cx="25" cy="25" r="5"/><circle cx="231" cy="25" r="5"/><circle cx="25" cy="231" r="5"/><circle cx="231" cy="231" r="5"/></g>
+  <!-- guard cells, parted -->
+  <path d="M128,52 C82,60 58,96 58,128 C58,160 82,196 128,204 C104,186 92,158 92,128 C92,98 104,70 128,52 Z"
+        fill="url(#lip)" stroke="#3e5e2a" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M128,52 C174,60 198,96 198,128 C198,160 174,196 128,204 C152,186 164,158 164,128 C164,98 152,70 128,52 Z"
+        fill="url(#lip)" stroke="#3e5e2a" stroke-width="4" stroke-linejoin="round"/>
+  <g fill="#e6f5c8" opacity="0.6"><ellipse cx="74" cy="118" rx="5" ry="14"/><ellipse cx="182" cy="118" rx="5" ry="14"/></g>
+  <!-- open pore glow -->
+  <ellipse cx="128" cy="128" rx="30" ry="70" fill="none" stroke="#fffbe8" stroke-width="3" opacity="0.7"/>
 </svg>

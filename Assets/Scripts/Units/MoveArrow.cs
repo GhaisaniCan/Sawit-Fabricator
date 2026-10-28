@@ -43,6 +43,7 @@ public class MoveArrow : MonoBehaviour, IPointerDownHandler, IPointerEnterHandle
     public void OnPointerDown(PointerEventData eventData)
     {
         if (GameManager.Instance.gameState != GameState.PlayerTurn) return;
+        if (eventData.button != PointerEventData.InputButton.Left || CameraController.IsPanning) return;
 
         UnitManager.Instance.MoveSelectedPlayer(direction);
     }

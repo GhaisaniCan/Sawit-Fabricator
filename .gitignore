@@ -112,3 +112,7 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# sprite generator dependencies (Art/build_sprites.js)
+Art/node_modules/
+Art/package*.json

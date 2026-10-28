@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CellIdleAnimator
   scaleFrequency: 0.7
-  scaleAmplitude: 0.06
+  scaleAmplitude: 0.021
   squashAndStretch: 1
-  rotationFrequency: 0.4
-  rotationAngleMax: 6
+  rotationFrequency: 0
+  rotationAngleMax: 0

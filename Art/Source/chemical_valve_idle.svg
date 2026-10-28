@@ -1,35 +1,76 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Chemical Valve, IDLE: a sealed enzyme gland on cytoplasm. Clicking it releases the enzyme -->
+  <!-- Injector Gland, IDLE: Fabricator nozzle bolted into the seed tissue, iris shut, status ring dim -->
   <defs>
-    <linearGradient id="cyto" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#46d17f"/>
-      <stop offset="1" stop-color="#1a8d50"/>
+    <linearGradient id="mx" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f4ead4"/>
+      <stop offset="1" stop-color="#e9dbbb"/>
     </linearGradient>
-    <radialGradient id="sac" cx="42%" cy="36%" r="65%">
-      <stop offset="0" stop-color="#f3c8ff"/>
-      <stop offset="0.5" stop-color="#a64ce0"/>
-      <stop offset="1" stop-color="#4b1477"/>
+    <radialGradient id="mxCell" cx="45%" cy="40%" r="70%">
+      <stop offset="0" stop-color="#fbf5e6" stop-opacity="0.75"/>
+      <stop offset="1" stop-color="#f1e4c6" stop-opacity="0.2"/>
     </radialGradient>
+    <radialGradient id="tissue" cx="50%" cy="50%" r="50%">
+      <stop offset="0.6" stop-color="#c8dfa0"/>
+      <stop offset="1" stop-color="#c8dfa0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#c2cad4"/>
+      <stop offset="0.5" stop-color="#8b95a3"/>
+      <stop offset="1" stop-color="#5c6672"/>
+    </linearGradient>
+    <linearGradient id="steelDark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6b7684"/>
+      <stop offset="1" stop-color="#2f3640"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
   </defs>
-  <rect width="256" height="256" fill="url(#cyto)"/>
-  <rect x="4" y="4" width="248" height="248" rx="14" fill="none" stroke="#0c5a30" stroke-width="7" opacity="0.6"/>
-
-  <!-- gland body -->
-  <path d="M128,40 C178,40 214,80 210,130 C206,182 170,216 128,216 C86,216 50,182 46,130 C42,80 78,40 128,40 Z"
-        fill="url(#sac)" stroke="#2a0845" stroke-width="6"/>
-  <!-- stitched seal -->
-  <path d="M84,128 C104,116 152,116 172,128" fill="none" stroke="#2a0845" stroke-width="7" stroke-linecap="round"/>
-  <g stroke="#2a0845" stroke-width="5" stroke-linecap="round">
-    <line x1="98" y1="112" x2="104" y2="136"/>
-    <line x1="128" y1="108" x2="128" y2="134"/>
-    <line x1="158" y1="112" x2="152" y2="136"/>
+  <rect width="256" height="256" fill="url(#mx)"/>
+  <!-- seed-pod cells (kept off the tile edges so tiles join cleanly) -->
+  <g fill="url(#mxCell)" stroke="#d9c6a0" stroke-width="3" stroke-opacity="0.55" stroke-linejoin="round">
+    <path d="M22,24 L116,20 L122,102 L66,116 L20,94 Z"/>
+    <path d="M136,20 L234,24 L236,108 L172,120 L132,98 Z"/>
+    <path d="M20,112 L68,130 L112,124 L118,234 L24,236 Z"/>
+    <path d="M130,116 L176,134 L236,126 L234,234 L134,236 Z"/>
   </g>
-  <!-- enzyme droplets visible through the membrane -->
-  <g fill="#e6ff7a" opacity="0.75">
-    <circle cx="104" cy="168" r="9"/>
-    <circle cx="146" cy="176" r="6"/>
-    <circle cx="160" cy="84" r="7"/>
-    <circle cx="96" cy="82" r="5"/>
+  <g fill="#e6cf9c" opacity="0.45">
+    <circle cx="70" cy="64" r="9"/><circle cx="192" cy="186" r="11"/><circle cx="182" cy="66" r="5"/>
   </g>
-  <path d="M84,70 C96,56 116,52 128,52" fill="none" stroke="#f8e1ff" stroke-width="5" stroke-linecap="round" opacity="0.6"/>
+  <!-- incubation fluid bubbles -->
+  <g fill="#ffffff" opacity="0.45">
+    <circle cx="96" cy="170" r="5"/><circle cx="108" cy="186" r="2.5"/><circle cx="210" cy="92" r="3.5"/>
+    <circle cx="48" cy="200" r="3"/><circle cx="150" cy="56" r="2.5"/>
+  </g>
+  <!-- faint holographic fabricator grid -->
+  <g stroke="#8fcfd0" stroke-width="1.2" opacity="0.18">
+    <line x1="64" y1="0" x2="64" y2="256"/><line x1="128" y1="0" x2="128" y2="256"/><line x1="192" y1="0" x2="192" y2="256"/>
+    <line x1="0" y1="64" x2="256" y2="64"/><line x1="0" y1="128" x2="256" y2="128"/><line x1="0" y1="192" x2="256" y2="192"/>
+  </g>
+  <g fill="none" stroke="#7cc9cc" stroke-width="2.5" stroke-linecap="round" opacity="0.4">
+    <path d="M10,24 V10 H24"/><path d="M232,10 H246 V24"/><path d="M246,232 V246 H232"/><path d="M24,246 H10 V232"/>
+  </g>
+  <rect x="3" y="3" width="250" height="250" rx="9" fill="none" stroke="#cdb98f" stroke-width="4" opacity="0.55"/>
+  <!-- swollen plant tissue around the implant -->
+  <circle cx="128" cy="128" r="112" fill="url(#tissue)" opacity="0.8"/>
+  <!-- bolted steel flange -->
+  <path d="M213.0,163.2 L163.2,213.0 L92.8,213.0 L43.0,163.2 L43.0,92.8 L92.8,43.0 L163.2,43.0 L213.0,92.8 Z" fill="url(#steel)" stroke="#262c34" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M201.9,158.6 L158.6,201.9 L97.4,201.9 L54.1,158.6 L54.1,97.4 L97.4,54.1 L158.6,54.1 L201.9,97.4 Z" fill="none" stroke="#e4eaf0" stroke-width="2.5" opacity="0.5" stroke-linejoin="round"/>
+  <g fill="#3a424c" stroke="#1c2128" stroke-width="2">
+    <circle cx="128" cy="52" r="6"/><circle cx="204" cy="128" r="6"/><circle cx="128" cy="204" r="6"/><circle cx="52" cy="128" r="6"/>
+  </g>
+  <!-- hazard ticks -->
+  <g stroke="#f2b84b" stroke-width="5" stroke-linecap="round">
+    <line x1="174" y1="70" x2="184" y2="60"/><line x1="186" y1="186" x2="176" y2="176"/>
+    <line x1="70" y1="186" x2="80" y2="176"/><line x1="72" y1="72" x2="82" y2="82"/>
+  </g>
+  <!-- status ring (dim) -->
+  <circle cx="128" cy="128" r="58" fill="url(#steelDark)" stroke="#1c2128" stroke-width="5"/>
+  <circle cx="128" cy="128" r="50" fill="none" stroke="#3fe0e8" stroke-width="5" opacity="0.35" stroke-dasharray="14 8"/>
+  <!-- closed iris nozzle -->
+  <circle cx="128" cy="128" r="38" fill="#4a535e" stroke="#1c2128" stroke-width="4"/>
+  <g stroke="#1c2128" stroke-width="3" fill="none">
+    <path d="M128,90 L140,128"/><path d="M161,109 L128,128"/><path d="M161,147 L116,128"/>
+    <path d="M128,166 L116,128"/><path d="M95,147 L128,128"/><path d="M95,109 L140,128"/>
+  </g>
+  <circle cx="128" cy="128" r="6" fill="#1c2128"/>
+  <path d="M100,104 A36,36 0 0 1 128,92" fill="none" stroke="#c2cad4" stroke-width="3" opacity="0.6"/>
 </svg>

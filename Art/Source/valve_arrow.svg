@@ -1,18 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- Deflector Valve arrow: bright glowing directional arrow pointing RIGHT (0°); the game rotates it -->
+  <!-- Sap Router glyph: glowing sap arrow pointing RIGHT (0°); the game rotates it -->
   <defs>
-    <linearGradient id="arrow" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#fff59d"/>
-      <stop offset="1" stop-color="#ffd23f"/>
+    <linearGradient id="sap" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff2b8"/>
+      <stop offset="1" stop-color="#f2c14e"/>
     </linearGradient>
-    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="8"/>
-    </filter>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="8"/></filter>
   </defs>
-  <path filter="url(#glow)" fill="#fff176" opacity="0.9"
-        d="M40,104 H136 V60 L220,128 L136,196 V152 H40 Z"/>
-  <path fill="url(#arrow)" stroke="#7a4b00" stroke-width="7" stroke-linejoin="round"
-        d="M44,106 H138 V66 L214,128 L138,190 V150 H44 Z"/>
-  <path fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"
-        d="M54,116 H148 V88 L196,128"/>
+  <path filter="url(#glow)" fill="#ffd966" opacity="0.9" d="M44,104 C80,100 110,104 136,100 V62 L218,128 L136,194 V156 C110,152 80,156 44,152 Z"/>
+  <path fill="url(#sap)" stroke="#7a4b00" stroke-width="7" stroke-linejoin="round"
+        d="M48,108 C82,104 110,108 138,104 V68 L212,128 L138,188 V152 C110,148 82,152 48,148 C40,138 40,118 48,108 Z"/>
+  <path fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity="0.75"
+        d="M58,118 C90,114 120,118 148,114 V90 L192,126"/>
+  <g fill="#fff8d8" opacity="0.85"><circle cx="76" cy="136" r="4"/><circle cx="110" cy="134" r="3"/></g>
 </svg>

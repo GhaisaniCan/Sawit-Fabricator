@@ -1,16 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
   <!-- Move Arrow (8-way slide selection), pointing RIGHT; the game rotates and tints it.
-       Mostly white so UnitManager's idle/hover tint colours read correctly. -->
+       Mostly white so UnitManager's idle/hover tint colours read correctly. Cyan/magenta halo ties it to the Tech Bug -->
   <defs>
-    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
-      <feGaussianBlur stdDeviation="9"/>
-    </filter>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
   </defs>
-  <!-- magenta halo ties it to the Cancer Cell -->
-  <path filter="url(#glow)" fill="#ff3be0" opacity="0.75"
-        d="M56,40 L200,128 L56,216 L92,128 Z"/>
-  <!-- double chevron body -->
-  <path fill="#ffffff" stroke="#2a0845" stroke-width="10" stroke-linejoin="round"
+  <path filter="url(#glow)" fill="#22e5f0" opacity="0.7" d="M52,44 L196,128 L52,212 L88,128 Z"/>
+  <path filter="url(#glow)" fill="#ff3dbe" opacity="0.55" d="M64,44 L208,128 L64,212 L100,128 Z"/>
+  <path fill="#ffffff" stroke="#0a0e16" stroke-width="10" stroke-linejoin="miter"
         d="M60,44 L204,128 L60,212 L98,128 Z"/>
-  <path fill="#ffe3fb" opacity="0.9" d="M84,92 L150,128 L84,164 L102,128 Z"/>
+  <path fill="#e6fcff" opacity="0.9" d="M86,92 L150,128 L86,164 L104,128 Z"/>
+  <rect x="112" y="122" width="40" height="4" fill="#22e5f0" opacity="0.8"/>
 </svg>

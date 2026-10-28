@@ -49,6 +49,9 @@ public abstract class Tile : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         if (GameManager.Instance.gameState != GameState.PlayerTurn || UnitManager.Instance.IsBusy) return;
 
+        // Middle/right buttons pan the camera, so only left presses act on the board
+        if (eventData.button != PointerEventData.InputButton.Left || CameraController.IsPanning) return;
+
         // Checked by type, not Faction, since the Faction field on unit prefabs can be wrong
         if (occupiedUnit is BasePlayer player)
         {

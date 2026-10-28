@@ -586,6 +586,7 @@ MonoBehaviour:
   arrowSprite: {fileID: 21300000, guid: f31ffc017f5ee2d46b8e5e1cb4d4ba0d, type: 3}
   moveSpeed: 8
   interactablesPreventLose: 1
+  lowEnergyThreshold: 2
 --- !u!1 &1976449856
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,7 +635,7 @@ MonoBehaviour:
   height: 8
   tilePrefab: {fileID: 9200977322369064681, guid: 6b4f71e154516254a906632c211f54f9, type: 3}
   cam: {fileID: 519420032}
-  level: {fileID: 11400000, guid: 0725daa2e64b84f4ab81a62d325036d8, type: 2}
+  level: {fileID: 11400000, guid: e7ac0f12bd6b7264bbec0305f7459f2e, type: 2}
   frameSprite: {fileID: 21300000, guid: 0b533778f587803469809eff63a16ccb, type: 3}
   frameSortingLayer: TileRender
   frameSortingOrder: -5

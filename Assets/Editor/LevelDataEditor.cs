@@ -23,11 +23,15 @@ public class LevelDataEditor : Editor
     private static readonly Color playerOutline = new Color(0.3f, 0.8f, 1f);
     private static readonly Color enemyOutline = new Color(1f, 0.35f, 0.35f);
     private static readonly Color coreOutline = new Color(0.4f, 1f, 0.45f);
+    private static readonly Color energyOutline = new Color(0.25f, 0.95f, 1f);
+    private static readonly Color movingOutline = new Color(1f, 0.75f, 0.2f);
 
     private static Color GetOutline(ScriptableUnit unit)
     {
         if (unit.UnitPrefab is BasePlayer) return playerOutline;
+        if (unit.UnitPrefab is MovingCell movingCell) return movingCell.IsHostile ? enemyOutline : movingOutline;
         if (unit.UnitPrefab is CoreCell) return coreOutline;
+        if (unit.UnitPrefab is EnergyCell) return energyOutline;
         return enemyOutline;
     }
 
@@ -49,6 +53,7 @@ public class LevelDataEditor : Editor
         serializedObject.Update();
 
         DrawSize(level);
+        DrawEnergy(level);
 
         serializedObject.ApplyModifiedProperties();
 
@@ -64,7 +69,7 @@ public class LevelDataEditor : Editor
 
         EditorGUILayout.Space();
         serializedObject.Update();
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("units"), new GUIContent("Units (edit blocker overrides here)"), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("units"), new GUIContent("Units (edit per-placement overrides here)"), true);
         serializedObject.ApplyModifiedProperties();
     }
 
@@ -83,6 +88,33 @@ public class LevelDataEditor : Editor
             level.Resize(newWidth, newHeight);
             EditorUtility.SetDirty(level);
         }
+    }
+
+    // Move limit: how much energy the Tech Bug starts with and the most it can hold
+    private void DrawEnergy(LevelData level)
+    {
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Energy", EditorStyles.boldLabel);
+
+        EditorGUI.BeginChangeCheck();
+        var initialMoves = EditorGUILayout.IntField(new GUIContent("Initial Moves", "0 = unlimited"), level.initialMoves);
+        int maxMoves;
+        using (new EditorGUI.DisabledScope(initialMoves <= 0))
+        {
+            maxMoves = EditorGUILayout.IntField(new GUIContent("Max Moves", "Recharges can't go above this"), level.maxMoves);
+        }
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            Undo.RecordObject(level, "Change Energy");
+            level.initialMoves = Mathf.Max(0, initialMoves);
+            level.maxMoves = Mathf.Max(1, maxMoves, level.initialMoves);
+            EditorUtility.SetDirty(level);
+        }
+
+        EditorGUILayout.HelpBox(level.HasMoveLimit
+            ? $"Starts with {level.initialMoves} / {level.maxMoves}. Each slide costs 1; capturing a unit with Moves Restored On Capture recharges it."
+            : "Unlimited moves (no energy limit).", MessageType.None);
     }
 
     // One row per tile type: painter colour, tile prefab, remove button
@@ -211,13 +243,14 @@ public class LevelDataEditor : Editor
         var gridRect = GUILayoutUtility.GetRect(cellSize * level.width, cellSize * level.height, GUILayout.ExpandWidth(false));
 
         var blockedCells = GetBlockedCells(level);
+        var routeCells = GetMovingCellRoutes(level);
 
         for (int x = 0; x < level.width; x++)
         {
             for (int y = 0; y < level.height; y++)
             {
                 var cellRect = GetCellRect(gridRect, cellSize, level.height, x, y);
-                DrawCell(level, cellRect, new Vector2Int(x, y), blockedCells);
+                DrawCell(level, cellRect, new Vector2Int(x, y), blockedCells, routeCells);
             }
         }
 
@@ -230,7 +263,7 @@ public class LevelDataEditor : Editor
         return new Rect(gridRect.x + x * cellSize, gridRect.y + (height - 1 - y) * cellSize, cellSize, cellSize);
     }
 
-    private void DrawCell(LevelData level, Rect cellRect, Vector2Int position, HashSet<Vector2Int> blockedCells)
+    private void DrawCell(LevelData level, Rect cellRect, Vector2Int position, HashSet<Vector2Int> blockedCells, Dictionary<Vector2Int, Color> routeCells)
     {
         var inner = new Rect(cellRect.x + 1, cellRect.y + 1, cellRect.width - 2, cellRect.height - 2);
 
@@ -244,6 +277,12 @@ public class LevelDataEditor : Editor
             GUI.Label(inner, "#", EditorStyles.centeredGreyMiniLabel);
         }
 
+        // Dot on every tile a Moving Cell visits over one cycle of its sequence
+        if (routeCells.TryGetValue(position, out var routeColor))
+        {
+            EditorGUI.DrawRect(new Rect(inner.center.x - 3, inner.center.y - 3, 6, 6), routeColor);
+        }
+
         var placement = level.GetUnitAt(position);
         if (placement != null && placement.unit != null)
         {
@@ -252,9 +291,26 @@ public class LevelDataEditor : Editor
             var sprite = GetSprite(placement.unit);
             if (sprite != null) DrawSprite(new Rect(inner.x + 3, inner.y + 3, inner.width - 6, inner.height - 6), sprite);
             else GUI.Label(inner, placement.unit.name.Substring(0, 1), EditorStyles.centeredGreyMiniLabel);
+
+            DrawEnergyBadge(level, inner, placement);
         }
 
         GUI.Label(new Rect(inner.x + 1, inner.y + inner.height - 12, inner.width, 12), $"{position.x},{position.y}", EditorStyles.miniLabel);
+    }
+
+    // "+N" in the cell's top-right for units that recharge energy when captured ("*" = overridden for this placement)
+    private static void DrawEnergyBadge(LevelData level, Rect cellRect, LevelData.UnitPlacement placement)
+    {
+        if (!level.HasMoveLimit || placement.unit.UnitPrefab == null || placement.unit.UnitPrefab is BasePlayer) return;
+
+        var moves = placement.overrideMovesRestored ? placement.movesRestoredOnCapture : placement.unit.UnitPrefab.MovesRestoredOnCapture;
+        if (moves <= 0) return;
+
+        var label = $"+{moves}{(placement.overrideMovesRestored ? "*" : "")}";
+        var style = new GUIStyle(EditorStyles.miniBoldLabel) { alignment = TextAnchor.UpperRight, normal = { textColor = energyOutline } };
+        var badge = new Rect(cellRect.x, cellRect.y, cellRect.width - 2, 14);
+        EditorGUI.DrawRect(new Rect(badge.xMax - 22, badge.y + 1, 22, 12), new Color(0f, 0f, 0f, 0.55f));
+        GUI.Label(badge, label, style);
     }
 
     private void HandleGridMouse(LevelData level, Rect gridRect, float cellSize)
@@ -340,6 +396,11 @@ public class LevelDataEditor : Editor
                 continue;
             }
 
+            if (placement.unit.UnitPrefab is MovingCell movingCell && GetMoveSequence(placement, movingCell).Length == 0)
+            {
+                EditorGUILayout.HelpBox($"{placement.unit.name} at {placement.position} has an empty move sequence and will never move.", MessageType.Warning);
+            }
+
             var tilePrefab = level.GetTilePrefab(placement.position.x, placement.position.y);
             if (tilePrefab != null && !IsWalkablePrefab(tilePrefab))
             {
@@ -369,6 +430,33 @@ public class LevelDataEditor : Editor
         }
 
         return blocked;
+    }
+
+    private static Vector2Int[] GetMoveSequence(LevelData.UnitPlacement placement, MovingCell movingCell)
+    {
+        var sequence = placement.overrideMoveSequence ? placement.moveSequence : movingCell.MoveSequence;
+        return sequence ?? new Vector2Int[0];
+    }
+
+    // Tiles each Moving Cell visits over one cycle of its sequence, assuming nothing blocks it
+    private static Dictionary<Vector2Int, Color> GetMovingCellRoutes(LevelData level)
+    {
+        var route = new Dictionary<Vector2Int, Color>();
+
+        foreach (var placement in level.units)
+        {
+            if (placement.unit == null || !(placement.unit.UnitPrefab is MovingCell movingCell)) continue;
+
+            var color = movingCell.IsHostile ? enemyOutline : movingOutline;
+            var position = placement.position;
+            foreach (var step in GetMoveSequence(placement, movingCell))
+            {
+                position += MovingCell.Clamp(step);
+                if (level.IsInside(position) && position != placement.position) route[position] = color;
+            }
+        }
+
+        return route;
     }
 
     private static bool IsWalkablePrefab(Tile tilePrefab)

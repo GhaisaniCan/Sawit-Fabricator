@@ -25,10 +25,26 @@ public class LevelData : ScriptableObject
         public Vector2Int[] blockedTileOffsets = new Vector2Int[0];
         [Tooltip("Only for Defensive Cells: colour for ColorMatch chemical valves. None keeps the prefab's colour.")]
         public ChemicalColor chemicalColor;
+
+        // Only used when the unit is a MovingCell: its steps, one per Tech Bug move, repeated in order
+        public bool overrideMoveSequence;
+        [Tooltip("Only for Moving Cells: one tile step per Tech Bug move, e.g. (0,1), (0,-1). (0,0) waits a turn.")]
+        public Vector2Int[] moveSequence = new Vector2Int[0];
+
+        // Any capturable unit: energy gained for capturing this one, instead of the prefab's value
+        public bool overrideMovesRestored;
+        [Min(0)] public int movesRestoredOnCapture;
     }
 
     [Min(1)] public int width = 8;
     [Min(1)] public int height = 8;
+
+    [Tooltip("Energy the Tech Bug starts with; each slide costs 1. 0 = unlimited (no energy limit).")]
+    [Min(0)] public int initialMoves = 3;
+    [Tooltip("Energy cap: recharges from captures can't go above this (the \"/ max\" in an energy counter).")]
+    [Min(1)] public int maxMoves = 10;
+
+    public bool HasMoveLimit => initialMoves > 0;
 
     public List<TileOption> tileOptions = new List<TileOption>();
 
@@ -123,6 +139,7 @@ public class LevelData : ScriptableObject
     private void OnValidate()
     {
         EnsureCellCount();
+        if (HasMoveLimit) maxMoves = Mathf.Max(maxMoves, initialMoves);
 
         // List elements added through the default Inspector start fully transparent
         for (int i = 0; i < tileOptions.Count; i++)

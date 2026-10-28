@@ -12,6 +12,11 @@ public class UnitManager : MonoBehaviour
     // Raised once per finished slide (one "turn"); timed effects such as retracted vines count these
     public static event System.Action SlideFinished;
 
+    // Energy (move limit). (currentMoves, maxMoves); maxMoves is 0 when the level has no move limit
+    public static event System.Action<int, int> OnMovesChanged;
+    // Raised whenever energy changes to a value at or below lowEnergyThreshold (but above 0)
+    public static event System.Action<int> OnEnergyCritical;
+
     public BasePlayer selectedPlayer;
 
     [SerializeField] private Sprite arrowSprite; // optional, a triangle is generated when empty
@@ -19,6 +24,9 @@ public class UnitManager : MonoBehaviour
 
     [Tooltip("When on, the level is only lost if no gate or valve can be clicked either, since clicking one may open a new path.")]
     [SerializeField] private bool interactablesPreventLose = true;
+
+    [Tooltip("OnEnergyCritical fires when energy drops to this many moves or fewer")]
+    [SerializeField, Min(1)] private int lowEnergyThreshold = 2;
 
     private static readonly Vector2[] moveDirections =
     {
@@ -28,10 +36,20 @@ public class UnitManager : MonoBehaviour
 
     private readonly List<MoveArrow> arrows = new List<MoveArrow>();
     private readonly HashSet<CoreCell> activeCoreCells = new HashSet<CoreCell>();
+    // In spawn order, which is also the order they step in within their group
+    private readonly List<MovingCell> movingCells = new List<MovingCell>();
     private bool isMoving;
+
+    // Energy is one pool shared by every Tech Bug on the board
+    private bool movesLimited;
+    private int currentMoves;
+    private int maxMoves;
 
     public bool IsBusy => isMoving;
     public int ActiveCoreCellCount => activeCoreCells.Count;
+    public bool MovesLimited => movesLimited;
+    public int CurrentMoves => currentMoves;
+    public int MaxMoves => maxMoves;
 
     private void Awake()
     {
@@ -46,6 +64,10 @@ public class UnitManager : MonoBehaviour
     public void SpawnPlayers() {
 
         var level = GridManager.Instance.Level;
+
+        // Before the players spawn, so their energy flashers see the starting value
+        InitEnergy(level);
+
         if (level != null)
         {
             SpawnLevelUnits<BasePlayer>(level);
@@ -71,6 +93,7 @@ public class UnitManager : MonoBehaviour
         {
             SpawnLevelUnits<BaseEnemy>(level);
             SpawnLevelUnits<CoreCell>(level);
+            SpawnLevelUnits<EnergyCell>(level);
             GameManager.Instance.ChangeState(GameState.PlayerTurn);
             return;
         }
@@ -103,11 +126,18 @@ public class UnitManager : MonoBehaviour
 
             var spawnedUnit = Instantiate(placement.unit.UnitPrefab);
 
+            if (placement.overrideMovesRestored) spawnedUnit.SetMovesRestoredOnCapture(placement.movesRestoredOnCapture);
+
             // Must happen before the enemy's Start, which is when it builds its vines and colour marker
             if (spawnedUnit is BlockingEnemy blockingEnemy)
             {
                 if (placement.overrideBlockedTiles) blockingEnemy.SetBlockedTileOffsets(placement.blockedTileOffsets);
                 if (placement.chemicalColor != ChemicalColor.None) blockingEnemy.SetEnemyColor(placement.chemicalColor);
+            }
+
+            if (spawnedUnit is MovingCell movingCell && placement.overrideMoveSequence)
+            {
+                movingCell.SetMoveSequence(placement.moveSequence);
             }
 
             tile.SetUnit(spawnedUnit);
@@ -152,6 +182,57 @@ public class UnitManager : MonoBehaviour
     public void UnregisterCoreCell(CoreCell coreCell) {
 
         activeCoreCells.Remove(coreCell);
+
+    }
+
+    public void RegisterMovingCell(MovingCell movingCell) {
+
+        if (!movingCells.Contains(movingCell)) movingCells.Add(movingCell);
+
+    }
+
+    public void UnregisterMovingCell(MovingCell movingCell) {
+
+        movingCells.Remove(movingCell);
+
+    }
+
+    #endregion
+
+
+    #region Energy
+
+    // Levels without LevelData, or with initialMoves 0, have unlimited moves
+    private void InitEnergy(LevelData level) {
+
+        movesLimited = level != null && level.HasMoveLimit;
+        maxMoves = movesLimited ? Mathf.Max(level.maxMoves, level.initialMoves) : 0;
+        SetMoves(movesLimited ? level.initialMoves : 0);
+
+    }
+
+    private void SetMoves(int value) {
+
+        currentMoves = movesLimited ? Mathf.Clamp(value, 0, maxMoves) : 0;
+
+        OnMovesChanged?.Invoke(currentMoves, maxMoves);
+        if (movesLimited && currentMoves > 0 && currentMoves <= lowEnergyThreshold) OnEnergyCritical?.Invoke(currentMoves);
+
+    }
+
+    // One finished slide: pay 1 move, then add what the captured unit restores (capped at maxMoves)
+    private void SpendMove(int movesRestored) {
+
+        if (!movesLimited) return;
+        SetMoves(currentMoves - 1 + movesRestored);
+
+    }
+
+    // A capture that isn't the Tech Bug's own slide (a passive Moving Cell stepping into it)
+    private void RestoreMoves(int movesRestored) {
+
+        if (!movesLimited || movesRestored <= 0) return;
+        SetMoves(currentMoves + movesRestored);
 
     }
 
@@ -248,8 +329,9 @@ public class UnitManager : MonoBehaviour
     // Every tile the slide passes through, in order; the last one is where the unit ends up.
     // Empty when the unit can't move that way at all.
     //  - board edge, wall, closed gate, vine-blocked tile or friendly unit: stop before it
-    //  - hazardous vines over open ground: enter the tile and be destroyed (endsInHazard)
+    //  - hazardous vines over open ground, or a hostile Moving Cell: enter the tile and be destroyed (endsInHazard)
     //  - enemy or Core Cell: stop on its tile and capture it
+    //  - stop tile (resin snare): enter it and stop there
     //  - deflector valve: enter it, then continue in the valve's direction
     private List<Tile> GetSlidePath(Tile start, Vector2 direction, out bool endsInHazard) {
 
@@ -265,6 +347,13 @@ public class UnitManager : MonoBehaviour
             var next = GetTileAt((Vector2)current.transform.position + direction);
 
             if (next == null) break;
+
+            if (next.occupiedUnit is MovingCell movingCell && movingCell.IsHostile)
+            {
+                path.Add(next);
+                endsInHazard = true;
+                break;
+            }
 
             if (next.occupiedUnit != null)
             {
@@ -284,6 +373,9 @@ public class UnitManager : MonoBehaviour
 
             path.Add(next);
             current = next;
+
+            // Resin snare: stop on it
+            if (next is StopTile) break;
 
             if (next is DeflectorValveTile valve)
             {
@@ -312,34 +404,66 @@ public class UnitManager : MonoBehaviour
             }
         }
 
+        var capturedCoreCell = false;
+
         if (endsInHazard)
         {
-            yield return DestroyPlayerInVines(player);
+            yield return DestroyPlayer(player);
+            Debug.Log("The Tech Bug was destroyed by thorny roots or a hostile cell.");
+        }
+        else
+        {
+            var destination = path[path.Count - 1];
+            var movesRestored = 0;
+
+            if (destination.occupiedUnit != null && destination.occupiedUnit != player)
+            {
+                capturedCoreCell = destination.occupiedUnit is CoreCell;
+                movesRestored = destination.occupiedUnit.MovesRestoredOnCapture;
+                Capture(destination.occupiedUnit);
+            }
+
+            destination.SetUnit(player);
+            SpendMove(movesRestored);
+        }
+
+        yield return FinishTurn(capturedCoreCell);
+
+    }
+
+
+    // After the Tech Bug's slide: win right away on the last Core Cell, otherwise let the Moving Cells
+    // take their turn, then check win/lose and count the turn (SlideFinished)
+    private IEnumerator FinishTurn(bool capturedCoreCell) {
+
+        // Win/lose first, so capturing the last Core Cell wins even if vines regrow this turn
+        // (and even if that move used the last of the energy)
+        if (capturedCoreCell && activeCoreCells.Count == 0)
+        {
+            isMoving = false;
+            ResolveOutcome(true);
+            SlideFinished?.Invoke();
             yield break;
         }
 
-        var destination = path[path.Count - 1];
-        var capturedCoreCell = false;
-
-        if (destination.occupiedUnit != null && destination.occupiedUnit != player)
-        {
-            capturedCoreCell = destination.occupiedUnit is CoreCell;
-            Capture(destination.occupiedUnit);
-        }
-
-        destination.SetUnit(player);
+        if (AnyPlayerLeft()) yield return MoveCells();
 
         isMoving = false;
 
-        // Win/lose first, so capturing the last Core Cell wins even if vines regrow this turn
-        ResolveOutcome(capturedCoreCell);
+        if (!AnyPlayerLeft())
+        {
+            GameManager.Instance.ChangeState(GameState.Lose);
+            yield break;
+        }
+
+        ResolveOutcome();
         SlideFinished?.Invoke();
 
     }
 
 
-    // The Cancer Cell slid into hazardous vines: shrink it away, then lose unless another Cancer Cell is left
-    private IEnumerator DestroyPlayerInVines(BasePlayer player) {
+    // Shrinks the Tech Bug away and removes it from the board (thorny roots or a hostile Moving Cell)
+    private IEnumerator DestroyPlayer(BasePlayer player) {
 
         // Stop the idle breathing first; disabling it restores the cell's base scale for the shrink
         var idle = player.GetComponent<CellIdleAnimator>();
@@ -352,29 +476,130 @@ public class UnitManager : MonoBehaviour
             yield return null;
         }
 
-        if (player.OccupiedTile != null) player.OccupiedTile.occupiedUnit = null;
+        // A hostile cell may already have taken the tile
+        if (player.OccupiedTile != null && player.OccupiedTile.occupiedUnit == player) player.OccupiedTile.occupiedUnit = null;
         Destroy(player.gameObject);
 
-        isMoving = false;
-        Debug.Log("The Cancer Cell was destroyed by hazardous vines.");
+    }
 
-        var anotherPlayerLeft = GridManager.Instance.AllTiles.Any(t => t.occupiedUnit is BasePlayer);
-        if (!anotherPlayerLeft)
+
+    private static bool AnyPlayerLeft() {
+
+        return GridManager.Instance.AllTiles.Any(t => t.occupiedUnit is BasePlayer);
+
+    }
+
+
+    // The enemy turn: every passive Moving Cell steps, then every hostile one
+    private IEnumerator MoveCells() {
+
+        movingCells.RemoveAll(c => c == null);
+        if (movingCells.Count == 0) yield break;
+
+        GameManager.Instance.ChangeState(GameState.EnemyTurn);
+
+        yield return MoveCellGroup(false);
+        if (AnyPlayerLeft()) yield return MoveCellGroup(true);
+
+        if (GameManager.Instance.gameState == GameState.EnemyTurn) GameManager.Instance.ChangeState(GameState.PlayerTurn);
+
+    }
+
+
+    // Moves one group (passive or hostile) together. Steps are decided in spawn order, so a cell can move
+    // into a tile another cell of the same group just left.
+    private IEnumerator MoveCellGroup(bool hostile) {
+
+        var group = movingCells.Where(c => c != null && c.IsHostile == hostile).ToList();
+
+        var steps = new List<(MovingCell cell, Vector3 from, Vector3 to)>();
+        var caughtCells = new List<MovingCell>();  // passive cells that stepped into a Tech Bug
+        var victims = new List<BasePlayer>();      // Tech Bugs a hostile cell stepped into
+
+        foreach (var cell in group)
         {
-            GameManager.Instance.ChangeState(GameState.Lose);
-            yield break;
+            // Only a cell still standing on its own tile acts (not one captured or removed this turn)
+            if (cell == null || cell.OccupiedTile == null || cell.OccupiedTile.occupiedUnit != cell) continue;
+
+            var step = cell.NextMove;
+            cell.AdvanceSequence();
+            if (step == Vector2Int.zero) continue;
+
+            var from = cell.OccupiedTile;
+            var target = GetTileAt((Vector2)from.transform.position + step);
+            if (target == null) continue;
+
+            var fromPosition = cell.transform.position;
+
+            if (target.occupiedUnit is BasePlayer player)
+            {
+                if (hostile)
+                {
+                    // Takes the tile now; the Tech Bug is removed once the step has played
+                    target.SetUnit(cell);
+                    if (!victims.Contains(player)) victims.Add(player);
+                }
+                else
+                {
+                    // Captured: off the board now, destroyed once it has visibly reached the Tech Bug
+                    from.occupiedUnit = null;
+                    cell.OccupiedTile = null;
+                    caughtCells.Add(cell);
+                }
+            }
+            else if (target.walkable)
+            {
+                target.SetUnit(cell);
+            }
+            else
+            {
+                continue; // blocked: wait this turn
+            }
+
+            // SetUnit snaps the transform; put it back so the step can be animated
+            cell.transform.position = fromPosition;
+            steps.Add((cell, fromPosition, target.transform.position));
         }
 
-        ResolveOutcome();
-        SlideFinished?.Invoke();
+        if (steps.Count == 0) yield break;
+
+        var duration = 1f / moveSpeed;
+        for (float t = 0f; t < duration; t += Time.deltaTime)
+        {
+            foreach (var step in steps)
+            {
+                if (step.cell != null) step.cell.transform.position = Vector3.Lerp(step.from, step.to, t / duration);
+            }
+            yield return null;
+        }
+        foreach (var step in steps)
+        {
+            if (step.cell != null) step.cell.transform.position = step.to;
+        }
+
+        foreach (var cell in caughtCells)
+        {
+            if (cell == null) continue;
+            RestoreMoves(cell.MovesRestoredOnCapture);
+            movingCells.Remove(cell);
+            Destroy(cell.gameObject);
+        }
+
+        foreach (var player in victims)
+        {
+            yield return DestroyPlayer(player);
+            Debug.Log("The Tech Bug was caught by a hostile Moving Cell.");
+        }
 
     }
 
 
     private void Capture(BaseUnit unit) {
 
-        // Destroy is deferred to the end of the frame, so drop the core cell from the count right away
+        // Destroy is deferred to the end of the frame, so drop the core cell from the count right away,
+        // and a captured Moving Cell from the turn order (the enemy turn starts this same frame)
         if (unit is CoreCell coreCell) activeCoreCells.Remove(coreCell);
+        if (unit is MovingCell movingCell) movingCells.Remove(movingCell);
 
         // A captured BlockingEnemy frees its tiles and retracts its vines in its own OnDestroy
         Destroy(unit.gameObject);
@@ -384,7 +609,9 @@ public class UnitManager : MonoBehaviour
 
     private static bool IsCapturable(BaseUnit unit) {
 
-        return unit is BaseEnemy || unit is CoreCell;
+        // A hostile Moving Cell can't be captured; sliding into it destroys the Tech Bug (see GetSlidePath)
+        if (unit is MovingCell movingCell && movingCell.IsHostile) return false;
+        return unit is BaseEnemy || unit is CoreCell || unit is EnergyCell;
 
     }
 
@@ -401,7 +628,8 @@ public class UnitManager : MonoBehaviour
     #region Win / lose
 
     // Win: the move just captured the last Core Cell.
-    // Lose: Core Cells remain but no Cancer Cell can slide anywhere (and, if enabled, nothing can be clicked).
+    // Lose: Core Cells remain and either the energy has run out, or no Cancer Cell can slide anywhere
+    // (and, if enabled, nothing can be clicked).
     private void ResolveOutcome(bool capturedCoreCell = false) {
 
         if (GameManager.Instance.gameState != GameState.PlayerTurn) return;
@@ -413,6 +641,13 @@ public class UnitManager : MonoBehaviour
         }
 
         if (activeCoreCells.Count == 0) return;
+
+        if (movesLimited && currentMoves <= 0)
+        {
+            Debug.Log("The Tech Bug ran out of energy.");
+            GameManager.Instance.ChangeState(GameState.Lose);
+            return;
+        }
 
         if (AnyPlayerCanMove()) return;
         if (interactablesPreventLose && GridManager.Instance.AllTiles.Any(t => t.CanInteract)) return;

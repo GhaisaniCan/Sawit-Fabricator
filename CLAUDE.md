@@ -21,8 +21,11 @@ MonoBehaviours would break prefab references), so map theme → class with this 
 | Injector gland                     | Chemical valve  | `ChemicalValveTile` (retracts roots) |
 | Seed matrix tile                   | Cytoplasm       | `GrassTile`                  |
 | Lignin wall                        | Cellulose wall  | `WallTile`                   |
+| Resin snare                        | —               | `StopTile`                   |
+| Pollen Drifter (passive)           | —               | `MovingCell : BaseEnemy` (`hostile` off) |
+| Seed Burr (hostile)                | —               | `MovingCell : BaseEnemy` (`hostile` on) |
 
-Some code and asset names still carry the old theme (`DestroyPlayerInVines`, `cancer_cell.png`,
+Some code and asset names still carry the old theme (`cancer_cell.png`,
 `PlayerSkull`, "Level 2 Infection Route"). Leave them alone unless you rename them inside Unity.
 
 ## Tech
@@ -41,20 +44,24 @@ Some code and asset names still carry the old theme (`DestroyPlayerInVines`, `ca
 Assets/
   Scripts/
     Managers/   GameManager, GridManager, UnitManager   (singletons via static Instance set in Awake)
-    Tiles/      Tile (abstract), GrassTile, WallTile
+    Tiles/      Tile (abstract), GrassTile, WallTile, StopTile
       Plant/    PlantInteractableTile (abstract), CellWallGateTile, DeflectorValveTile, ChemicalValveTile,
                 ChemicalColor (enum + colours)
-    Units/      BaseUnit, ScriptableUnit, MoveArrow, CellIdleAnimator
+    Units/      BaseUnit, ScriptableUnit, MoveArrow, CellIdleAnimator, PlayerEnergyFlasher
+      Energy/   EnergyCell
       Players/  BasePlayer, Player1
-      Enemies/  BaseEnemy, Enemy1, Enemy2, BlockingEnemy, VineSegment
+      Enemies/  BaseEnemy, Enemy1, Enemy2, BlockingEnemy, VineSegment, MovingCell
       Cores/    CoreCell
     Levels/     LevelData (ScriptableObject)
     Utility/    GeneratedSprites (placeholder square / frame / triangle sprites), CameraController
   Editor/       LevelDataEditor (grid painter for LevelData)
   Levels/       Level 1, Level Test, Level 2 Infection Route, Level 3 Overgrowth (roots + injector demo),
-                Level 4 Chemistry (all three injector targeting modes)
-  Prefabs/      Tiles/ (Base, Grass, Wall, Gate, Gate Closed, Deflector Valve, Chemical Valve [+ Area, Azure], AssetTestTile)
-                Units/ (PlayerSkull, EnemyPrabowo, EnemySawit, EnemyBlocker, EnemyBlocker Thorny, Cores/CoreCell)
+                Level 4 Chemistry (all three injector targeting modes), Level 5 Skizo,
+                Level 6 Energy (move limit + Energy Cell test level), Level 6 Drifters (Moving Cells demo)
+  Prefabs/      Tiles/ (Base, Grass, Wall, Stop, Gate, Gate Closed, Deflector Valve, Chemical Valve [+ Area, Azure], AssetTestTile)
+                Units/ (PlayerSkull, EnemyPrabowo, EnemySawit, EnemyBlocker, EnemyBlocker Thorny, MovingCell, MovingCell Hostile,
+                        Cores/CoreCell,
+                        Energy/EnergyCell)
                 FX/ (Chemical Smoke)
   Materials/    Chemical Smoke.mat
   Resources/Units/  ScriptableUnit assets (loaded with Resources.LoadAll<ScriptableUnit>("Units"))
@@ -74,9 +81,14 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
                                             enemies + cores)   clicks repeat)
 ```
 
-- The player keeps moving during `PlayerTurn`. `EnemyTurn` exists but is unused.
+- The player keeps moving during `PlayerTurn`. After each slide the **Moving Cells** take their turn in
+  `EnemyTurn` (passive cells, then hostile ones), then it's `PlayerTurn` again. Without Moving Cells the
+  state never leaves `PlayerTurn`.
 - **Win:** a move corrupts the last Seed Embryo (`UnitManager.ResolveOutcome(capturedCoreCell: true)`).
-- **Lose (hazard):** the last Tech Bug slides into thorny roots and is destroyed (`DestroyPlayerInVines`).
+- **Lose (hazard):** the last Tech Bug slides into thorny roots or a hostile Moving Cell, or a hostile Moving Cell
+  steps onto it, and it's destroyed (`DestroyPlayer`).
+- **Lose (energy):** the level has a move limit, energy hits 0 and Seed Embryos remain. Checked after the win
+  check, so corrupting the last embryo with the last move still wins.
 - **Lose (stuck):** Seed Embryos remain and no Tech Bug has any safe slide in any direction. With
   `UnitManager.interactablesPreventLose` on (the default), it's also required that no gate, router or
   gland can be clicked, since clicking one might open a path. Turn it off for the strict rule.
@@ -136,23 +148,76 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
   scale (`scaleFrequency`, `scaleAmplitude`, optional `squashAndStretch`) and Z sway (`rotationFrequency`,
   `rotationAngleMax`), random phases per cell. It animates relative to the scale/rotation captured in
   `OnEnable` and restores them in `OnDisable`, so **disable it before animating the unit's transform
-  yourself** (`DestroyPlayerInVines` does). Slides only move position, so they don't conflict.
+  yourself** (`DestroyPlayer` does). Slides only move position, so they don't conflict.
+
+### Energy (move limit) (`UnitManager`, `LevelData`, `PlayerEnergyFlasher`, `EnergyCell`)
+- Per level: `LevelData.initialMoves` (default 3; **0 = unlimited**) and `maxMoves` (cap, default 10).
+  Levels 1–5 and Level Test are set to 0 (they were designed without a limit). No LevelData = unlimited.
+- `UnitManager.InitEnergy` runs at the start of `SpawnPlayers` (before the players exist). Energy is one pool
+  shared by every Tech Bug. `CurrentMoves`, `MaxMoves` (0 when unlimited), `MovesLimited`.
+- Each finished slide calls `SpendMove(restored)`: −1, then + the captured unit's `MovesRestoredOnCapture`,
+  clamped to `0..maxMoves`. Clicking interactables is free. Hazard deaths don't spend.
+- **Every unit** has a serialized `movesRestoredOnCapture` on `BaseUnit` (default 0; read via
+  `MovesRestoredOnCapture`). Prefab values: CoreCell **3**, EnergyCell **3**, everything else 0 (set it on any
+  enemy prefab, e.g. a Root Sentinel, to make capturing it recharge).
+- Per-level override: `LevelData.UnitPlacement.overrideMovesRestored` + `movesRestoredOnCapture` →
+  `SetMovesRestoredOnCapture` when spawning. The painter shows a cyan "+N" badge on units that recharge
+  ("*" = overridden for that placement); badges only show in levels with a move limit.
+- **`EnergyCell : BaseUnit`**: a capturable Fabricator power capsule that only recharges; it doesn't count
+  toward winning. Spawned from LevelData (`SpawnEnemies` → BaseEnemy, CoreCell, then EnergyCell). Prefab
+  `Prefabs/Units/Energy/EnergyCell` (scale 0.8, quick idle hum), unit asset `Resources/Units/Energy/EnergyUnit 1`.
+  Cyan outline in the level painter.
+- Events: `UnitManager.OnMovesChanged(current, max)` on every change (including the initial value), and
+  `UnitManager.OnEnergyCritical(current)` whenever energy changes to 1..`lowEnergyThreshold` (default 2).
+  A UI energy counter should subscribe to `OnMovesChanged` (no counter UI exists yet).
+- **`PlayerEnergyFlasher`** (on PlayerSkull): only changes `SpriteRenderer.color`, so it layers with
+  `CellIdleAnimator`. At ≤ `lowMoveThreshold` (default 2) moves it pulses alpha (`pulseMinAlpha`..1,
+  `pulseFrequency`); at 1 move it strobes faster toward `criticalTint` with Perlin-noise glitch dropouts
+  (`flickerAmount`, `flickerAlpha`). Restores the original colour when energy rises, the level is unlimited,
+  or the state leaves PlayerTurn. Reads the current value in `OnEnable`, so late spawns catch up.
 
 ### Movement (`UnitManager` + `MoveArrow`)
 - Arrows appear on neighbouring tiles for each of the 8 directions where the slide path isn't empty.
 - `GetSlidePath(start, direction)` returns every tile passed through; the last one is where the unit ends up:
   - off the board → stop on the current tile
-  - an enemy or Seed Embryo (`IsCapturable`) → stop **on** its tile (capture)
+  - an enemy, Seed Embryo or Energy Cell (`IsCapturable`) → stop **on** its tile (capture)
+  - a resin snare (`StopTile`, walkable) → enter it and stop **on** it. Starting a move from one is
+    unaffected. Prefab `Prefabs/Tiles/Stop Tile` (Base Tile variant, `stop_tile` art); add it as a tile type
+    in a LevelData to paint it
   - a friendly unit, non-walkable tile (wall, closed gate) or root-blocked tile → stop **before** it
-  - thorny (hazardous) roots over walkable terrain → enter the tile and be destroyed (`endsInHazard`); these
+  - thorny (hazardous) roots over walkable terrain, or a hostile Moving Cell → enter the tile and be destroyed (`endsInHazard`); these
     moves still get arrows, tinted red, and don't count as a way out for the lose check
   - a sap router → enter it, then continue in the router's `OutputDirection`. Entering the same
     router with the same heading twice ends the slide, which stops router loops from running forever.
 - `SlideAlongPath` animates tile by tile (`moveSpeed`, default 8) so turns at routers are visible, then
-  captures, calls `SetUnit` and resolves win/lose. Input is ignored while `IsBusy`.
-- `Capture` removes a Seed Embryo from the count right away (`Destroy` is deferred), then destroys the unit.
+  captures and calls `SetUnit`. `FinishTurn` then wins right away on the last Seed Embryo, otherwise runs the
+  Moving Cells, then resolves win/lose and fires `SlideFinished`. Input is ignored while `IsBusy` (the whole
+  turn, enemy phase included).
+- `Capture` removes a Seed Embryo from the count and a Moving Cell from the turn order right away (`Destroy` is
+  deferred, and the enemy phase starts the same frame), then destroys the unit.
 - `MoveArrow` uses `GeneratedSprites.Triangle` unless `arrowSprite` is set on UnitManager. It must be on
   the **"Units"** sorting layer, or the tiles cover it and catch its clicks.
+
+### Moving Cells (`MovingCell : BaseEnemy`)
+- Step **one tile** after every Tech Bug slide (not after gate/router/gland clicks), cycling through
+  `moveSequence` (e.g. up, down; any length). Each entry is clamped to -1..1 per axis, so diagonals work and
+  `(0,0)` is a deliberate wait. Per-level override: `LevelData.UnitPlacement.overrideMoveSequence` +
+  `moveSequence` → `SetMoveSequence` (before Start).
+- **Turn order:** Tech Bug → every passive cell (together) → every hostile cell (together) → Tech Bug. Within a group,
+  steps are decided in spawn order, so a cell can move into a tile another just left. Run by
+  `UnitManager.MoveCells`/`MoveCellGroup`, all moves animated at once over `1 / moveSpeed`.
+- **Blocked** (wall, closed gate, roots, any other unit, board edge): the cell waits, but its sequence still advances.
+  Moving cells ignore sap routers (they just step onto them).
+- **Passive** (`hostile` off): captured on contact either way: the Tech Bug slides onto it, or it steps into the
+  Tech Bug (then it's removed and its `MovesRestoredOnCapture` energy is granted via `RestoreMoves`).
+- **Hostile** (`hostile` on): never capturable. The Tech Bug sliding into it is destroyed (red arrow, not a way
+  out for the stuck check), and a hostile cell stepping onto the Tech Bug takes its tile and destroys it.
+- Shows its **next step** as a small triangle on its edge (`indicatorColor`, Units order 2), updated as it advances.
+- Register with `UnitManager` in `Start`, unregister in `OnDestroy`.
+- Prefabs `Prefabs/Units/Enemies/MovingCell` (Pollen Drifter, `moving_cell` art) and `MovingCell Hostile`
+  (Seed Burr, `moving_cell_hostile`), unit assets `EnemyUnit Moving` / `EnemyUnit Moving Hostile`.
+- Level painter: amber outline (passive) / red (hostile), a dot on each tile the cell visits over one cycle (ignoring
+  blockers), and a warning for an empty sequence.
 
 ### Seed Embryos (`CoreCell : BaseUnit`)
 - Stationary targets. They register with `UnitManager` in `Start` and unregister in `OnDestroy`.
@@ -222,9 +287,10 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
 
 ### Level authoring (`LevelData` + `LevelDataEditor`)
 - Create one with *Create → Level Data*.
-- Holds `width`, `height`, `tileOptions` (tile prefab + painter colour), `cells` (one int per cell,
+- Holds `width`, `height`, energy (`initialMoves`, `maxMoves`; edited in the painter's **Energy** section,
+  which shows a summary), `tileOptions` (tile prefab + painter colour), `cells` (one int per cell,
   `index = y * width + x`, indexing into `tileOptions`), and `units` (position + ScriptableUnit +
-  optional Root Sentinel overrides: root offsets and `chemicalColor`).
+  optional overrides: Root Sentinel root offsets and `chemicalColor`, and any unit's `movesRestoredOnCapture`).
 - The Inspector painter has:
   - **Tile Types:** rows with a colour picker and prefab field, plus Add and Remove buttons.
   - **Brushes:** one for each tile type, one for each ScriptableUnit in the project, and Erase Unit.
@@ -251,6 +317,7 @@ sorting order, both for drawing and for which object gets a click.
 | Injector smoke particles        | TileRender | 3     |
 | Root Sentinel colour dot        | Units      | 1     |
 | Units (Tech Bug, Seed Embryo, Root Sentinel) | Units | 0 |
+| Moving Cell next-step indicator | Units      | 2     |
 | Move arrows                     | Units      | 10    |
 
 The Global Light 2D lights TileRender and Units. Sprites on a layer it doesn't light will render black.
@@ -275,9 +342,11 @@ The Fabricator frame uses TileRender order −5 for this reason; it never overla
 ## Not done yet / ideas
 
 - Win/lose UI: the `onWin`/`onLose` events and `RestartLevel()` are ready, but no panel exists yet
+- Energy counter UI: `UnitManager.OnMovesChanged` is ready, but nothing displays it yet
+- `energy_cell.png` and `stop_tile.png` were rendered with Edge (resvg wasn't installed). Re-run
+  `node build_sprites.js energy_cell stop_tile` once resvg is installed to render them the same way as the rest
 - Real dead-end detection. Lose currently ignores whether clicking an interactable could actually help
   (see `interactablesPreventLose`)
-- Enemy turn logic (unused `EnemyTurn` state)
 - Level selection or loading more than the one level assigned on GridManager
 - Art for the generic enemies (EnemyPrabowo, EnemySawit still use their old images)
 - `valve_up/down/left/right.png` are old, unused sprites with no SVG source; they weren't re-skinned
@@ -300,6 +369,7 @@ interactables carry all the saturation. If a tile competes with a unit for atten
 |---|---|---|
 | Seed matrix tile (`cytoplasm_tile`) | Translucent amber cell, faint wall lines, very faint holographic grid line on one edge | `#F1E6CC` base, `#E6D7B4` checker, `#D8C59C` walls, `#BFDCD8` grid @ ~25% |
 | Lignin wall (`cellulose_wall`) | Dense woody cell block, muted | `#B89A6E`, `#8F7552` |
+| Resin snare (`stop_tile`) | Glossy amber sap pool on the matrix: ripples, trapped bubbles, a stuck leaf fleck, rim drips | `#E9AD45`, `#B8741F`, `#8A5416` |
 | Fabricator border | Gunmetal frame panels, rivets, thin cyan status lights, amber warning chevrons in corners | `#2B3038`, `#3A414C`, `#3FE0E8`, `#F2B84B` |
 | Tech Bug (`cancer_cell`) | Hexagonal hull, nanite plating, circuit traces, glitch offset fringe | `#1C2230` hull, `#22E5F0` cyan, `#FF3DBE` magenta |
 | Seed Embryo (`core_cell`) | Concentric translucent layers, glowing sap heart, leafy membrane edge | `#F5C542` sap, `#9BD16A` leaf, `#FFF4C8` glow |
@@ -308,6 +378,9 @@ interactables carry all the saturation. If a tile competes with a unit for atten
 | Seed-coat gate (`gate_open`/`gate_closed`) | Open: petals parted like a stoma. Closed: overlapping cellulose petals | `#C9A66B`, `#9C7B45` |
 | Sap router (`valve_node` + `valve_arrow`) | Round wooden vascular node; arrow is a glowing sap glyph | `#7A5634` node, `#F2C14E` glyph |
 | Injector gland (`chemical_valve_*`) | Steel nozzle with a cyan status ring; released = nozzle open, ring lit | `#8B95A3`, `#5C6672`, `#3FE0E8` |
+| Pollen Drifter (`moving_cell`) | Botanical, soft: bumpy golden pollen grain with a fluffy filament halo and a green core; round and soft so it never reads as the burr | `#F5C542`, `#C98A12`, `#6E4A08` outline |
+| Seed Burr (`moving_cell_hostile`) | Botanical, dangerous: blood-red burr ringed with 14 hooked thorns (pale, red tips, like thorny roots) and a glowing orange seed eye | `#7E2620`, `#C8281E`, `#FF5A2E` eye |
+| Energy Cell (`energy_cell`) | Tech: upright bevelled battery capsule (not a hexagon, so it never reads as the Tech Bug), cyan charge window, white lightning glyph, magenta/cyan charge pips | `#2A3346` shell, `#22E5F0` charge, `#FF3DBE` pips |
 
 `ChemicalColor` mist tints (Crimson, Azure, Amber, Violet) stay as they are, since they're gameplay keys.
 Keep them clearly different from the pastel board.

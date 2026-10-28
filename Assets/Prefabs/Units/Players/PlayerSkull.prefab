@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6725839480572069256}
   - component: {fileID: 4035213621656597811}
   - component: {fileID: 6615965691350687838}
+  - component: {fileID: 452753660033518604}
   m_Layer: 0
   m_Name: PlayerSkull
   m_TagString: Untagged
@@ -126,3 +127,24 @@ MonoBehaviour:
   squashAndStretch: 1
   rotationFrequency: 0
   rotationAngleMax: 0
+--- !u!114 &452753660033518604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6497139677039755847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d42b5eacf5466c248a22165a8859281d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEnergyFlasher
+  targetRenderer: {fileID: 0}
+  lowMoveThreshold: 2
+  pulseFrequency: 1.6
+  pulseMinAlpha: 0.25
+  criticalFrequency: 4.5
+  criticalTint: {r: 1, g: 0.16, b: 0.27, a: 1}
+  criticalTintStrength: 0.85
+  flickerAmount: 0.18
+  flickerAlpha: 0.1

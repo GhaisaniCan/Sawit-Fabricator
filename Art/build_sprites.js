@@ -656,6 +656,153 @@ sprites.fabricator_frame = svg(
     <circle cx="66" cy="190" r="5" fill="#ff3dbe"/><circle cx="190" cy="190" r="5" fill="#3fe0e8"/></g>
   <g fill="#ffffff"><circle cx="66" cy="66" r="2"/><circle cx="190" cy="66" r="2"/><circle cx="66" cy="190" r="2"/><circle cx="190" cy="190" r="2"/></g>`);
 
+// ---------- tile: Resin Snare (StopTile) ----------
+// Botanical: a glossy amber sap pool on the matrix. Strong enough to read as "sticky" but still a floor tile,
+// so it stays well below the units in saturation
+sprites.stop_tile = svg(
+  'Resin Snare (StopTile): sticky amber sap pool. A sliding Tech Bug stops on it',
+  matrixDefs + `
+    <radialGradient id="resin" cx="42%" cy="38%" r="70%">
+      <stop offset="0" stop-color="#ffe7a6"/>
+      <stop offset="0.45" stop-color="#e9ad45"/>
+      <stop offset="1" stop-color="#b8741f"/>
+    </radialGradient>`,
+  matrixBody + `
+  <!-- sap pool, slightly irregular so it reads as liquid -->
+  <path d="M128,38 C176,36 214,64 218,108 C222,150 206,196 160,212 C120,226 70,214 48,176 C28,140 38,92 66,62 C82,46 104,38 128,38 Z"
+        fill="url(#resin)" stroke="#8a5416" stroke-width="5" stroke-linejoin="round" opacity="0.92"/>
+  <!-- concentric ripples -->
+  <g fill="none" stroke="#b8741f" stroke-width="3" opacity="0.45">
+    <ellipse cx="130" cy="130" rx="54" ry="44"/><ellipse cx="130" cy="130" rx="28" ry="22"/>
+  </g>
+  <!-- trapped bubbles and a stuck leaf fleck -->
+  <g fill="#fff6d8" opacity="0.85"><circle cx="98" cy="96" r="7"/><circle cx="112" cy="84" r="3.5"/><circle cx="168" cy="168" r="5"/></g>
+  <path d="M150,104 C158,92 172,90 178,96 C172,106 160,110 150,104 Z" fill="#7ea24e" stroke="#4f6b3a" stroke-width="2" opacity="0.8"/>
+  <!-- glossy highlight -->
+  <path d="M78,82 C90,64 112,54 134,54" fill="none" stroke="#fffaf0" stroke-width="7" stroke-linecap="round" opacity="0.75"/>
+  <!-- sticky drips at the rim -->
+  <g fill="#c98a2c" stroke="#8a5416" stroke-width="3" stroke-linejoin="round">
+    <path d="M86,200 C86,212 92,222 98,222 C104,222 106,212 104,204 Z"/>
+    <path d="M196,170 C204,176 206,190 200,194 C194,196 188,188 188,180 Z"/>
+  </g>`);
+
+// ---------- pickup: Energy Cell (tech, recharges the Tech Bug's moves) ----------
+// Bevelled battery capsule: same tech palette as the Tech Bug, but an upright silhouette so it never reads as the player
+const bevelRect = (x, y, w, h, b) =>
+  `M${x + b},${y} H${x + w - b} L${x + w},${y + b} V${y + h - b} L${x + w - b},${y + h} H${x + b} L${x},${y + h - b} V${y + b} Z`;
+sprites.energy_cell = svg(
+  'Energy Cell: Fabricator power capsule. Capturing it recharges the Tech Bug\'s energy (moves)',
+  `
+    <linearGradient id="shell" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4b5874"/>
+      <stop offset="0.45" stop-color="#2a3346"/>
+      <stop offset="1" stop-color="#121722"/>
+    </linearGradient>
+    <linearGradient id="charge" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0" stop-color="#0fb8c4"/>
+      <stop offset="0.6" stop-color="#22e5f0"/>
+      <stop offset="1" stop-color="#bdfbff"/>
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>`,
+  `
+  <!-- cyan charge aura -->
+  <path d="${bevelRect(70, 46, 116, 176, 26)}" fill="#22e5f0" opacity="0.55" filter="url(#glow)"/>
+
+  <!-- terminal cap -->
+  <path d="${bevelRect(102, 22, 52, 30, 8)}" fill="url(#shell)" stroke="#0a0e16" stroke-width="6" stroke-linejoin="round"/>
+  <rect x="116" y="30" width="24" height="6" fill="#ff3dbe"/>
+
+  <!-- shell -->
+  <path d="${bevelRect(74, 46, 108, 176, 24)}" fill="url(#shell)" stroke="#0a0e16" stroke-width="7" stroke-linejoin="round"/>
+  <path d="M86,62 L98,52 H158" fill="none" stroke="#9fb0d4" stroke-width="3" opacity="0.55" stroke-linejoin="round"/>
+
+  <!-- charge window -->
+  <path d="${bevelRect(92, 66, 72, 136, 12)}" fill="#0a0e16"/>
+  <path d="${bevelRect(97, 71, 62, 126, 9)}" fill="url(#charge)"/>
+  <g stroke="#0a0e16" stroke-width="3" opacity="0.35">
+    <line x1="97" y1="103" x2="159" y2="103"/><line x1="97" y1="135" x2="159" y2="135"/><line x1="97" y1="167" x2="159" y2="167"/>
+  </g>
+
+  <!-- lightning glyph -->
+  <path d="M136,78 L108,140 H128 L118,190 L150,122 H130 Z" fill="#ffffff" stroke="#0a0e16" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- magenta charge pips and rivets on the shell -->
+  <g fill="#ff3dbe"><rect x="80" y="96" width="6" height="14"/><rect x="80" y="122" width="6" height="14"/><rect x="80" y="148" width="6" height="14"/></g>
+  <g fill="#22e5f0"><rect x="170" y="96" width="6" height="14"/><rect x="170" y="122" width="6" height="14"/><rect x="170" y="148" width="6" height="14"/></g>
+  <g fill="#8fa0c0"><circle cx="90" cy="210" r="3.5"/><circle cx="166" cy="210" r="3.5"/></g>
+
+  <!-- glitch scanline slices, as on the Tech Bug -->
+  <g opacity="0.75"><rect x="58" y="118" width="26" height="4" fill="#22e5f0"/><rect x="172" y="176" width="24" height="4" fill="#ff3dbe"/></g>`);
+
+// ---------- Moving Cells (step after every Tech Bug move) ----------
+// Two clearly different silhouettes: the passive one is a soft round puff, the hostile one a spiky burr
+const radial = (n, fn, rot = 0) => Array.from({ length: n }, (_, i) => fn(rot + i * 360 / n)).join('');
+
+const pollenBumps = radial(14, a => `<circle transform="rotate(${a} 128 128)" cx="128" cy="62" r="18"/>`);
+sprites.moving_cell = svg(
+  'Pollen Drifter (passive Moving Cell): a fluffy golden pollen grain drifting through the matrix. Captured on contact',
+  `
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0.55" stop-color="#fff3c0" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#fff3c0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="grain" cx="42%" cy="38%" r="65%">
+      <stop offset="0" stop-color="#fff2b0"/>
+      <stop offset="0.55" stop-color="#f5c542"/>
+      <stop offset="1" stop-color="#c98a12"/>
+    </radialGradient>`,
+  `
+  <circle cx="128" cy="128" r="122" fill="url(#halo)"/>
+  <!-- fluffy filaments around the grain, each with a little tuft -->
+  <g stroke="#b8902a" stroke-width="4" stroke-linecap="round" fill="none">
+    ${radial(14, a => `<path transform="rotate(${a} 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/>`, 360 / 28)}
+  </g>
+  <!-- bumpy pollen grain: outlined bumps first, then filled on top so the outline merges -->
+  <g fill="none" stroke="#6e4a08" stroke-width="8">${pollenBumps}<circle cx="128" cy="128" r="66"/></g>
+  <g fill="url(#grain)">${pollenBumps}<circle cx="128" cy="128" r="66"/></g>
+  <!-- germination pores -->
+  <g fill="#c98a12" stroke="#6e4a08" stroke-width="3">
+    <circle cx="128" cy="96" r="9"/><circle cx="100" cy="146" r="9"/><circle cx="156" cy="146" r="9"/>
+  </g>
+  <circle cx="128" cy="128" r="16" fill="#9bd16a" stroke="#4a7d2e" stroke-width="4"/>
+  <ellipse cx="104" cy="96" rx="12" ry="7" transform="rotate(-35 104 96)" fill="#ffffff" opacity="0.6"/>`);
+
+const burrSpikes = radial(14, a => {
+  // a slightly hooked thorn pointing outward, pale with a red tip
+  const body = `<path transform="rotate(${a} 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/>`;
+  const tip = `<path transform="rotate(${a} 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/>`;
+  return `<g class="s">${body}</g><g class="t">${tip}</g>`;
+}, 12);
+sprites.moving_cell_hostile = svg(
+  'Seed Burr (hostile Moving Cell): a spiked burr rolling through the matrix. Destroys the Tech Bug on contact',
+  `
+    <radialGradient id="burr" cx="42%" cy="38%" r="70%">
+      <stop offset="0" stop-color="#b8503e"/>
+      <stop offset="0.6" stop-color="#7e2620"/>
+      <stop offset="1" stop-color="#3e0f0e"/>
+    </radialGradient>
+    <radialGradient id="eye" cx="50%" cy="45%" r="55%">
+      <stop offset="0" stop-color="#ffe0a0"/>
+      <stop offset="0.5" stop-color="#ff5a2e"/>
+      <stop offset="1" stop-color="#8a1010"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+    <style>.s path { fill: #f0dcc0; stroke: #2a0a08; stroke-width: 3; stroke-linejoin: round; } .t path { fill: #c8281e; }</style>`,
+  `
+  ${burrSpikes}
+  <!-- burr body -->
+  <circle cx="128" cy="128" r="70" fill="url(#burr)" stroke="#2a0a08" stroke-width="7"/>
+  <!-- husk plates -->
+  <g fill="none" stroke="#2a0a08" stroke-width="3.5" stroke-linecap="round" opacity="0.7">
+    ${radial(6, a => `<path transform="rotate(${a} 128 128)" d="M128,62 C140,80 140,92 128,100"/>`, 30)}
+  </g>
+  <path d="M78,104 C88,80 108,66 132,64" fill="none" stroke="#e08070" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+  <!-- glowing seed eye -->
+  <ellipse cx="128" cy="130" rx="30" ry="20" fill="#ff5a2e" opacity="0.7" filter="url(#glow)"/>
+  <ellipse cx="128" cy="130" rx="26" ry="16" fill="url(#eye)" stroke="#2a0a08" stroke-width="4"/>
+  <ellipse cx="128" cy="130" rx="6" ry="13" fill="#2a0a08"/>
+  <circle cx="118" cy="124" r="4" fill="#ffffff" opacity="0.7"/>`);
+
 // ---------- write + render ----------
 for (const [name, text] of Object.entries(sprites)) {
   if (only.length && !only.includes(name)) continue;

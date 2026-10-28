@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Pollen Drifter (passive Moving Cell): a fluffy golden pollen grain drifting through the matrix. Captured on contact -->
+  <defs>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0.55" stop-color="#fff3c0" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#fff3c0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="grain" cx="42%" cy="38%" r="65%">
+      <stop offset="0" stop-color="#fff2b0"/>
+      <stop offset="0.55" stop-color="#f5c542"/>
+      <stop offset="1" stop-color="#c98a12"/>
+    </radialGradient>
+  </defs>
+  <circle cx="128" cy="128" r="122" fill="url(#halo)"/>
+  <!-- fluffy filaments around the grain, each with a little tuft -->
+  <g stroke="#b8902a" stroke-width="4" stroke-linecap="round" fill="none">
+    <path transform="rotate(12.857142857142858 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(38.57142857142857 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(64.28571428571429 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(90 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(115.71428571428572 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(141.42857142857144 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(167.14285714285714 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(192.85714285714286 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(218.57142857142858 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(244.28571428571428 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(270 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(295.71428571428567 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(321.4285714285714 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/><path transform="rotate(347.1428571428571 128 128)" d="M128,44 V16 M128,22 L120,12 M128,22 L136,12"/>
+  </g>
+  <!-- bumpy pollen grain: outlined bumps first, then filled on top so the outline merges -->
+  <g fill="none" stroke="#6e4a08" stroke-width="8"><circle transform="rotate(0 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(25.714285714285715 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(51.42857142857143 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(77.14285714285714 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(102.85714285714286 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(128.57142857142858 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(154.28571428571428 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(180 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(205.71428571428572 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(231.42857142857142 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(257.14285714285717 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(282.85714285714283 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(308.57142857142856 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(334.2857142857143 128 128)" cx="128" cy="62" r="18"/><circle cx="128" cy="128" r="66"/></g>
+  <g fill="url(#grain)"><circle transform="rotate(0 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(25.714285714285715 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(51.42857142857143 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(77.14285714285714 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(102.85714285714286 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(128.57142857142858 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(154.28571428571428 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(180 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(205.71428571428572 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(231.42857142857142 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(257.14285714285717 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(282.85714285714283 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(308.57142857142856 128 128)" cx="128" cy="62" r="18"/><circle transform="rotate(334.2857142857143 128 128)" cx="128" cy="62" r="18"/><circle cx="128" cy="128" r="66"/></g>
+  <!-- germination pores -->
+  <g fill="#c98a12" stroke="#6e4a08" stroke-width="3">
+    <circle cx="128" cy="96" r="9"/><circle cx="100" cy="146" r="9"/><circle cx="156" cy="146" r="9"/>
+  </g>
+  <circle cx="128" cy="128" r="16" fill="#9bd16a" stroke="#4a7d2e" stroke-width="4"/>
+  <ellipse cx="104" cy="96" rx="12" ry="7" transform="rotate(-35 104 96)" fill="#ffffff" opacity="0.6"/>
+</svg>

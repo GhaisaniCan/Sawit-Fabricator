@@ -1,0 +1,97 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4631970789335248195
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1729091548473472669, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 052abac800bb90f4789f8756af9acacd, type: 3}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7584603196867520350, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      propertyPath: m_Name
+      value: Stop Tile
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7584603196867520350, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2150066656723476192}
+  m_SourcePrefab: {fileID: 100100000, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+--- !u!1 &2957172293199235613 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7584603196867520350, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+  m_PrefabInstance: {fileID: 4631970789335248195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2150066656723476192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2957172293199235613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5040f20d1d8ce084b8237433e78092d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StopTile
+  highlight: {fileID: 7012818791202742610}
+  spriteRenderer: {fileID: 6320493657270262750}
+  isWalkable: 1
+  occupiedUnit: {fileID: 0}
+--- !u!212 &6320493657270262750 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1729091548473472669, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+  m_PrefabInstance: {fileID: 4631970789335248195}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7012818791202742610 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2385387644994636817, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
+  m_PrefabInstance: {fileID: 4631970789335248195}
+  m_PrefabAsset: {fileID: 0}

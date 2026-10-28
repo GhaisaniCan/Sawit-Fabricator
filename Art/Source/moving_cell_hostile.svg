@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- Seed Burr (hostile Moving Cell): a spiked burr rolling through the matrix. Destroys the Tech Bug on contact -->
+  <defs>
+    <radialGradient id="burr" cx="42%" cy="38%" r="70%">
+      <stop offset="0" stop-color="#b8503e"/>
+      <stop offset="0.6" stop-color="#7e2620"/>
+      <stop offset="1" stop-color="#3e0f0e"/>
+    </radialGradient>
+    <radialGradient id="eye" cx="50%" cy="45%" r="55%">
+      <stop offset="0" stop-color="#ffe0a0"/>
+      <stop offset="0.5" stop-color="#ff5a2e"/>
+      <stop offset="1" stop-color="#8a1010"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+    <style>.s path { fill: #f0dcc0; stroke: #2a0a08; stroke-width: 3; stroke-linejoin: round; } .t path { fill: #c8281e; }</style>
+  </defs>
+  <g class="s"><path transform="rotate(12 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(12 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(37.714285714285715 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(37.714285714285715 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(63.42857142857143 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(63.42857142857143 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(89.14285714285714 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(89.14285714285714 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(114.85714285714286 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(114.85714285714286 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(140.57142857142858 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(140.57142857142858 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(166.28571428571428 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(166.28571428571428 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(192 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(192 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(217.71428571428572 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(217.71428571428572 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(243.42857142857142 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(243.42857142857142 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(269.14285714285717 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(269.14285714285717 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(294.85714285714283 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(294.85714285714283 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(320.57142857142856 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(320.57142857142856 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g><g class="s"><path transform="rotate(346.2857142857143 128 128)" d="M118,64 C120,44 126,26 136,14 C134,30 136,48 138,64 Z"/></g><g class="t"><path transform="rotate(346.2857142857143 128 128)" d="M131,26 C133,20 134,17 136,14 C135,20 135,24 135,28 Z"/></g>
+  <!-- burr body -->
+  <circle cx="128" cy="128" r="70" fill="url(#burr)" stroke="#2a0a08" stroke-width="7"/>
+  <!-- husk plates -->
+  <g fill="none" stroke="#2a0a08" stroke-width="3.5" stroke-linecap="round" opacity="0.7">
+    <path transform="rotate(30 128 128)" d="M128,62 C140,80 140,92 128,100"/><path transform="rotate(90 128 128)" d="M128,62 C140,80 140,92 128,100"/><path transform="rotate(150 128 128)" d="M128,62 C140,80 140,92 128,100"/><path transform="rotate(210 128 128)" d="M128,62 C140,80 140,92 128,100"/><path transform="rotate(270 128 128)" d="M128,62 C140,80 140,92 128,100"/><path transform="rotate(330 128 128)" d="M128,62 C140,80 140,92 128,100"/>
+  </g>
+  <path d="M78,104 C88,80 108,66 132,64" fill="none" stroke="#e08070" stroke-width="4" stroke-linecap="round" opacity="0.5"/>
+  <!-- glowing seed eye -->
+  <ellipse cx="128" cy="130" rx="30" ry="20" fill="#ff5a2e" opacity="0.7" filter="url(#glow)"/>
+  <ellipse cx="128" cy="130" rx="26" ry="16" fill="url(#eye)" stroke="#2a0a08" stroke-width="4"/>
+  <ellipse cx="128" cy="130" rx="6" ry="13" fill="#2a0a08"/>
+  <circle cx="118" cy="124" r="4" fill="#ffffff" opacity="0.7"/>
+</svg>

@@ -632,8 +632,8 @@ public class UnitManager : MonoBehaviour
     #region Win / lose
 
     // Win: the move just captured the last Core Cell.
-    // Lose: Core Cells remain and either the energy has run out, or no Cancer Cell can slide anywhere
-    // (and, if enabled, nothing can be clicked).
+    // Lose: not won, and either the energy has run out, or no Tech Bug can slide anywhere, not even into
+    // a deadly tile (and, if enabled, nothing can be clicked).
     private void ResolveOutcome(bool capturedCoreCell = false) {
 
         if (GameManager.Instance.gameState != GameState.PlayerTurn) return;
@@ -668,10 +668,11 @@ public class UnitManager : MonoBehaviour
         {
             if (!(tile.occupiedUnit is BasePlayer)) continue;
 
-            // A slide into hazardous vines doesn't count as a way out
+            // Deadly slides (thorny roots, hostile cells) count too: the player decides whether to take them,
+            // so a board where every move is deadly isn't lost until one is actually made
             foreach (var direction in moveDirections)
             {
-                if (GetSlidePath(tile, direction, out var endsInHazard).Count > 0 && !endsInHazard) return true;
+                if (GetSlidePath(tile, direction, out _).Count > 0) return true;
             }
         }
 

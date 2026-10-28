@@ -90,7 +90,7 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
 - **Lose (energy):** the level has a move limit, energy hits 0 and the level isn't won. Checked after the win
   check, so corrupting the last embryo with the last move still wins. Energy and stuck losses also apply to a
   level with no Seed Embryos at all (it can't be won, but it must still be losable).
-- **Lose (stuck):** the level isn't won and no Tech Bug has any safe slide in any direction. With
+- **Lose (stuck):** the level isn't won and no Tech Bug can slide in any direction (deadly slides count as moves, so a board where every move is deadly isn't lost until one is taken). With
   `UnitManager.interactablesPreventLose` on (the default), it's also required that no gate, router or
   gland can be clicked, since clicking one might open a path. Turn it off for the strict rule.
 - The outcome is checked after every finished slide and after every interactable click (`OnBoardChanged`).
@@ -188,7 +188,7 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
   - a friendly unit, non-walkable tile (wall, closed gate) or root-blocked tile → stop **before** it. Roots are
     checked first, so a unit under roots can't be captured through them (capture the Root Sentinel or retract them)
   - thorny (hazardous) roots over walkable terrain, or a hostile Moving Cell → enter the tile and be destroyed (`endsInHazard`); these
-    moves still get arrows, tinted red, and don't count as a way out for the lose check
+    moves still get arrows, tinted red, and count as moves for the stuck check
   - a sap router → enter it, then continue in the router's `OutputDirection`. Entering the same
     router with the same heading twice ends the slide, which stops router loops from running forever.
 - `SlideAlongPath` animates tile by tile (`moveSpeed`, default 8) so turns at routers are visible, then
@@ -212,8 +212,8 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
   Moving cells ignore sap routers (they just step onto them).
 - **Passive** (`hostile` off): captured on contact either way: the Tech Bug slides onto it, or it steps into the
   Tech Bug (then it's removed and its `MovesRestoredOnCapture` energy is granted via `RestoreMoves`).
-- **Hostile** (`hostile` on): never capturable. The Tech Bug sliding into it is destroyed (red arrow, not a way
-  out for the stuck check), and a hostile cell stepping onto the Tech Bug takes its tile and destroys it.
+- **Hostile** (`hostile` on): never capturable. The Tech Bug sliding into it is destroyed (red arrow; still
+  counts as a move for the stuck check), and a hostile cell stepping onto the Tech Bug takes its tile and destroys it.
 - Shows its **next step** as a small triangle on its edge (`indicatorColor`, Units order 2), updated as it advances.
 - Register with `UnitManager` in `Start`, unregister in `OnDestroy`.
 - Prefabs `Prefabs/Units/Enemies/MovingCell` (Pollen Drifter, `moving_cell` art) and `MovingCell Hostile`

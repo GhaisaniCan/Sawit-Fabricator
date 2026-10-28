@@ -12,22 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df34e99b5f694a9cac71048b7fc616c9, type: 3}
   m_Name: Level 6 Drifters
   m_EditorClassIdentifier: Assembly-CSharp::LevelData
-  width: 7
-  height: 5
-  initialMoves: 0
+  width: 19
+  height: 7
+  initialMoves: 4
   maxMoves: 10
   tileOptions:
   - prefab: {fileID: 9200977322369064681, guid: 6b4f71e154516254a906632c211f54f9, type: 3}
     editorColor: {r: 0.15, g: 0.6, b: 0.2, a: 1}
   - prefab: {fileID: 5392014200653610183, guid: 109a77b4a880f9947ae8c393d1fd9d38, type: 3}
-    editorColor: {r: 0.35, g: 0.35, b: 0.35, a: 1}
-  - prefab: {fileID: 5392014200653610183, guid: 109a77b4a880f9947ae8c393d1fd9d38, type: 3}
     editorColor: {r: 0.7490196, g: 0.526694, b: 0.3372549, a: 1}
-  - prefab: {fileID: 0}
+  - prefab: {fileID: 2150066656723476192, guid: 4f9aeff69c6131048ac40428c3c2d15a, type: 3}
     editorColor: {r: 0.70710015, g: 0.75, b: 0.33749998, a: 1}
-  cells: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000i
+  cells: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000000000000000000000000000000000002000000000000000000000002000000000000000000000000000000000000000000000000000000000000000000000000000000010000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000000100000001000000010000000100000001000000000000000000000001000000010000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000100000001000000010000000000000000000000010000000100000001000000000000000000000002000000010000000000000000000000000000000100000000000000000000000100000001000000010000000100000001000000010000000100000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000i
   units:
-  - position: {x: 0, y: 2}
+  - position: {x: 2, y: 4}
     unit: {fileID: 11400000, guid: 0a2b9d78607d0de46b4221ab7305ab70, type: 2}
     overrideBlockedTiles: 0
     blockedTileOffsets: []
@@ -36,6 +34,32 @@ MonoBehaviour:
     moveSequence: []
     overrideMovesRestored: 0
     movesRestoredOnCapture: 0
+  - position: {x: 2, y: 2}
+    unit: {fileID: 11400000, guid: b9eb70c24dc680c44beeb877fd3cd87c, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 0
+    movesRestoredOnCapture: 0
+  - position: {x: 10, y: 4}
+    unit: {fileID: 11400000, guid: 78c243ca8dbb2634db587effdf498778, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 1
+    moveSequence:
+    - {x: 0, y: 1}
+    - {x: -1, y: 0}
+    - {x: -1, y: 0}
+    - {x: 0, y: -1}
+    - {x: 0, y: -1}
+    - {x: 1, y: 0}
+    - {x: 1, y: 0}
+    - {x: 0, y: 1}
+    overrideMovesRestored: 1
+    movesRestoredOnCapture: 5
   - position: {x: 6, y: 4}
     unit: {fileID: 11400000, guid: ed5a765d665a4aa58896345615f7a4b0, type: 2}
     overrideBlockedTiles: 0
@@ -45,31 +69,24 @@ MonoBehaviour:
     moveSequence: []
     overrideMovesRestored: 0
     movesRestoredOnCapture: 0
-  - position: {x: 3, y: 2}
-    unit: {fileID: 11400000, guid: 78c243ca8dbb2634db587effdf498778, type: 2}
+  - position: {x: 14, y: 3}
+    unit: {fileID: 11400000, guid: b9eb70c24dc680c44beeb877fd3cd87c, type: 2}
     overrideBlockedTiles: 0
     blockedTileOffsets: []
     chemicalColor: 0
     overrideMoveSequence: 1
     moveSequence:
+    - {x: 0, y: -1}
+    - {x: 0, y: -1}
     - {x: -1, y: 0}
+    - {x: -1, y: 0}
+    - {x: 0, y: 1}
+    - {x: 0, y: 1}
+    - {x: 1, y: 0}
     - {x: 1, y: 0}
     overrideMovesRestored: 0
     movesRestoredOnCapture: 0
-  - position: {x: 6, y: 1}
-    unit: {fileID: 11400000, guid: 78c243ca8dbb2634db587effdf498778, type: 2}
-    overrideBlockedTiles: 0
-    blockedTileOffsets: []
-    chemicalColor: 0
-    overrideMoveSequence: 1
-    moveSequence:
-    - {x: 0, y: 1}
-    - {x: 0, y: 1}
-    - {x: 0, y: -1}
-    - {x: 0, y: -1}
-    overrideMovesRestored: 0
-    movesRestoredOnCapture: 0
-  - position: {x: 4, y: 0}
+  - position: {x: 15, y: 3}
     unit: {fileID: 11400000, guid: b9eb70c24dc680c44beeb877fd3cd87c, type: 2}
     overrideBlockedTiles: 0
     blockedTileOffsets: []
@@ -77,6 +94,26 @@ MonoBehaviour:
     overrideMoveSequence: 1
     moveSequence:
     - {x: 0, y: 1}
+    - {x: 0, y: 1}
     - {x: 0, y: -1}
+    - {x: 0, y: -1}
+    overrideMovesRestored: 0
+    movesRestoredOnCapture: 0
+  - position: {x: 17, y: 5}
+    unit: {fileID: 11400000, guid: ed5a765d665a4aa58896345615f7a4b0, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 0
+    movesRestoredOnCapture: 0
+  - position: {x: 17, y: 1}
+    unit: {fileID: 11400000, guid: ed5a765d665a4aa58896345615f7a4b0, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
     overrideMovesRestored: 0
     movesRestoredOnCapture: 0

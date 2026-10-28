@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df34e99b5f694a9cac71048b7fc616c9, type: 3}
+  m_Name: Level 8 Biblical Greed
+  m_EditorClassIdentifier: Assembly-CSharp::LevelData
+  width: 12
+  height: 12
+  initialMoves: 5
+  maxMoves: 10
+  tileOptions:
+  - prefab: {fileID: 9200977322369064681, guid: 6b4f71e154516254a906632c211f54f9, type: 3}
+    editorColor: {r: 0.15, g: 0.6, b: 0.2, a: 1}
+  - prefab: {fileID: 5392014200653610183, guid: 109a77b4a880f9947ae8c393d1fd9d38, type: 3}
+    editorColor: {r: 0.6698113, g: 0.45565888, b: 0.30647027, a: 1}
+  - prefab: {fileID: 9200977322369064681, guid: c8046a37c79b432e8f820b9f482a5c3e, type: 3}
+    editorColor: {r: 0.75, g: 0.95, b: 0.35, a: 1}
+  - prefab: {fileID: 9200977322369064681, guid: d8e710472aab4d8c81f00f123dea5496, type: 3}
+    editorColor: {r: 0.95, g: 0.8, b: 0.25, a: 1}
+  - prefab: {fileID: 2150066656723476192, guid: 4f9aeff69c6131048ac40428c3c2d15a, type: 3}
+    editorColor: {r: 0.6724498, g: 0.33749998, b: 0.75, a: 1}
+  cells: 010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000000000000000000000000000100000001000000010000000100000001000000010000000100000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000000000000000000000000000100000001000000010000000100000001000000010000000000000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000000000001000000010000000100000001000000000000000000000000000000000000000000000000000000000000000400000001000000010000000000000000000000000000000000000000000000040000000100000001000000010000000000000001000000010000000000000001000000000000000000000000000000000000000100000001000000010000000000000001000000010000000000000001000000010000000400000000000000000000000000000000000000010000000000000001000000010000000000000001000000010000000000000000000000000000000100000001000000010000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000i
+  units:
+  - position: {x: 4, y: 2}
+    unit: {fileID: 11400000, guid: 0a2b9d78607d0de46b4221ab7305ab70, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 0
+    movesRestoredOnCapture: 0
+  - position: {x: 1, y: 3}
+    unit: {fileID: 11400000, guid: 40f5513f010fa47419794126e5192acb, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 1
+    movesRestoredOnCapture: 3
+  - position: {x: 2, y: 3}
+    unit: {fileID: 11400000, guid: 40f5513f010fa47419794126e5192acb, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 1
+    movesRestoredOnCapture: 3
+  - position: {x: 3, y: 3}
+    unit: {fileID: 11400000, guid: 40f5513f010fa47419794126e5192acb, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 1
+    movesRestoredOnCapture: 3
+  - position: {x: 1, y: 2}
+    unit: {fileID: 11400000, guid: 40f5513f010fa47419794126e5192acb, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 1
+    movesRestoredOnCapture: 3
+  - position: {x: 2, y: 2}
+    unit: {fileID: 11400000, guid: 40f5513f010fa47419794126e5192acb, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 1
+    movesRestoredOnCapture: 3
+  - position: {x: 3, y: 2}
+    unit: {fileID: 11400000, guid: 40f5513f010fa47419794126e5192acb, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 1
+    movesRestoredOnCapture: 3
+  - position: {x: 1, y: 1}
+    unit: {fileID: 11400000, guid: 40f5513f010fa47419794126e5192acb, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 1
+    movesRestoredOnCapture: 3
+  - position: {x: 2, y: 1}
+    unit: {fileID: 11400000, guid: 40f5513f010fa47419794126e5192acb, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 1
+    movesRestoredOnCapture: 3
+  - position: {x: 3, y: 1}
+    unit: {fileID: 11400000, guid: 40f5513f010fa47419794126e5192acb, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 1
+    movesRestoredOnCapture: 3
+  - position: {x: 4, y: 5}
+    unit: {fileID: 11400000, guid: b9eb70c24dc680c44beeb877fd3cd87c, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 1
+    moveSequence:
+    - {x: 1, y: 0}
+    - {x: 1, y: 0}
+    - {x: 1, y: 0}
+    - {x: 1, y: 0}
+    - {x: 1, y: 0}
+    overrideMovesRestored: 0
+    movesRestoredOnCapture: 0
+  - position: {x: 10, y: 10}
+    unit: {fileID: 11400000, guid: 40f5513f010fa47419794126e5192acb, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 0
+    movesRestoredOnCapture: 0
+  - position: {x: 4, y: 9}
+    unit: {fileID: 11400000, guid: ed5a765d665a4aa58896345615f7a4b0, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 0
+    movesRestoredOnCapture: 0
+  - position: {x: 8, y: 8}
+    unit: {fileID: 11400000, guid: ed5a765d665a4aa58896345615f7a4b0, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 0
+    movesRestoredOnCapture: 0

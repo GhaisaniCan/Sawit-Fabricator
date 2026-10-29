@@ -130,3 +130,12 @@ MonoBehaviour:
     moveSequence: []
     overrideMovesRestored: 1
     movesRestoredOnCapture: 3
+  - position: {x: 1, y: 10}
+    unit: {fileID: 11400000, guid: ed5a765d665a4aa58896345615f7a4b0, type: 2}
+    overrideBlockedTiles: 0
+    blockedTileOffsets: []
+    chemicalColor: 0
+    overrideMoveSequence: 0
+    moveSequence: []
+    overrideMovesRestored: 0
+    movesRestoredOnCapture: 0

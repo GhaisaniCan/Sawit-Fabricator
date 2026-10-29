@@ -635,7 +635,7 @@ MonoBehaviour:
   height: 8
   tilePrefab: {fileID: 9200977322369064681, guid: 6b4f71e154516254a906632c211f54f9, type: 3}
   cam: {fileID: 519420032}
-  level: {fileID: 11400000, guid: e7ac0f12bd6b7264bbec0305f7459f2e, type: 2}
+  level: {fileID: 11400000, guid: b42d0d1e3ae136141b452410dd15c188, type: 2}
   frameSprite: {fileID: 21300000, guid: 060b756b828cf944195547379fa125bf, type: 3}
   frameSortingLayer: TileRender
   frameSortingOrder: -5

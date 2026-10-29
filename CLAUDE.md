@@ -247,7 +247,8 @@ Start → GenerateGrid → SpawnPlayerUnit → SpawnEnemyUnit → PlayerTurn ─
   blockers immediately and animates the pieces (grow outward / retract inward, `growDuration`, `growStagger`).
   When a timed retraction runs out, the roots regrow and call `UnitManager.OnBoardChanged()`.
 - **Capture:** `OnDestroy` frees every tile and retracts + destroys all its pieces.
-- **Thorny** (`hazardous`, uses `hazardStemSprite`): sliding into these brambles destroys the Tech Bug.
+- **Thorny** (`hazardous`, uses `hazardStemSprite`, `hazardKnotSprite`, `hazardTipSprite` when set, else the normal
+  ones): sliding into these brambles destroys the Tech Bug.
 - `BlockingEnemy.VinesChanged` (static event) fires on every extend/retract/timer tick.
 - **`enemyColor`** (`ChemicalColor`) links it to ColorMatch injector glands and shows a coloured dot on the
   sentinel (Units order 1). Per-level override: `LevelData.UnitPlacement.chemicalColor` → `SetEnemyColor`
@@ -397,6 +398,25 @@ interactables stay consistent. Thorny Root Sentinels get a crimson tint on the h
 
 ## Art notes
 
+- **Pixel-art sprites (`Assets/simplified`)** replace most of the smooth art. 64×64 px, imported as Sprite at
+  **64 PPU** (still 1 tile), Point filter, uncompressed, no mipmaps, Full Rect. File names differ from the old ones:
+
+  | New (`Assets/simplified`) | Replaces (`Sprites/Cells`) | Used on |
+  |---|---|---|
+  | `cancer_cell_3x_palette` | `cancer_cell` | PlayerSkull |
+  | `seed_coin_64` | `core_cell` | CoreCell |
+  | `tile_64` | `cytoplasm_tile` | Grass Tile + gate/gland base Square |
+  | `cellulose_wall_64` | `cellulose_wall` | Wall Tile |
+  | `pod_crate_64` / `fan_panel_64` | `gate_open` / `gate_closed` | gate `openSprite`/`closedSprite` |
+  | `gold_arrow_64` | `valve_arrow` | sap router `arrowSprite` |
+  | `vault_door_64` / `core_unit_64` | `chemical_valve_idle` / `_released` | gland `idleSprite`/`releasedSprite` |
+  | `arrow_64` | `move_arrow` | UnitManager `arrowSprite` (LevelScene) |
+  | `panel_64` (9-slice border 24 px) | `fabricator_frame` | GridManager `frameSprite` (LevelScene) |
+  | `vine_stem_1_5tone`, `vine_knot_64`, `vine_tip_recolor` | `vine_stem`, `vine_knot`, `vine_tip` | EnemyBlocker |
+  | `vine_stem_thorn`, `vine_knot_thorn_recolor`, `vine_tip_thorn` | `vine_stem_thorny` (+ new slots) | EnemyBlocker `hazard*Sprite` |
+
+  Still smooth (no pixel version yet): `defensive_cell`, `valve_node`, `stop_tile`, `energy_cell`, `moving_cell(_hostile)`,
+  `chemical_mist`. `Art/build_sprites.js` only generates the smooth set.
 - Sprites in `Assets/Sprites/Cells` are on the prefabs: units at scale 0.85–0.9, tiles on the Square child,
   gate `openSprite`/`closedSprite`, router `arrowSprite`, UnitManager `arrowSprite` (in LevelScene).
 - Tints are white so the art shows its own colours. GrassTile's checkerboard uses a light warm offset tint

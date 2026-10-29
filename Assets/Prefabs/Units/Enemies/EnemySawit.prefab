@@ -108,3 +108,4 @@ MonoBehaviour:
   UnitName: 
   OccupiedTile: {fileID: 0}
   Faction: 1
+  movesRestoredOnCapture: 0

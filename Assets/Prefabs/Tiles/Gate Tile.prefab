@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: 1729091548473472669, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 0ebd7cdc20fa92e42af4ea1300dd3d70, type: 3}
+      objectReference: {fileID: 21300000, guid: 0909861b6a2c7934fa4038b70436af20, type: 3}
     - target: {fileID: 4611080745487130429, guid: 66411167fea02124a8f25edbd06917dc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   occupiedUnit: {fileID: 0}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   startsOpen: 1
-  openSprite: {fileID: 21300000, guid: e964b55d3795b154795251b1eff108b0, type: 3}
-  closedSprite: {fileID: 21300000, guid: 7bd2ce5270354f1439cb72b6cd630d19, type: 3}
+  openSprite: {fileID: 21300000, guid: a2eba01d741bd3e4b94b03f354e44f21, type: 3}
+  closedSprite: {fileID: 21300000, guid: f0cc029ece9fdd541bf59d45f9936728, type: 3}
   openColor: {r: 1, g: 1, b: 1, a: 1}
   closedColor: {r: 1, g: 1, b: 1, a: 1}

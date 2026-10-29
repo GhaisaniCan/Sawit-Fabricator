@@ -109,6 +109,7 @@ MonoBehaviour:
   UnitName: 
   OccupiedTile: {fileID: 0}
   Faction: 1
+  movesRestoredOnCapture: 0
   blockedTileOffsets:
   - {x: 0, y: 1}
   - {x: 0, y: -1}
@@ -117,10 +118,12 @@ MonoBehaviour:
   enemyColor: 0
   colorMarkerSprite: {fileID: 0}
   hazardous: 0
-  stemSprite: {fileID: 21300000, guid: 79171a229d7da6d4e88890120061e29f, type: 3}
-  hazardStemSprite: {fileID: 21300000, guid: b5e76bb869f22a74cb1813b9e46f0fdd, type: 3}
-  knotSprite: {fileID: 21300000, guid: 1de38b52dfac2d843a33da4ef1145133, type: 3}
-  tipSprite: {fileID: 21300000, guid: eb5d28e651255134fb7738edbb242792, type: 3}
+  stemSprite: {fileID: 21300000, guid: 788b44ea6f36ce0478b938ee91eac72a, type: 3}
+  hazardStemSprite: {fileID: 21300000, guid: 3c26ed60faddf1d41bac86d3c1b8848a, type: 3}
+  knotSprite: {fileID: 21300000, guid: a66f2cb2c2b8e904d809af3a40225158, type: 3}
+  tipSprite: {fileID: 21300000, guid: b74e1036783c77b40a4090c5aee9991e, type: 3}
+  hazardKnotSprite: {fileID: 21300000, guid: fb26c46326218b54c89a9c901b76a202, type: 3}
+  hazardTipSprite: {fileID: 21300000, guid: f58e862012c90b44ca4859b9b0037efa, type: 3}
   vineColor: {r: 1, g: 1, b: 1, a: 1}
   growDuration: 0.25
   growStagger: 0.06

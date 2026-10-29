@@ -28,6 +28,8 @@ public class BlockingEnemy : BaseEnemy
     [SerializeField] private Sprite hazardStemSprite; // optional, used instead of stemSprite when hazardous
     [SerializeField] private Sprite knotSprite;
     [SerializeField] private Sprite tipSprite;
+    [SerializeField] private Sprite hazardKnotSprite; // optional, used instead of knotSprite when hazardous
+    [SerializeField] private Sprite hazardTipSprite;  // optional, used instead of tipSprite when hazardous
     [SerializeField] private Color vineColor = Color.white;
     [SerializeField, Min(0f)] private float growDuration = 0.25f;
     [SerializeField, Min(0f), Tooltip("Extra delay per step away from the host, so vines grow outward and retract inward")]
@@ -260,8 +262,8 @@ public class BlockingEnemy : BaseEnemy
         var visuals = new VineVisuals
         {
             stem = hazardous && hazardStemSprite != null ? hazardStemSprite : stemSprite,
-            knot = knotSprite,
-            tip = tipSprite,
+            knot = hazardous && hazardKnotSprite != null ? hazardKnotSprite : knotSprite,
+            tip = hazardous && hazardTipSprite != null ? hazardTipSprite : tipSprite,
             color = vineColor,
             sortingLayerId = SortingLayer.NameToID("TileRender"),
             sortingOrder = 1, // TileRender 1: above the base tile, below interactive tile visuals

@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 9732aecb869c9c14581c3fa02ad202f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 889a8abfd75f0e44a929e106fa7e2e84, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -110,6 +110,7 @@ MonoBehaviour:
   UnitName: 
   OccupiedTile: {fileID: 0}
   Faction: 0
+  movesRestoredOnCapture: 0
 --- !u!114 &6615965691350687838
 MonoBehaviour:
   m_ObjectHideFlags: 0

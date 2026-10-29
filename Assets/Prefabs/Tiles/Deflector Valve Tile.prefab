@@ -98,5 +98,5 @@ MonoBehaviour:
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   allowedDirections: -1
   startAngle: 0
-  arrowSprite: {fileID: 21300000, guid: b3df5c5fc76feac418e0cceb40ed08f7, type: 3}
+  arrowSprite: {fileID: 21300000, guid: 4fe9f3b512b33f042bd02e70f0c33664, type: 3}
   arrowColor: {r: 1, g: 1, b: 1, a: 1}
